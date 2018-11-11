@@ -9,18 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Vehicle {
+public class Schedule {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column
-	private TransportType type;
+	private ArrayList<String> workDay;
 	
 	@Column
-	private ArrayList<Ticket> tickets;
+	private ArrayList<String> saturday;
 	
 	@Column
-	private Schedule schedule;
+	private ArrayList<String> sunday;
 }
