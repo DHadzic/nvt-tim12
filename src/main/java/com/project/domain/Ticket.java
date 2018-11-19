@@ -19,13 +19,10 @@ public class Ticket {
 	private Date travel_time;
 	
 	@Column
-	private int seat;
-
-	@Column
-	private int platform_nr;
+	private boolean isActive;
 	
 	@Column
-	private boolean isActive;
+	private Vehicle vehicle;
 	
 	@Column
 	private Passenger user;
@@ -37,18 +34,16 @@ public class Ticket {
 		
 	}
 	
-	public Ticket(Long id, Date travel_time, int seat, int platform_nr, boolean isActive, Passenger user,TicketType type) {
+	public Ticket(Long id, Date travel_time, boolean isActive, Vehicle vehicle, Passenger user, TicketType type) {
 		super();
 		this.id = id;
 		this.travel_time = travel_time;
-		this.seat = seat;
-		this.platform_nr = platform_nr;
 		this.isActive = isActive;
+		this.vehicle = vehicle;
 		this.user = user;
 		this.type = type;
 	}
 	
-
 	public Long getId() {
 		return id;
 	}
@@ -65,20 +60,12 @@ public class Ticket {
 		this.travel_time = travel_time;
 	}
 
-	public int getSeat() {
-		return seat;
+	public Vehicle getVehicle() {
+		return vehicle;
 	}
 
-	public void setSeat(int seat) {
-		this.seat = seat;
-	}
-
-	public int getPlatform_nr() {
-		return platform_nr;
-	}
-
-	public void setPlatform_nr(int platform_nr) {
-		this.platform_nr = platform_nr;
+	public void setVehicle(Vehicle vehicle) {
+		this.vehicle = vehicle;
 	}
 
 	public boolean isActive() {
