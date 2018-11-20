@@ -30,6 +30,9 @@ public class Ticket {
 	@Column
 	private TicketType type;
 	
+	@Column
+	private PricelistItem price;
+	
 	public Ticket() {
 		
 	}
