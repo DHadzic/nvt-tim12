@@ -22,5 +22,8 @@ public class Vehicle {
 	private ArrayList<Ticket> tickets;
 	
 	@Column
+	private ArrayList<BusStation> stations;
+	
+	@Column
 	private Schedule schedule;
 }
