@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.project.web.dto.TicketDTO;
+
 @Entity
 public class Ticket {
 
@@ -44,6 +46,14 @@ public class Ticket {
 		this.type = type;
 	}
 	
+	public Ticket(TicketDTO ticketDTO) {
+		super();
+		this.isActive = true;
+		this.vehicle = null;
+		this.user = null;
+		this.type = TicketType.valueOf(ticketDTO.getType());
+	}
+
 	public Long getId() {
 		return id;
 	}
