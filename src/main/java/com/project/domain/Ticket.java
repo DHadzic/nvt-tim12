@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.project.web.dto.TicketDTO;
 
@@ -23,28 +25,24 @@ public class Ticket {
 	@Column
 	private boolean isActive;
 	
-	@Column
-	private Vehicle vehicle;
-	
-	@Column
+	@OneToOne
 	private Passenger user;
 	
 	@Column
 	private TicketType type;
 	
-	@Column
+	@ManyToOne
 	private PricelistItem price;
 	
 	public Ticket() {
 		
 	}
 	
-	public Ticket(Long id, Date travel_time, boolean isActive, Vehicle vehicle, Passenger user, TicketType type) {
+	public Ticket(Long id, Date travel_time, boolean isActive, Passenger user, TicketType type) {
 		super();
 		this.id = id;
 		this.travel_time = travel_time;
 		this.isActive = isActive;
-		this.vehicle = vehicle;
 		this.user = user;
 		this.type = type;
 	}
@@ -52,7 +50,6 @@ public class Ticket {
 	public Ticket(TicketDTO ticketDTO) {
 		super();
 		this.isActive = true;
-		this.vehicle = null;
 		this.user = null;
 		this.type = TicketType.valueOf(ticketDTO.getType());
 	}
@@ -71,14 +68,6 @@ public class Ticket {
 
 	public void setTravel_time(Date travel_time) {
 		this.travel_time = travel_time;
-	}
-
-	public Vehicle getVehicle() {
-		return vehicle;
-	}
-
-	public void setVehicle(Vehicle vehicle) {
-		this.vehicle = vehicle;
 	}
 
 	public boolean isActive() {
