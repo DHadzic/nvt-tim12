@@ -2,9 +2,12 @@ package com.project.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 @Entity
 public class Passenger extends User {
@@ -24,8 +27,9 @@ public class Passenger extends User {
 	@Column
 	private String documentID;
 	
-	@Column
-	private ArrayList<Ticket> tikcet;
+	@OneToMany(mappedBy="user")
+    @OrderBy("name ASC")
+	private List<Ticket> tikcets;
 	
 	public Passenger() {
 		
@@ -39,7 +43,7 @@ public class Passenger extends User {
 		this.birthDate = birthDate;
 		this.type = type;
 		this.documentID = documentID;
-		this.tikcet = tikcet;
+		this.tikcets = tikcet;
 	}
 
 	public String getName() {
@@ -82,11 +86,11 @@ public class Passenger extends User {
 		this.documentID = documentID;
 	}
 
-	public ArrayList<Ticket> getTikcet() {
-		return tikcet;
+	public List<Ticket> getTikcet() {
+		return tikcets;
 	}
 
 	public void setTikcet(ArrayList<Ticket> tikcet) {
-		this.tikcet = tikcet;
+		this.tikcets = tikcet;
 	}
 }

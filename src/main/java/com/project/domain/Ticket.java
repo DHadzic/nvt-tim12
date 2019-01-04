@@ -1,6 +1,7 @@
 package com.project.domain;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ public class Ticket {
 	@Column
 	private boolean isActive;
 	
-	@OneToOne
+	@ManyToOne
 	private Passenger user;
 	
 	@Column
@@ -33,6 +34,9 @@ public class Ticket {
 	
 	@ManyToOne
 	private PricelistItem price;
+	
+	@Column
+	private HashMap<Long, String> useHistory;
 	
 	public Ticket() {
 		
