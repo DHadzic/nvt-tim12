@@ -5,9 +5,13 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.domain.Authority;
 import com.project.domain.Passenger;
 import com.project.domain.Ticket;
+import com.project.domain.UserAuthority;
 import com.project.domain.Validator;
+import com.project.repository.AuthorityRepository;
+import com.project.repository.UserAuthorityRepository;
 import com.project.repository.UserRepository;
 import com.project.web.dto.PassengerDTO;
 import com.project.web.dto.ValidatorDTO;
@@ -16,6 +20,12 @@ import com.project.web.dto.ValidatorDTO;
 public class UserService {
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private AuthorityRepository authRepository;
+
+	@Autowired
+	private UserAuthorityRepository userAuthRepository;
 
 	public boolean registerUser(PassengerDTO passengerDTO) {
 		if(userRepository.findByUsername(passengerDTO.getUsername()) != null) {
@@ -31,7 +41,17 @@ public class UserService {
 		passenger.setBirthDate(passengerDTO.getBirthDate());
 		passenger.setTikcet(new ArrayList<Ticket>());
 		
+		UserAuthority authorities = new UserAuthority();
+		
+		Authority auth = authRepository.findByName("USER_ROLE");
+		auth.getUserAuthorities().add(authorities);
+		authorities.setAuthority(auth);
+		authorities.setUser(passenger);
+		passenger.getUserAuthorities().add(authorities);
+		
 		userRepository.save(passenger);
+		authRepository.save(auth);
+		userAuthRepository.save(authorities);
 		
 		return true;
 		

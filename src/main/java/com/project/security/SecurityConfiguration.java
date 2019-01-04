@@ -58,11 +58,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
+			.formLogin()
+				.and()
 			.authorizeRequests()
 				.antMatchers("/user/login").
 					permitAll() 
-				.antMatchers(HttpMethod.POST, "/api/**")
-					.hasAuthority("ROLE_ADMIN") //only administrator can add and edit data
+				.antMatchers("/user/register").
+					permitAll()
+				//.antMatchers(HttpMethod.POST, "/api/**")
+				//	.hasAuthority("ROLE_ADMIN") //only administrator can add and edit data
 				.anyRequest().authenticated();
 				//if we use AngularJS on client side
 				//.and().csrf().csrfTokenRepository(csrfTokenRepository()); 
