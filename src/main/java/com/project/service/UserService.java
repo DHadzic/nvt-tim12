@@ -50,8 +50,6 @@ public class UserService {
 		passenger.getUserAuthorities().add(authorities);
 		
 		userRepository.save(passenger);
-		authRepository.save(auth);
-		userAuthRepository.save(authorities);
 		
 		return true;
 		

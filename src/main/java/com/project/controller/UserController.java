@@ -1,5 +1,7 @@
 package com.project.controller;
 
+import javax.naming.AuthenticationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +39,7 @@ public class UserController {
 		
 	@Autowired
 	TokenUtils tokenUtils;
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
         try {
@@ -53,6 +56,7 @@ public class UserController {
             return new ResponseEntity<String>(
             		tokenUtils.generateToken(details), HttpStatus.OK);
         } catch (Exception ex) {
+        	System.out.println(ex.getMessage());
             return new ResponseEntity<String>("Invalid login", HttpStatus.BAD_REQUEST);
         }
 	}
@@ -64,18 +68,7 @@ public class UserController {
 			return new ResponseEntity<String>("Invalid register",HttpStatus.BAD_REQUEST);
 		}
 		
-    	UsernamePasswordAuthenticationToken token = 
-    			new UsernamePasswordAuthenticationToken(
-				passengerDTO.getUsername(), passengerDTO.getPassword());
-        Authentication authentication = authenticationManager.authenticate(token);            
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        // Reload user details so we can generate token
-        UserDetails details = userDetailsService.
-        		loadUserByUsername(passengerDTO.getUsername());
-
-        return new ResponseEntity<String>(
-				tokenUtils.generateToken(details),HttpStatus.OK);
+        return new ResponseEntity<String>("Successful register",HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/change_profile", method = RequestMethod.POST)

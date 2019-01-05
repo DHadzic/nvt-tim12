@@ -29,7 +29,7 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<UserAuthority> userAuthorities = new HashSet<UserAuthority>();
 	
 	public User() {

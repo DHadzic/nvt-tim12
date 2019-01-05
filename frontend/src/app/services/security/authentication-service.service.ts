@@ -7,9 +7,10 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class AuthenticationService {
 
-  private readonly loginPath = '/api/users/authenticate';
+  private readonly loginPath = 'http://localhost:8080/user/login';
 
-  constructor(private http: HttpClient, private jwtUtilsService: JwtUtilsService) { }
+  constructor(private http: HttpClient, private jwtUtilsService: JwtUtilsService) {
+  }
 
   login(name: string, password: string): Observable<boolean> {
     var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -28,7 +29,12 @@ export class AuthenticationService {
         return false;
       }
     });
-    return mapData(this.http.post(this.loginPath, JSON.stringify({ name, password }), { headers }));
+
+
+    return mapData(this.http.post(this.loginPath, JSON.stringify({ 
+                                  username : name, 
+                                  password : password })
+                                , { headers }));
   }
 
   getToken(): String {
