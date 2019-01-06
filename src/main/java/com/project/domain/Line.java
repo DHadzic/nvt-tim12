@@ -16,6 +16,9 @@ public class Line {
 	private Long id;
 	
 	@Column
+	private String name;
+	
+	@Column
 	private ArrayList<BusStation> stations;
 
 }

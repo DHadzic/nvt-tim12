@@ -41,7 +41,8 @@ export class LoginComponent implements OnInit {
         console.log(err);
       }
       else{
-        Observable.throw(err);
+        // Observable.throw(err);
+        console.log('ovde sam');
       }
     });
   }

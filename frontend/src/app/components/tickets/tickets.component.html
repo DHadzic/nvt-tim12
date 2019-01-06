@@ -1,0 +1,19 @@
+<h1>
+  Tickets!
+</h1>
+<div class="containter">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h2 class="form-signin-heading">Purchase ticket</h2>
+        <form role="form" (ngSubmit)="create()">
+      <div class="form-group">
+        <label for="type"><b>Type</b></label>
+        <input type="text" class="form-control" id="type" name="type" [(ngModel)]="ticket.type" required />
+      </div>
+      <button type="submit" class="btn btn btn-primary" id="create">Create</button>
+      </form>
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+</div>

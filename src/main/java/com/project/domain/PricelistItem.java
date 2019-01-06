@@ -17,7 +17,7 @@ public class PricelistItem {
 	private Long id;
 	
 	@ManyToOne
-	private Pricelist pricelsit;
+	private Pricelist pricelist;
 	
 	@Column
 	private TicketType ticketType;
