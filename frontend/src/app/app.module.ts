@@ -4,7 +4,7 @@ import { FormsModule }   from '@angular/forms';
 
 import { RouterModule,Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
@@ -13,7 +13,8 @@ import { JwtUtilsService } from './services/security/jwt-utils.service';
 import { HttpClientModule } from '@angular/common/http'; 
 import { AuthenticationService } from './services/security/authentication-service.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptorService } from './services/security/token-interceptor.service'
+import { TokenInterceptorService } from './services/security/token-interceptor.service';
+import { RegisterComponent } from './components/register/register.component'
 
 const appRoutes: Routes = [
   { path: 'main', 
@@ -38,7 +39,8 @@ const appRoutes: Routes = [
     LoginComponent,
     LoginPageComponent,
     MainPageComponent,
-    NotFoundPageComponent
+    NotFoundPageComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

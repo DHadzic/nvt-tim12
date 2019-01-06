@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
-import { LoginUser } from 'src/model/loginUser';
-import { AuthenticationService } from '../services/security/authentication-service.service';
+import { EventEmitter,Output } from '@angular/core';
+import { AuthenticationService } from '../../services/security/authentication-service.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   public user;
 
+  @Output()
+  changeDisplay:EventEmitter<any> = new EventEmitter();
+  
   public wrongUsernameOrPass:boolean;
 
   constructor(private authenticationService:AuthenticationService,
@@ -26,6 +29,7 @@ export class LoginComponent implements OnInit {
   login():void{
     this.authenticationService.login(this.user.name, this.user.password).subscribe(
       (loggedIn:boolean) => {
+        console.log(loggedIn);
         if(loggedIn){
           this.router.navigate(['/main']);          
         }
@@ -40,6 +44,10 @@ export class LoginComponent implements OnInit {
         Observable.throw(err);
       }
     });
+  }
+
+  public openRegistration(){
+    this.changeDisplay.emit();
   }
 
   

@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor() { }
+  public isLoginDisplayed : boolean;
+
+  constructor() { 
+    this.isLoginDisplayed = true;
+  }
 
   ngOnInit() {
+  }
+
+  changeDisplay(){
+    this.isLoginDisplayed = !this.isLoginDisplayed;
   }
 
 }
