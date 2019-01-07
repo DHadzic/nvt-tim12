@@ -14,8 +14,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationService } from './services/security/authentication-service.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './services/security/token-interceptor.service';
+<<<<<<< HEAD
 import { RegisterComponent } from './components/register/register.component'
 import { LoginGuardGuard } from './services/security/login-guard.guard';
+=======
+import { RegisterComponent } from './components/register/register.component';
+import { TicketsComponent } from './components/tickets/tickets.component'
+>>>>>>> branch 'master' of https://github.com/DHadzic/nvt-tim12
 
 const appRoutes: Routes = [
   { path: 'main', 
@@ -30,6 +35,9 @@ const appRoutes: Routes = [
     redirectTo: 'main',
     pathMatch: 'full'
   },
+  { path: 'tickets',
+    component: TicketsComponent,
+  },
   { path: '**', component: NotFoundPageComponent }
 ];
 
@@ -41,7 +49,8 @@ const appRoutes: Routes = [
     LoginPageComponent,
     MainPageComponent,
     NotFoundPageComponent,
-    RegisterComponent
+    RegisterComponent,
+    TicketsComponent
   ],
   imports: [
     BrowserModule,

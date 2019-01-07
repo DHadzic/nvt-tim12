@@ -3,6 +3,7 @@ package com.project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,16 +19,17 @@ public class TicketController {
 	@Autowired
 	private TicketServiceImpl ticketService;
 
+	@PreAuthorize("permitAll()")
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ResponseEntity<String> createTicket(@RequestBody TicketDTO ticketDTO) {
         try {
         	
-            ticketService.create(ticketDTO);
+            if (!ticketService.create(ticketDTO)) throw new Exception();
             
             return new ResponseEntity<String>(
             		"Ticket successfully created.", HttpStatus.OK);
         } catch (Exception ex) {
-            return new ResponseEntity<String>("Invalid login", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Ticket not created.", HttpStatus.BAD_REQUEST);
         }
 	}
 }

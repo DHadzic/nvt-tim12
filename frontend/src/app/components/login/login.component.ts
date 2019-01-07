@@ -40,7 +40,15 @@ export class LoginComponent implements OnInit {
         this.wrongUsernameOrPass = true;
         console.log("ERROR COMPONENT");
       }
+<<<<<<< HEAD
     }
+=======
+      else{
+        // Observable.throw(err);
+        console.log('ovde sam');
+      }
+    });
+>>>>>>> branch 'master' of https://github.com/DHadzic/nvt-tim12
   }
 
   public openRegistration(){
