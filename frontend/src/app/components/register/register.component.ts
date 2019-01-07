@@ -28,6 +28,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    this.userService.register(this.passenger);
+    console.log(this.userService.register(this.passenger));
   }
 }

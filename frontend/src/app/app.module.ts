@@ -15,6 +15,7 @@ import { AuthenticationService } from './services/security/authentication-servic
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './services/security/token-interceptor.service';
 import { RegisterComponent } from './components/register/register.component'
+import { LoginGuardGuard } from './services/security/login-guard.guard';
 
 const appRoutes: Routes = [
   { path: 'main', 
@@ -23,7 +24,7 @@ const appRoutes: Routes = [
   },
   { path: 'login',
     component: LoginPageComponent, 
-    canActivate: [AuthGuardGuard] 
+    canActivate: [LoginGuardGuard] 
   },
   { path: '',
     redirectTo: 'main',

@@ -13,7 +13,7 @@ export class TokenInterceptorService {
     let authenticationService:AuthenticationService = this.inj.get(AuthenticationService); 
     request = request.clone({
       setHeaders: {
-        'Authorization': `${authenticationService.getToken()}`
+        'X-Auth-Token': `${authenticationService.getToken()}`
       }
     });
 

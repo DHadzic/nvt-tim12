@@ -27,23 +27,20 @@ export class LoginComponent implements OnInit {
   }
 
   login():void{
-    this.authenticationService.login(this.user.name, this.user.password).subscribe(
-      (loggedIn:boolean) => {
-        console.log(loggedIn);
-        if(loggedIn){
-          this.router.navigate(['/main']);          
-        }
-      }
-    ,
-    (err:Error) => {
-      if(err.toString()==='Ilegal login'){
+    console.log(this);
+    this.authenticationService.login(this.user.name, this.user.password,this);
+  }
+
+  handleLogin(loggedIn){
+    if(loggedIn){
+      console.log("SUCCESSFUL COMPONENT");
+      if(loggedIn){
+        this.router.navigate(['/main']);          
+      }else{
         this.wrongUsernameOrPass = true;
-        console.log(err);
+        console.log("ERROR COMPONENT");
       }
-      else{
-        Observable.throw(err);
-      }
-    });
+    }
   }
 
   public openRegistration(){
