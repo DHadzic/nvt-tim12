@@ -29,7 +29,7 @@ public class Ticket {
 	@ManyToOne
 	private Passenger user;
 
-	@Column
+	@Column(nullable = false)
 	private TicketType type;
 
 	@ManyToOne

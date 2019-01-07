@@ -8,8 +8,14 @@
         <h2 class="form-signin-heading">Purchase ticket</h2>
         <form role="form" (ngSubmit)="create()">
       <div class="form-group">
-        <label for="type"><b>Type</b></label>
-        <input type="text" class="form-control" id="type" name="type" [(ngModel)]="ticket.type" required />
+        <label for="type">Select type of ticket:</label>
+        <select class="form-control" id="type" name="type" [(ngModel)]="ticket.type" (change)="priceDisplay()" required >
+          <option value="ONE_TIME">One use</option>
+          <option value="ONE_DAY">One day</option>
+          <option value="ONE_MONTH">One month</option>
+          <option value="ONE_YEAR">One year</option>
+        </select>
+        <p *ngIf="price">Price is: {{price}} RSD</p>
       </div>
       <button type="submit" class="btn btn btn-primary" id="create">Create</button>
       </form>

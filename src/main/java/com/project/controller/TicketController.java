@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.exceptions.EntityDoesNotExistException;
 import com.project.service.TicketServiceImpl;
 import com.project.web.dto.TicketDTO;
 
@@ -24,12 +25,12 @@ public class TicketController {
 	public ResponseEntity<String> createTicket(@RequestBody TicketDTO ticketDTO) {
         try {
         	
-            if (!ticketService.create(ticketDTO)) throw new Exception();
+            ticketService.create(ticketDTO);
             
             return new ResponseEntity<String>(
             		"Ticket successfully created.", HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<String>("Ticket not created.", HttpStatus.BAD_REQUEST);
+        } catch (EntityDoesNotExistException edne) {
+            return new ResponseEntity<String>("Ticket not created. "+edne.getMessage(), HttpStatus.BAD_REQUEST);
         }
 	}
 }

@@ -10,6 +10,7 @@ import { TicketService } from 'src/app/services/ticket.service';
 export class TicketsComponent implements OnInit {
 
   public ticket;
+  public price:number;
 
   @Output()
   changeDisplay:EventEmitter<any> = new EventEmitter();
@@ -23,6 +24,19 @@ export class TicketsComponent implements OnInit {
 
   openCreation(){
     this.changeDisplay.emit();
+  }
+
+  priceDisplay(){
+    console.log(this.ticket.type);
+    if (this.ticket.type == "ONE_TIME"){
+      this.price = 200;
+    }else if (this.ticket.type == "ONE_DAY" ){
+      this.price = 500;
+    }else if (this.ticket.type == "ONE_MONTH" ){
+      this.price = 1000;
+    }else{
+      this.price = 1500;
+    }
   }
 
   create(){
