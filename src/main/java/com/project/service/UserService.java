@@ -27,12 +27,24 @@ public class UserService {
 	@Autowired
 	private UserAuthorityRepository userAuthRepository;
 
-	public boolean registerUser(PassengerDTO passengerDTO) {
+	public void registerUser(PassengerDTO passengerDTO) throws Exception {
 		if(userRepository.findByUsername(passengerDTO.getUsername()) != null) {
-			return false;
+			throw new Exception();
 		}
 		
 		Passenger passenger = new Passenger();
+		
+		if(passengerDTO.getUsername().length() < 3 || passengerDTO.getUsername().length() > 20)
+			throw new Exception();
+		if(passengerDTO.getPassword().length() < 3 || passengerDTO.getPassword().length() > 20)
+			throw new Exception();
+		if(passengerDTO.getName().length() < 3 || passengerDTO.getName().length() > 20)
+			throw new Exception();
+		if(passengerDTO.getSurname().length() < 3 || passengerDTO.getSurname().length() > 20)
+			throw new Exception();
+		if(passengerDTO.getBirthDate().getYear() < 1900 || passengerDTO.getBirthDate().getYear() > 2010)
+			throw new Exception();
+		
 		passenger.setUsername(passengerDTO.getUsername());
 		passenger.setPassword(passengerDTO.getPassword());
 		passenger.setName(passengerDTO.getName());

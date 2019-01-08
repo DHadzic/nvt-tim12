@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.domain.PassengerType;
 import com.project.security.TokenUtils;
 import com.project.service.UserService;
 import com.project.web.dto.LoginDTO;
@@ -64,7 +65,9 @@ public class UserController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<String> register(@RequestBody PassengerDTO passengerDTO) {
 		
-		if(!userService.registerUser(passengerDTO)) {
+		try {
+			userService.registerUser(passengerDTO);
+		} catch (Exception e) {
 			return new ResponseEntity<String>("Invalid register",HttpStatus.BAD_REQUEST);
 		}
 		

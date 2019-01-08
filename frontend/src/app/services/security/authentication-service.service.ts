@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtUtilsService } from './jwt-utils.service';
-import { map,filter } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationService {
@@ -17,8 +17,10 @@ export class AuthenticationService {
 
     var _this = this;
     
+
     var observer = {
       next(value) {
+        console.log(value);
         if (value !== "Invalid login") {
           localStorage.setItem('currentUser', JSON.stringify({ 
                                     username: name,
@@ -26,12 +28,9 @@ export class AuthenticationService {
                                     token: value
                                   }));
           callback.handleLogin(true);
-        }else{
-          console.log("Nothing");
         }
       },
         error(msg) {
-          console.log("ERROR SERVICE");
           callback.handleLogin(false);
         }
     }
@@ -39,7 +38,12 @@ export class AuthenticationService {
     this.http.post(this.loginPath, JSON.stringify({ 
       username : name, 
       password : password })
-    , { headers , responseType : 'text' as 'json'}).subscribe(observer);
+    , { headers , responseType : 'text' as 'json'})
+          // pipe hvata los zahtev i baca error koji subscribe obradjuje
+          .pipe(catchError(err => {
+          return throwError(err);
+          }))
+          .subscribe(observer);
   }
 
   getToken(): String {

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.domain.PassengerType;
 
 public class PassengerDTO {
@@ -11,6 +12,7 @@ public class PassengerDTO {
 	private String password;
 	private String name;
 	private String surname;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date birthDate;
 	private PassengerType type;
 	public String getUsername() {

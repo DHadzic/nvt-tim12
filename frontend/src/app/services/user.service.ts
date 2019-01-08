@@ -16,12 +16,10 @@ export class UserService {
   register(passenger){
     var observer = {
       next(value) {
-        console.log("USPESNO REGISTROVAN");
         console.log(value);
         return "Neuspesno";
       },
       error(msg) {
-        console.log(msg);
         return "Uspesno";
       }
     }

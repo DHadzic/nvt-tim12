@@ -27,19 +27,16 @@ export class LoginComponent implements OnInit {
   }
 
   login():void{
-    console.log(this);
     this.authenticationService.login(this.user.name, this.user.password,this);
   }
 
   handleLogin(loggedIn){
     if(loggedIn){
       console.log("SUCCESSFUL COMPONENT");
-      if(loggedIn){
-        this.router.navigate(['/main']);          
-      }else{
-        this.wrongUsernameOrPass = true;
-        console.log("ERROR COMPONENT");
-      }
+      this.router.navigate(['/main']);          
+    }else{
+      this.wrongUsernameOrPass = true;
+      console.log("ERROR COMPONENT");
     }
   }
 
