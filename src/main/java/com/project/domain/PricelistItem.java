@@ -25,4 +25,15 @@ public class PricelistItem {
 	@Column
 	private double price;
 
+	public PricelistItem(Pricelist pricelist, TicketType ticketType, double price) {
+		super();
+		this.pricelist = pricelist;
+		this.ticketType = ticketType;
+		this.price = price;
+	}
+
+	public PricelistItem() {
+		super();
+	}
+
 }

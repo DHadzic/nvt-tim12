@@ -9,6 +9,7 @@ import com.project.domain.PricelistItem;
 import com.project.domain.Ticket;
 import com.project.domain.TicketType;
 import com.project.domain.User;
+import com.project.exceptions.EntityDoesNotExistException;
 import com.project.repository.PricelistItemRepository;
 import com.project.repository.PricelistRepository;
 import com.project.repository.TicketRepository;
@@ -30,23 +31,18 @@ public class TicketServiceImpl {
 	@Autowired
 	private UserRepository userRepository;
 	
-	public boolean create(TicketDTO ticketDTO){
+	public boolean create(TicketDTO ticketDTO) throws EntityDoesNotExistException{
 		
 		Passenger u = (Passenger) userRepository.findByUsername(ticketDTO.getUser());
-		if (u == null) {
-			System.out.println("NEMA USERA");
-			return false;
-		}
+		if (u == null) throw new EntityDoesNotExistException("User does not exist.");	
 		TicketType tt = TicketType.valueOf(ticketDTO.getType());
-		System.out.println("Tip je " + tt);
+//		System.out.println("Tip je " + tt);
 		Pricelist pl = pricelistRepository.findTopByOrderByIdDesc();
-		System.out.println("Pricelist je " + pl);
+		if (pl == null) throw new EntityDoesNotExistException("Pricelist does not exist.");
+//		System.out.println("Pricelist je " + pl);
 		PricelistItem pli = pricelistItemRepository.findByPricelistAndTicketType(pl, tt);
-		if (pli == null){
-			System.out.println("NEMA CENE");
-			return false;
-		}
-		System.out.println("Pricelist item je " + pli);
+		if (pli == null) throw new EntityDoesNotExistException("Price list item does not exist.");
+//		System.out.println("Pricelist item je " + pli);
 		Ticket ticket = new Ticket(u, tt, pli);
 		
 		ticketRepository.save(ticket);
