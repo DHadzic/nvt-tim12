@@ -10,6 +10,8 @@ import com.project.domain.Passenger;
 import com.project.domain.Ticket;
 import com.project.domain.UserAuthority;
 import com.project.domain.Validator;
+import com.project.exceptions.EntityAlreadyExistsException;
+import com.project.exceptions.InvalidDataException;
 import com.project.repository.AuthorityRepository;
 import com.project.repository.UserAuthorityRepository;
 import com.project.repository.UserRepository;
@@ -27,23 +29,23 @@ public class UserService {
 	@Autowired
 	private UserAuthorityRepository userAuthRepository;
 
-	public void registerUser(PassengerDTO passengerDTO) throws Exception {
+	public void registerUser(PassengerDTO passengerDTO) throws EntityAlreadyExistsException, InvalidDataException {
 		if(userRepository.findByUsername(passengerDTO.getUsername()) != null) {
-			throw new Exception();
+			throw new EntityAlreadyExistsException();
 		}
 		
 		Passenger passenger = new Passenger();
 		
 		if(passengerDTO.getUsername().length() < 3 || passengerDTO.getUsername().length() > 20)
-			throw new Exception();
+			throw new InvalidDataException();
 		if(passengerDTO.getPassword().length() < 3 || passengerDTO.getPassword().length() > 20)
-			throw new Exception();
+			throw new InvalidDataException();
 		if(passengerDTO.getName().length() < 3 || passengerDTO.getName().length() > 20)
-			throw new Exception();
+			throw new InvalidDataException();
 		if(passengerDTO.getSurname().length() < 3 || passengerDTO.getSurname().length() > 20)
-			throw new Exception();
+			throw new InvalidDataException();
 		if(passengerDTO.getBirthDate().getYear() < 1900 || passengerDTO.getBirthDate().getYear() > 2010)
-			throw new Exception();
+			throw new InvalidDataException();
 		
 		passenger.setUsername(passengerDTO.getUsername());
 		passenger.setPassword(passengerDTO.getPassword());
@@ -63,7 +65,7 @@ public class UserService {
 		
 		userRepository.save(passenger);
 		
-		return true;
+		return;
 		
 	}
 	
