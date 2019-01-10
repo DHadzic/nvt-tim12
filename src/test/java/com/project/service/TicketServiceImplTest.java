@@ -18,6 +18,7 @@ import com.project.domain.Pricelist;
 import com.project.domain.PricelistItem;
 import com.project.domain.Ticket;
 import com.project.domain.TicketType;
+import com.project.domain.TransportType;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.repository.PricelistItemRepository;
 import com.project.repository.PricelistRepository;
@@ -51,17 +52,24 @@ public class TicketServiceImplTest {
 		p1.setPassword("p11");
 		Pricelist pl1 = new Pricelist();
 		PricelistItem pli1 = new PricelistItem(pl1, TicketType.ONE_TIME, 500);
-		Ticket t1 = new Ticket(p1, TicketType.MONTHLY, pli1);
+		Ticket t1 = new Ticket(p1, TicketType.MONTHLY, TransportType.BUS, pli1);
 		Mockito.when(userRepository.findByUsername("p1")).thenReturn(p1);
+		Mockito.when(userRepository.findByUsername("p2")).thenReturn(null);
 		Mockito.when(pricelistRepository.findTopByOrderByIdDesc()).thenReturn(pl1);
 		Mockito.when(pricelistItemRepository.findByPricelistAndTicketType(pl1, TicketType.ONE_TIME)).thenReturn(pli1);
 		Mockito.when(ticketRepository.findByUserAndType(p1, TicketType.MONTHLY)).thenReturn(t1);
 	}
 	
 	@Test
-	public void create_allGood() throws EntityDoesNotExistException{
-		TicketDTO t1dto = new TicketDTO("p1", "ONE_TIME");
+	public void create_allGood() throws EntityDoesNotExistException {
+		TicketDTO t1dto = new TicketDTO("p1", "ONE_TIME", "BUS");
 		boolean answer = ticketService.create(t1dto);
 		assertTrue(answer);
+	}
+	
+	@Test(expected = EntityDoesNotExistException.class)
+	public void create_userNotFound() throws EntityDoesNotExistException {
+		TicketDTO t1dto = new TicketDTO("p2", "ONE_TIME", "BUS");
+		ticketService.create(t1dto);
 	}
 }

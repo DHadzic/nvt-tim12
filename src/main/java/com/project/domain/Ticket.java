@@ -5,12 +5,17 @@ import java.util.HashMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.web.dto.TicketDTO;
 
 @Entity
@@ -26,11 +31,17 @@ public class Ticket {
 	@Column
 	private boolean isActive;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
 	private Passenger user;
 
 	@Column(nullable = false)
 	private TicketType type;
+	
+	@Column(nullable = false)
+	private TransportType transportType;
 
 	@ManyToOne
 	private PricelistItem price;
@@ -42,21 +53,23 @@ public class Ticket {
 
 	}
 
-	public Ticket(Long id, Date dateCreated, boolean isActive, Passenger user, TicketType type) {
+	public Ticket(Long id, Date dateCreated, boolean isActive, Passenger user, TicketType type, TransportType transportType) {
 		super();
 		this.id = id;
 		this.dateCreated = dateCreated;
 		this.isActive = isActive;
 		this.user = user;
 		this.type = type;
+		this.transportType = transportType;
 	}
 	
 	
 
-	public Ticket(Passenger user, TicketType type, PricelistItem price) {
+	public Ticket(Passenger user, TicketType type, TransportType transportType,PricelistItem price) {
 		super();
 		this.user = user;
 		this.type = type;
+		this.transportType = transportType;
 		this.price = price;
 		this.isActive = true;
 		this.dateCreated = new Date();
@@ -67,7 +80,8 @@ public class Ticket {
 		super();
 		this.isActive = true;
 		this.user = null;
-		this.type = TicketType.valueOf(ticketDTO.getType());
+		this.type = TicketType.valueOf(ticketDTO.getTicketType());
+		this.transportType = TransportType.valueOf(ticketDTO.getTransportType());
 		this.dateCreated = new Date();
 	}
 
@@ -101,6 +115,14 @@ public class Ticket {
 
 	public void setType(TicketType type) {
 		this.type = type;
+	}
+
+	public TransportType getTransportType() {
+		return transportType;
+	}
+
+	public void setTransportType(TransportType transportType) {
+		this.transportType = transportType;
 	}
 
 	public void Activate() {

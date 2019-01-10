@@ -3,12 +3,14 @@ package com.project.web.dto;
 public class TicketDTO {
 
 	String user;
-	String type;
-
-	public TicketDTO(String user, String type) {
+	String ticketType;
+	String transportType;
+	
+	public TicketDTO(String user, String ticketType, String transportType) {
 		super();
 		this.user = user;
-		this.type = type;
+		this.ticketType = ticketType;
+		this.transportType = transportType;
 	}
 
 	public TicketDTO() {
@@ -23,12 +25,20 @@ public class TicketDTO {
 		this.user = user;
 	}
 
-	public String getType() {
-		return type;
+	public String getTicketType() {
+		return ticketType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setTicketType(String ticketType) {
+		this.ticketType = ticketType;
 	}
 
+	public String getTransportType() {
+		return transportType;
+	}
+
+	public void setTransportType(String transportType) {
+		this.transportType = transportType;
+	}
+	
 }

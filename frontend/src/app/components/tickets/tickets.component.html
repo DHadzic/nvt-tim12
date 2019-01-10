@@ -3,23 +3,46 @@
 </h1>
 <div class="containter">
   <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
+      <div class="col-md-6">
+          <h2>Your tickets:</h2>
+          <div class="col- bg-primary" *ngFor="let ticket of userTickets">
+            <p>{{ticket.type}}, created {{ticket.dateCreated}} is {{ticket.active}}</p>
+            <ng-container *ngIf="ticket.active; else ticketNotActiveTemplate">
+              Ticket is active.
+            </ng-container>
+            <ng-template #ticketNotActiveTemplate>
+              Ticket is not active.
+            </ng-template>
+            
+          </div>
+      </div>
+    <div class="col-md-6">
+      <button class="btn btn btn-primary" (click)="toggleBuy()">Buy ticket</button>
+      <div *ngIf="buyTicketForm">
         <h2 class="form-signin-heading">Purchase ticket</h2>
         <form role="form" (ngSubmit)="create()">
-      <div class="form-group">
-        <label for="type">Select type of ticket:</label>
-        <select class="form-control" id="type" name="type" [(ngModel)]="ticket.type" (change)="priceDisplay()" required >
-          <option value="ONE_TIME">One use</option>
-          <option value="ONE_DAY">One day</option>
-          <option value="ONE_MONTH">One month</option>
-          <option value="ONE_YEAR">One year</option>
-        </select>
-        <p *ngIf="price">Price is: {{price}} RSD</p>
+        <div class="form-group">
+          <label for="transportType">Select type of vehicle:</label>
+          <select class="form-control" id="transportType" name="transportType" [(ngModel)]="ticket.transportType" (change)="priceDisplay()" required >
+            <option value="BUS">Bus</option>
+            <option value="TRAM">Tram</option>
+            <option value="TROLLEYBUS">Trolleybus</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="ticketType">Select type of ticket:</label>
+          <select class="form-control" id="ticketType" name="ticketType" [(ngModel)]="ticket.ticketType" (change)="priceDisplay()" required >
+            <option value="ONE_TIME">One use</option>
+            <option value="ONE_DAY">One day</option>
+            <option value="ONE_MONTH">One month</option>
+            <option value="ONE_YEAR">One year</option>
+          </select>
+          <p *ngIf="price">Price is: {{price}} RSD</p>
+        </div>
+        <button type="submit" class="btn btn btn-primary" id="create">Create</button>
+        </form>
       </div>
-      <button type="submit" class="btn btn btn-primary" id="create">Create</button>
-      </form>
-      <div class="col-md-4"></div>
     </div>
+    
   </div>
 </div>
