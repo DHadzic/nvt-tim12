@@ -134,4 +134,7 @@ public class UserServiceTest {
 		pass.setBirthDate(new Date(2011, 1, 1));
 		userService.registerUser(pass);
 	}
+	
+	//@Test()
+	//public void registerSuccessful
 }

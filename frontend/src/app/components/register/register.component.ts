@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { EventEmitter,Output } from '@angular/core';
 import { UserService } from "../../services/user.service";
+import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { Observable,throwError } from 'rxjs';
+
 
 @Component({
   selector: 'app-register',
@@ -16,7 +20,7 @@ export class RegisterComponent implements OnInit {
   @Output()
   changeDisplay:EventEmitter<any> = new EventEmitter();
 
-  constructor(private userService:UserService) { 
+  constructor(private userService:UserService,private router: Router) { 
     this.passenger = {};
     this.pass_types = ["Student","Regular","Retiree"];
     this.passenger.type = this.pass_types[0];
@@ -44,8 +48,24 @@ export class RegisterComponent implements OnInit {
       return;
 
     this.passenger.type = this.passenger.type.toUpperCase();
+    delete this.passenger.password_r;
     console.log(this.passenger);
-    this.userService.register(this.passenger);
+
+    var observer = {
+      next(value) {
+        this.router.navigate(['/login']);
+      },
+      error(msg) {
+        console.log(msg.error);
+      }
+    }
+
+    this.userService.register(this.passenger)
+        .pipe(catchError(err => {
+          return throwError(err);
+        })).subscribe(observer);
+      
+    this.passenger.password_r = this.passenger.password;
   }
 
   handleValidation(): boolean{
@@ -78,7 +98,7 @@ export class RegisterComponent implements OnInit {
     }
 
     if(this.passenger.password_r != undefined){
-      if(this.passenger.password_r === this.passenger.password){
+      if(this.passenger.password_r != this.passenger.password){
         isSuccessful = false;
         this.error_messages.password_r = true;
       }

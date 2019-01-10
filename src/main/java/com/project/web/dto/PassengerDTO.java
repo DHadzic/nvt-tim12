@@ -51,4 +51,11 @@ public class PassengerDTO {
 	public void setType(PassengerType type) {
 		this.type = type;
 	}
+	@Override
+	public String toString() {
+		return "PassengerDTO [username=" + username + ", password=" + password + ", name=" + name + ", surname="
+				+ surname + ", birthDate=" + birthDate + ", type=" + type + "]";
+	}
+	
+	
 }

@@ -17,7 +17,6 @@ export class AuthenticationService {
 
     var _this = this;
     
-
     var observer = {
       next(value) {
         console.log(value);
@@ -68,5 +67,10 @@ export class AuthenticationService {
     else {
       return undefined;
     }
-  }  
+  }
+
+  getRoles(){
+    var token = this.getToken().toString();
+    return this.jwtUtilsService.getRoles(token);
+  }
 }

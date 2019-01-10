@@ -14,9 +14,4 @@ export class MainPageComponent implements OnInit {
   ngOnInit() {
   }
 
-  logout(){
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
-
 }

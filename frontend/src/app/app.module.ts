@@ -16,12 +16,14 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './services/security/token-interceptor.service';
 import { RegisterComponent } from './components/register/register.component'
 import { LoginGuardGuard } from './services/security/login-guard.guard';
-import { TicketsComponent } from './components/tickets/tickets.component'
+import { TicketsComponent } from './components/tickets/tickets.component';
+import { AddStopsComponent } from './components/add-stops/add-stops.component';
+import { AgmCoreModule } from '@agm/core';
+import { AgmDirectionModule } from 'agm-direction';
 
 const appRoutes: Routes = [
   { path: 'main', 
-    component: MainPageComponent ,
-    canActivate: [AuthGuardGuard]
+    component: MainPageComponent
   },
   { path: 'login',
     component: LoginPageComponent, 
@@ -30,6 +32,12 @@ const appRoutes: Routes = [
   { path: '',
     redirectTo: 'main',
     pathMatch: 'full'
+  },
+  {
+    path: 'addStop',
+    component: AddStopsComponent,
+    data: {roles: ['ADMIN_ROLE']},
+    canActivate: [AuthGuardGuard]
   },
   { path: 'tickets',
     component: TicketsComponent,
@@ -46,7 +54,8 @@ const appRoutes: Routes = [
     MainPageComponent,
     NotFoundPageComponent,
     RegisterComponent,
-    TicketsComponent
+    TicketsComponent,
+    AddStopsComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +63,10 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true }), // <-- debugging purposes only
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBG-Cyqxezk9fYYllu_VmEe8q3ZBFf30Yc'
+    }),
+    AgmDirectionModule,
     HttpClientModule
   ],
   providers: [

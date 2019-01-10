@@ -11,24 +11,11 @@ export class UserService {
     this.http = http;
   }
 
-  retVal;
-
   register(passenger){
-    var observer = {
-      next(value) {
-        console.log(value);
-        return "Neuspesno";
-      },
-      error(msg) {
-        return "Uspesno";
-      }
-    }
-
     var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http.post(this.basePath + "/register", JSON.stringify(passenger),
-          {headers, responseType : 'text' as 'json'})
-          .subscribe(observer);
+          {headers, responseType : 'text' as 'json'});
   }
 
 }

@@ -1,6 +1,8 @@
 package com.project.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,7 @@ public class UserService {
 		if(userRepository.findByUsername(passengerDTO.getUsername()) != null) {
 			throw new EntityAlreadyExistsException();
 		}
+		Calendar cal = new GregorianCalendar();
 		
 		Passenger passenger = new Passenger();
 		
@@ -44,8 +47,11 @@ public class UserService {
 			throw new InvalidDataException();
 		if(passengerDTO.getSurname().length() < 3 || passengerDTO.getSurname().length() > 20)
 			throw new InvalidDataException();
-		if(passengerDTO.getBirthDate().getYear() < 1900 || passengerDTO.getBirthDate().getYear() > 2010)
+		
+		cal.setTime(passenger.getBirthDate());
+		if(cal.get(Calendar.YEAR) < 1993 || cal.get(Calendar.YEAR) > 2010) {
 			throw new InvalidDataException();
+		}
 		
 		passenger.setUsername(passengerDTO.getUsername());
 		passenger.setPassword(passengerDTO.getPassword());

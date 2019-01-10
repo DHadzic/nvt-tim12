@@ -1,0 +1,11 @@
+
+<p>
+  ADD-STOP COMPONENT
+</p>
+
+<agm-map class="my_map" [longitude]="19.843958" [latitude]="45.253322" (mapClick)="setMarker($event)">
+  <agm-marker [longitude]="marker.lng" [latitude]="marker.lat"></agm-marker>
+  <agm-direction *ngFor="let point of busStops" [origin]="point.origin" [destination]="point.dest"></agm-direction>
+</agm-map>
+
+<button (click)="addPoint()">Add point</button>
