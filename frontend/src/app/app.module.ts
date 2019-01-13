@@ -20,6 +20,7 @@ import { TicketsComponent } from './components/tickets/tickets.component';
 import { AddStopsComponent } from './components/add-stops/add-stops.component';
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';
+import { ValidateComponent } from './components/validate/validate.component';
 
 const appRoutes: Routes = [
   { path: 'main', 
@@ -38,6 +39,11 @@ const appRoutes: Routes = [
     component: AddStopsComponent,
     data: {roles: ['ADMIN_ROLE']},
     canActivate: [AuthGuardGuard]
+  },{
+    path: 'validate',
+    component: ValidateComponent,
+    data: {roles: ['VALIDATOR_ROLE']},
+    canActivate: [AuthGuardGuard]
   },
   { path: 'tickets',
     component: TicketsComponent,
@@ -55,7 +61,8 @@ const appRoutes: Routes = [
     NotFoundPageComponent,
     RegisterComponent,
     TicketsComponent,
-    AddStopsComponent
+    AddStopsComponent,
+    ValidateComponent
   ],
   imports: [
     BrowserModule,

@@ -50,4 +50,17 @@ public class TicketController {
 			return new ResponseEntity<ArrayList<Ticket>>(new ArrayList<Ticket>(), HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@PreAuthorize("permitAll()")
+	@RequestMapping(value = "/validate/{username}&{type}", method = RequestMethod.GET)
+	public ResponseEntity<Ticket> validateTicket(@PathVariable("username") String username,
+												 @PathVariable("type") String transportType){
+		try{
+			Ticket ticket = ticketService.getUserTicket(username, transportType);
+		
+			return new ResponseEntity<Ticket>(ticket, HttpStatus.OK);
+		}catch (EntityDoesNotExistException edne){
+			return new ResponseEntity<Ticket>(new Ticket(), HttpStatus.NOT_FOUND);
+		}
+	}
 }

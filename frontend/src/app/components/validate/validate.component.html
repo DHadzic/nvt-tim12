@@ -1,0 +1,27 @@
+<h1>
+    Validate!
+</h1>
+<div class="containter">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="form-signin-heading">Validate ticket</h2>
+      <form role="form" (ngSubmit)="searchForTicket()">
+      <div class="form-group">
+        <label for="transportType">Select type of vehicle:</label>
+        <select class="form-control" id="transportType" name="transportType" [(ngModel)]="transportType" required >
+          <option value="BUS">Bus</option>
+          <option value="TRAM">Tram</option>
+          <option value="TROLLEYBUS">Trolleybus</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="username" class="sr-only">Passenger username</label>
+        <input type="text" id="username" class="form-control" name="username" [(ngModel)]="username" placeholder="Username"
+          required autofocus>
+      </div>
+      <button type="submit" class="btn btn btn-primary" id="search">Search</button>
+      </form>
+    </div>
+    
+  </div>
+</div>

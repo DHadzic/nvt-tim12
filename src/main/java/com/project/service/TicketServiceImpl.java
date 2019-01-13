@@ -55,8 +55,20 @@ public class TicketServiceImpl {
 	}
 	
 	public ArrayList<Ticket> getUserTickets(String username) throws EntityDoesNotExistException {
-		Passenger u = (Passenger) userRepository.findByUsername(username);
-		ArrayList<Ticket> tickets = ticketRepository.findByUser(u);
+		Passenger p = (Passenger) userRepository.findByUsername(username);
+		if (p == null) throw new EntityDoesNotExistException("User does not exist.");
+		ArrayList<Ticket> tickets = ticketRepository.findByUser(p);
 		return tickets;
+	}
+	
+	public Ticket getUserTicket(String username, String transportType) throws EntityDoesNotExistException {
+		ArrayList<Ticket> tickets = getUserTickets(username);
+		TransportType ttype = TransportType.valueOf(transportType);
+		for (Ticket t : tickets){
+			if (t.getTransportType() == ttype && t.isActive() == true){
+				return t;
+			}
+		}
+		throw new EntityDoesNotExistException("Active ticket not found");
 	}
 }

@@ -23,4 +23,8 @@ export class TicketService {
    getTickets(username:string){
      return this.http.get(this.basePath+"/getAll/" + username,{responseType: 'json'});
    }
+
+   getPassengerTicket(username:string, transportType:string){
+     return this.http.get(this.basePath + "/validate/" + username + "&" + transportType,{responseType: 'json'});
+   }
 }
