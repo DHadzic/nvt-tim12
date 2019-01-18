@@ -1,0 +1,16 @@
+<p>
+  add-line works!
+</p>
+
+<agm-map class="my_map" [longitude]="19.843958" [latitude]="45.253322" (mapClick)="setMarker($event)">
+  <!-- <agm-marker *ngFor="let stop of busStops" [longitude]="stop.lng" [latitude]="stop.lat"></agm-marker>-->
+</agm-map>
+
+<ol>
+  <li *ngFor="let stop of selectedStops">Bus stop -> {{stop.id}}</li>
+</ol>
+
+<p>Your line will be added based on selected stops from above..</p>
+<button (click)="addStopToSelected()">Add Stop</button>
+<button (click)="addLine()">Add Line</button>
+

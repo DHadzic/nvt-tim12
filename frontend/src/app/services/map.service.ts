@@ -5,15 +5,25 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MapService {
-  private path: string = "http://router.project-osrm.org/table/v1/driving/";
+  private path: string = "http://localhost:8080/line";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+   }
 
-  getPoints(firstPoint,secondPoint){
-      var newPath = this.path + firstPoint.lat + "," + firstPoint.lng + ";" + secondPoint.lat + "," + secondPoint.lng;
+  getBusStations(){
+    return this.http.get(this.path + "/get_stations",{responseType : 'text' as 'json'})
+  }
 
-      this.http.get(newPath,{responseType : 'text' as 'json'}).subscribe(
-        success => {console.log(success);}
-      )
+  addBusStation(station_json){
+    var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.put(this.path + "/add_station",station_json
+            ,{headers, responseType : 'text' as 'json'});
+  }
+
+  addLine(line_json){
+    var headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(this.path + "/add_line",line_json
+            ,{headers, responseType : 'text' as 'json'});
   }
 }

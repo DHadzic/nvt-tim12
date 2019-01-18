@@ -21,6 +21,7 @@ import { AddStopsComponent } from './components/add-stops/add-stops.component';
 import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';
 import { ValidateComponent } from './components/validate/validate.component';
+import { AddLineComponent } from './components/add-line/add-line.component';
 
 const appRoutes: Routes = [
   { path: 'main', 
@@ -37,6 +38,11 @@ const appRoutes: Routes = [
   {
     path: 'addStop',
     component: AddStopsComponent,
+    data: {roles: ['ADMIN_ROLE']},
+    canActivate: [AuthGuardGuard]
+  },{
+    path: 'addLine',
+    component: AddLineComponent,
     data: {roles: ['ADMIN_ROLE']},
     canActivate: [AuthGuardGuard]
   },{
@@ -62,7 +68,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     TicketsComponent,
     AddStopsComponent,
-    ValidateComponent
+    ValidateComponent,
+    AddLineComponent
   ],
   imports: [
     BrowserModule,

@@ -4,8 +4,9 @@
 </p>
 
 <agm-map class="my_map" [longitude]="19.843958" [latitude]="45.253322" (mapClick)="setMarker($event)">
-  <agm-marker [longitude]="marker.lng" [latitude]="marker.lat"></agm-marker>
-  <agm-direction *ngFor="let point of busStops" [origin]="point.origin" [destination]="point.dest"></agm-direction>
+  <!-- <agm-marker *ngFor="let stop of busStops" [longitude]="stop.lng" [latitude]="stop.lat"></agm-marker>
+  DIRECTIONS <agm-direction *ngFor="let point of busStops" [origin]="point.origin" [destination]="point.dest"></agm-direction>
+  <agm-marker [longitude]="marker.lng" [latitude]="marker.lat"></agm-marker>-->
 </agm-map>
 
-<button (click)="addPoint()">Add point</button>
+<button (click)="addStation()">Add station</button>

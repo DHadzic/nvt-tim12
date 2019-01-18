@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.omg.CORBA.DynAnyPackage.Invalid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,12 +33,36 @@ public class UserService {
 	private UserAuthorityRepository userAuthRepository;
 
 	public void registerUser(PassengerDTO passengerDTO) throws EntityAlreadyExistsException, InvalidDataException {
+		if(passengerDTO == null) {
+			throw new InvalidDataException();
+		}
+		
+		
 		if(userRepository.findByUsername(passengerDTO.getUsername()) != null) {
 			throw new EntityAlreadyExistsException();
 		}
 		Calendar cal = new GregorianCalendar();
 		
 		Passenger passenger = new Passenger();
+		
+		if(passengerDTO.getUsername() == null) {
+			throw new InvalidDataException();
+		}
+		if(passengerDTO.getPassword() == null) {
+			throw new InvalidDataException();
+		}
+		if(passengerDTO.getName() == null) {
+			throw new InvalidDataException();
+		}
+		if(passengerDTO.getSurname() == null) {
+			throw new InvalidDataException();
+		}
+		if(passengerDTO.getBirthDate() == null) {
+			throw new InvalidDataException();
+		}
+		if(passengerDTO.getType() == null) {
+			throw new InvalidDataException();
+		}
 		
 		if(passengerDTO.getUsername().length() < 3 || passengerDTO.getUsername().length() > 20)
 			throw new InvalidDataException();

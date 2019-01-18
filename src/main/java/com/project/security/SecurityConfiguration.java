@@ -75,6 +75,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					permitAll()
 				.antMatchers("/ticket/validate/{username}&{type}").
 					permitAll()
+					.antMatchers("/line/get_stations").
+					permitAll()
 				//.antMatchers(HttpMethod.POST, "/api/**")
 				//	.hasAuthority("ROLE_ADMIN") //only administrator can add and edit data
 				.anyRequest().authenticated();
