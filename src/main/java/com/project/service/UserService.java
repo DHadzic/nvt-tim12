@@ -2,9 +2,8 @@ package com.project.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.HashSet;
 
-import org.omg.CORBA.DynAnyPackage.Invalid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,61 +33,58 @@ public class UserService {
 
 	public void registerUser(PassengerDTO passengerDTO) throws EntityAlreadyExistsException, InvalidDataException {
 		if(passengerDTO == null) {
-			throw new InvalidDataException();
+			throw new InvalidDataException("Data is null");
 		}
-		
-		
-		if(userRepository.findByUsername(passengerDTO.getUsername()) != null) {
-			throw new EntityAlreadyExistsException();
-		}
-		Calendar cal = new GregorianCalendar();
-		
+				
 		Passenger passenger = new Passenger();
 		
 		if(passengerDTO.getUsername() == null) {
-			throw new InvalidDataException();
+			throw new InvalidDataException("Username is null");
 		}
 		if(passengerDTO.getPassword() == null) {
-			throw new InvalidDataException();
+			throw new InvalidDataException("Password in null");
 		}
 		if(passengerDTO.getName() == null) {
-			throw new InvalidDataException();
+			throw new InvalidDataException("Name is null");
 		}
 		if(passengerDTO.getSurname() == null) {
-			throw new InvalidDataException();
+			throw new InvalidDataException("Surname is null");
 		}
 		if(passengerDTO.getBirthDate() == null) {
-			throw new InvalidDataException();
+			throw new InvalidDataException("BirthDate is null");
 		}
 		if(passengerDTO.getType() == null) {
-			throw new InvalidDataException();
+			throw new InvalidDataException("Type is null");
+		}
+
+		if(userRepository.findByUsername(passengerDTO.getUsername()) != null) {
+			throw new EntityAlreadyExistsException("Username taken");
 		}
 		
 		if(passengerDTO.getUsername().length() < 3 || passengerDTO.getUsername().length() > 20)
-			throw new InvalidDataException();
-		if(passengerDTO.getPassword().length() < 3 || passengerDTO.getPassword().length() > 20)
-			throw new InvalidDataException();
+			throw new InvalidDataException("Username format");
+		if(passengerDTO.getPassword().length() < 3 || passengerDTO.getPassword().length() > 100)
+			throw new InvalidDataException("Password format");
 		if(passengerDTO.getName().length() < 3 || passengerDTO.getName().length() > 20)
-			throw new InvalidDataException();
+			throw new InvalidDataException("Name format");
 		if(passengerDTO.getSurname().length() < 3 || passengerDTO.getSurname().length() > 20)
-			throw new InvalidDataException();
-		
-		cal.setTime(passenger.getBirthDate());
-		if(cal.get(Calendar.YEAR) < 1993 || cal.get(Calendar.YEAR) > 2010) {
-			throw new InvalidDataException();
+			throw new InvalidDataException("Surname format");
+		if(passengerDTO.getBirthDate().get(Calendar.YEAR) < 1993 || passengerDTO.getBirthDate().get(Calendar.YEAR) > 2010) {
+			throw new InvalidDataException("Date format");
 		}
 		
 		passenger.setUsername(passengerDTO.getUsername());
 		passenger.setPassword(passengerDTO.getPassword());
 		passenger.setName(passengerDTO.getName());
-		passenger.setSurname(passenger.getSurname());
+		passenger.setSurname(passengerDTO.getSurname());
 		passenger.setType(passengerDTO.getType());
 		passenger.setBirthDate(passengerDTO.getBirthDate());
 		passenger.setTikcet(new ArrayList<Ticket>());
 		
 		UserAuthority authorities = new UserAuthority();
 		
-		Authority auth = authRepository.findByName("USER_ROLE");
+		Authority auth = authRepository.findByName("PASSENGER_ROLE");
+		
 		auth.getUserAuthorities().add(authorities);
 		authorities.setAuthority(auth);
 		authorities.setUser(passenger);

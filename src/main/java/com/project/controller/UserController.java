@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.PassengerType;
+import com.project.exceptions.EntityAlreadyExistsException;
+import com.project.exceptions.EntityDoesNotExistException;
+import com.project.exceptions.InvalidDataException;
 import com.project.security.TokenUtils;
 import com.project.service.UserService;
 import com.project.web.dto.LoginDTO;
@@ -67,8 +70,8 @@ public class UserController {
 		
 		try {
 			userService.registerUser(passengerDTO);
-		} catch (Exception e) {
-			return new ResponseEntity<String>("Invalid register",HttpStatus.BAD_REQUEST);
+		} catch (InvalidDataException | EntityAlreadyExistsException e) {
+			return new ResponseEntity<String>("Invalid register.." + e.getMessage() ,HttpStatus.BAD_REQUEST);
 		}
 		
         return new ResponseEntity<String>("Successful register",HttpStatus.OK);

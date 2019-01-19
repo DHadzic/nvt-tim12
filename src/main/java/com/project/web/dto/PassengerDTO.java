@@ -1,8 +1,7 @@
 package com.project.web.dto;
 
 import java.util.Date;
-
-import javax.persistence.Column;
+import java.util.GregorianCalendar;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.domain.PassengerType;
@@ -13,7 +12,7 @@ public class PassengerDTO {
 	private String name;
 	private String surname;
 	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date birthDate;
+	private GregorianCalendar birthDate;
 	private PassengerType type;
 	public String getUsername() {
 		return username;
@@ -39,10 +38,10 @@ public class PassengerDTO {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public Date getBirthDate() {
+	public GregorianCalendar getBirthDate() {
 		return birthDate;
 	}
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(GregorianCalendar birthDate) {
 		this.birthDate = birthDate;
 	}
 	public PassengerType getType() {

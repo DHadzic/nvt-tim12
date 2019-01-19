@@ -2,6 +2,7 @@ package com.project.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -19,7 +20,7 @@ public class Passenger extends User {
 	private String surname;
 	
 	@Column
-	private Date birthDate;
+	private GregorianCalendar birthDate;
 	
 	@Column
 	private PassengerType type;
@@ -35,7 +36,7 @@ public class Passenger extends User {
 		
 	}
 
-	public Passenger(String name, String surname, Date birthDate, PassengerType type, String documentID,
+	public Passenger(String name, String surname, GregorianCalendar birthDate, PassengerType type, String documentID,
 			ArrayList<Ticket> tikcet) {
 		super();
 		this.name = name;
@@ -62,11 +63,11 @@ public class Passenger extends User {
 		this.surname = surname;
 	}
 
-	public Date getBirthDate() {
+	public GregorianCalendar getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
+	public void setBirthDate(GregorianCalendar birthDate) {
 		this.birthDate = birthDate;
 	}
 
