@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MapService {
-  private path: string = "http://localhost:8080/line";
+  private path: string = "/api/line";
 
   constructor(private http: HttpClient) {
    }

@@ -13,11 +13,46 @@ export class AddStopsComponent implements OnInit {
   public marker;
   public busStops;
   public lastPoint;
-  public isEnabled;
+  public mapNotClicked;
+  public polygonDots;
 
   constructor(private mapService: MapService) { 
     this.marker = {};
     this.busStops = [];
+    this.mapNotClicked = true;
+    this.polygonDots = [{
+      lat: 45.271652105740415,
+      lng: 19.785163978393484
+    },{
+      // PRVI
+      lat: 45.271652105740415,
+      lng: 19.807694198063132
+    },{
+      // DRUGI
+      lat: 45.301403448327434,
+      lng: 19.807694198063132
+    },{
+      // TRECI
+      lat: 45.301403448327434,
+      lng: 19.85146784918618
+    },{
+      // CETVRTI
+      lat: 45.271652105740415,
+      lng: 19.85146784918618
+    },{
+      lat: 45.271652105740415,
+      lng: 19.893825630004812
+    },{
+      lat: 45.22028630783431,
+      lng: 19.893825630004812
+    },{
+      lat: 45.22028630783431,
+      lng: 19.785163978393484
+    },{
+      lat: 45.271652105740415,
+      lng: 19.785163978393484
+    }
+  ]
   }
 
   ngOnInit() {
@@ -26,7 +61,7 @@ export class AddStopsComponent implements OnInit {
         this.busStops = value;
       },
       error(msg) {
-        alert(msg.error);
+        alert("Couldn't load the existing stops");
       }
     }
 
@@ -38,9 +73,31 @@ export class AddStopsComponent implements OnInit {
     
   }
 
+  isMapClicked(){
+    return this,this.mapNotClicked;
+  }
+
+  //Za icon url ako bude trebalo
+  markerIconUrl() {
+    return require('../../../assets/bus_station.png')
+  }
+
 
   setMarker(event){
-    this.isEnabled = true;
+    var lat = parseFloat(event.coords.lat);
+    var lng = parseFloat(event.coords.lng);
+
+    var isInside = false;
+
+    if(lat > 45.271652105740415 && lat < 45.301403448327434 && lng > 19.807694198063132 && 19.85146784918618)
+      isInside = true;
+    if(lat > 45.22028630783431 && lat < 45.271652105740415 && lng > 19.785163978393484 && 19.893825630004812)
+      isInside = true;
+
+    if(!isInside)
+      return;
+
+    this.mapNotClicked = false;
     console.log(event.coords);
     this.marker = {
       lat: event.coords.lat,
@@ -49,6 +106,10 @@ export class AddStopsComponent implements OnInit {
   }
 
   addStation(){
+    if(this.mapNotClicked){
+      return;
+    }
+
 
     var observer = {
       next(value) {

@@ -1,12 +1,26 @@
 
-<p>
-  ADD-STOP COMPONENT
-</p>
+<div class="alert alert-info box-msg text-center">Click on the map to put set your marker.
+  Bus stop must be inside green area.</div>
 
-<agm-map class="my_map" [longitude]="19.843958" [latitude]="45.253322" (mapClick)="setMarker($event)">
-  <!-- <agm-marker *ngFor="let stop of busStops" [longitude]="stop.lng" [latitude]="stop.lat"></agm-marker>
-  DIRECTIONS <agm-direction *ngFor="let point of busStops" [origin]="point.origin" [destination]="point.dest"></agm-direction>
-  <agm-marker [longitude]="marker.lng" [latitude]="marker.lat"></agm-marker>-->
-</agm-map>
-
-<button (click)="addStation()">Add station</button>
+<div class="row">
+    <div class="col-8">
+      <agm-map class="my_map" [longitude]="19.840958" [latitude]="45.24604914768334" 
+        (mapClick)="setMarker($event)" [zoom]="13" [clickableIcons]="false">
+        <agm-polyline [strokeColor]="'#78F027'">
+          <agm-polyline-point *ngFor="let point of polygonDots" [latitude]="point.lat" [longitude]="point.lng">
+          </agm-polyline-point>
+        </agm-polyline>
+        <!-- <agm-marker *ngFor="let stop of busStops" [longitude]="stop.lng" [latitude]="stop.lat"></agm-marker>
+        DIRECTIONS <agm-direction *ngFor="let point of busStops" [origin]="point.origin" [destination]="point.dest"></agm-direction>-->
+        <agm-marker [title]="New" [longitude]="marker.lng" [latitude]="marker.lat"></agm-marker>
+        <!-- [iconUrl]="markerIconUrl()"  ZA ICON -->
+      </agm-map>
+    </div>
+  <div class="col-3 top_padding">
+    <div class="bottom_padding">
+    <button class="btn btn-success btn-block"(click)="addStation()" [disabled]="isMapClicked()">Add station</button>
+    </div>
+    <div *ngIf="mapNotClicked" class="alert alert-warning box-msg text-center">You must first click on the map.</div>
+  </div>
+  <div class="col"></div>
+</div>

@@ -27,7 +27,7 @@ export class AddLineComponent implements OnInit {
         this.busStops = value;
       },
       error(msg) {
-        alert(msg.error);
+        alert("Couldn't load the existing stops");
       }
     }
 

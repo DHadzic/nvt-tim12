@@ -31,7 +31,7 @@ public class LineController {
 		return new ResponseEntity<ArrayList<BusStation>>( this.lineService.getStations() ,HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasRole(ADMIN_ROLE)")
+	@PreAuthorize("hasAuthority('ADMIN_ROLE')")
 	@RequestMapping(value = "/add_station", method = RequestMethod.PUT)
 	public ResponseEntity<String> addStation(@RequestBody BusStation station){
 		try {
@@ -43,7 +43,7 @@ public class LineController {
 	}
 	
 	
-	@PreAuthorize("hasRole(ADMIN_ROLE)")
+	@PreAuthorize("hasAuthority('ADMIN_ROLE')")
 	@RequestMapping(value = "/add_line", method = RequestMethod.PUT)
 	public ResponseEntity<String> addLine(@RequestBody Line line){
 		try {
@@ -55,7 +55,6 @@ public class LineController {
 	}
 	
 	// proveriti PathParam("id") <--
-	@PreAuthorize("hasRole(ADMIN_ROLE)")
 	@RequestMapping(value = "/get_line/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<String> getLine(@PathParam("id") String line_name){
 		try {
