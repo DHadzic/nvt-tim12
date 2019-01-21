@@ -53,35 +53,35 @@ export class AddStopsComponent implements OnInit {
       lng: 19.785163978393484
     }
   ]
+
+  var _this = this;
+
+  var observer = {
+    next(value) {
+      _this.busStops = JSON.parse(value);
+      for(let stop of _this.busStops){
+        stop.id = String(stop.id);
+      }
+    },
+    error(msg) {
+      alert("Couldn't load the existing stops");
+    }
+  }
+
+
+  this.mapService.getBusStations().pipe(catchError(err => {
+    return throwError(err);
+  })).subscribe(observer);
+
   }
 
   ngOnInit() {
-    var observer = {
-      next(value) {
-        this.busStops = value;
-      },
-      error(msg) {
-        alert("Couldn't load the existing stops");
-      }
-    }
-
-
-    this.mapService.getBusStations().pipe(catchError(err => {
-      return throwError(err);
-    })).subscribe(observer);
-
     
   }
 
   isMapClicked(){
-    return this,this.mapNotClicked;
+    return this.mapNotClicked;
   }
-
-  //Za icon url ako bude trebalo
-  markerIconUrl() {
-    return require('../../../assets/bus_station.png')
-  }
-
 
   setMarker(event){
     var lat = parseFloat(event.coords.lat);
@@ -89,9 +89,9 @@ export class AddStopsComponent implements OnInit {
 
     var isInside = false;
 
-    if(lat > 45.271652105740415 && lat < 45.301403448327434 && lng > 19.807694198063132 && 19.85146784918618)
+    if(lat > 45.271652105740415 && lat < 45.301403448327434 && lng > 19.807694198063132 && lng < 19.85146784918618)
       isInside = true;
-    if(lat > 45.22028630783431 && lat < 45.271652105740415 && lng > 19.785163978393484 && 19.893825630004812)
+    if(lat > 45.22028630783431 && lat < 45.271652105740415 && lng > 19.785163978393484 && lng < 19.893825630004812)
       isInside = true;
 
     if(!isInside)
@@ -106,14 +106,11 @@ export class AddStopsComponent implements OnInit {
   }
 
   addStation(){
-    if(this.mapNotClicked){
-      return;
-    }
-
 
     var observer = {
       next(value) {
-        alert(value);
+        alert("Bus stop added")
+        this.router.navigate(['/addStop']);
       },
       error(msg) {
         alert(msg.error);
@@ -142,8 +139,6 @@ export class AddStopsComponent implements OnInit {
     this.lastPoint = {
       lat: this.marker.lat,
       lng: this.marker.lng
-    };*/ 
-
-
+    };*/
   }
 }

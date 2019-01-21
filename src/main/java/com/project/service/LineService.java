@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.domain.BusStation;
 import com.project.domain.Line;
+import com.project.exceptions.EntityAlreadyExistsException;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.BusStationRepository;
@@ -25,13 +26,21 @@ public class LineService {
 		return (ArrayList<BusStation>) this.bsRepository.findAll();
 	}
 	
-	public void addStation(BusStation bs) throws InvalidDataException{
-		if(bs != null) {
-			throw new InvalidDataException();
-		}if(bs.getLat() != null) {
-			throw new InvalidDataException();
+	public void addStation(BusStation bs) throws InvalidDataException, EntityAlreadyExistsException{
+		if(bs == null) {
+			throw new InvalidDataException("Data is null");
+		}if(bs.getLat() == null) {
+			throw new InvalidDataException("Lat is null");
 		}if(bs.getLng() == null) {
-			throw new InvalidDataException();
+			throw new InvalidDataException("Lng is null");
+		}
+		
+		BusStation foundBs = bsRepository.findByLat(bs.getLat());
+		
+		if(foundBs != null) {
+			if(foundBs.getLng().equals(bs.getLng())) {
+				throw new EntityAlreadyExistsException("Station already exists");
+			}
 		}
 		
 		Float lat = (float) 0;
@@ -41,63 +50,76 @@ public class LineService {
 			lat = Float.parseFloat(bs.getLat());
 			lng = Float.parseFloat(bs.getLng());
 		}catch(NumberFormatException e){
-			throw new InvalidDataException();
+			throw new InvalidDataException("Coords not numbers");
 		}
 		
-		if(lat < 41.5554 || lng > 41.5555) {
-			throw new InvalidDataException();
-		}
-		if(lng < 41.5554|| lng > 41.5555 ) {
-			throw new InvalidDataException();
-		}
+		boolean isInside = false;
+		
+	    if((lat > 45.271652105740415 && lat < 45.301403448327434 && lng > 19.807694198063132 && lng < 19.85146784918618) == true) {
+	    	isInside = true;
+	    }
+	    if((lat > 45.22028630783431 && lat < 45.271652105740415 && lng > 19.785163978393484 && lng < 19.893825630004812) == true) {
+	    	isInside = true;
+	    }
+	    
+	    if(!isInside) {
+	    	throw new InvalidDataException("Point not in the area");
+	    }
 		
 		bsRepository.save(bs);
 	}
 	
-	public void addLine(Line line) throws InvalidDataException{
+	public void addLine(Line line) throws InvalidDataException, EntityDoesNotExistException {
 		
 		if(line == null) {
-			throw new InvalidDataException();		
+			throw new InvalidDataException("Data is null");
 		}
 		
 		if(line.getName() == null) {
-			throw new InvalidDataException();
+			throw new InvalidDataException("Name is null");
 		}
 		
 		if(line.getStations() == null) {
-			throw new InvalidDataException();		
+			throw new InvalidDataException("Stations are null");
 		}
 
-		Float lat = (float) 0;
-		Float lng = (float) 0;
-		
 		if(line.getStations().size() < 2) {
-			throw new InvalidDataException();
+			throw new InvalidDataException("Need atleast 2 stations");
 		}
 		
+		BusStation foundBs;
+		
 		for (BusStation bs : line.getStations()) {
-			if(bs != null) {
-				throw new InvalidDataException();
-			}if(bs.getLat() != null) {
-				throw new InvalidDataException();
+			if(bs == null) {
+				throw new InvalidDataException("Station is null");
+			}if(bs.getLat() == null) {
+				throw new InvalidDataException("Station lat is null");
 			}if(bs.getLng() == null) {
-				throw new InvalidDataException();
+				throw new InvalidDataException("Station lng is null");
 			}
 			
+			foundBs = bsRepository.findByLat(bs.getLat());
 			
-			try {
-				lat = Float.parseFloat(bs.getLat());
-				lng = Float.parseFloat(bs.getLng());
-			}catch(NumberFormatException e){
-				throw new InvalidDataException();
+			if(foundBs != null) {
+				if(!foundBs.equals(bs)) {
+					throw new EntityDoesNotExistException("Station not in a system");
+				}
+			}else {
+				throw new EntityDoesNotExistException("Station not in a system");
 			}
 			
-			if(lat < 41.5554 || lng > 41.5555) {
-				throw new InvalidDataException();
+		}
+		
+		for (int i = 0; i < line.getStations().size();i++) {
+			for(int j = i+1; j<line.getStations().size();j++) {
+				if(line.getStations().get(i).equals(line.getStations().get(j))) {
+					throw new InvalidDataException("Uqinue bus stations required");
+				}
 			}
-			if(lng < 41.5554|| lng > 41.5555 ) {
-				throw new InvalidDataException();
-			}			
+		}
+		
+		for (int i = 0;i < line.getStations().size();i++) {
+			line.getStations().set(i, bsRepository.findByLat(line.getStations().get(i).getLat()));
 		}
 		
 		lineRepository.save(line);

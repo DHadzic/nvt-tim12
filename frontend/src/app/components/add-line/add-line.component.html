@@ -1,16 +1,27 @@
-<p>
-  add-line works!
-</p>
+<div class="alert alert-info box-msg text-center">Clicking on a marker will either add or remove that stop from list.
+Line must have atleast 2 stops.</div>
 
-<agm-map class="my_map" [longitude]="19.843958" [latitude]="45.253322" (mapClick)="setMarker($event)">
-  <!-- <agm-marker *ngFor="let stop of busStops" [longitude]="stop.lng" [latitude]="stop.lat"></agm-marker>-->
-</agm-map>
+<div class="row">
+    <div class="col-8">
+      <agm-map class="my_map" [longitude]="19.840958" [latitude]="45.24604914768334" 
+        (mapClick)="setMarker($event)" [zoom]="13" [clickableIcons]="false">
+        <agm-marker *ngFor="let stop of busStops" [label]="{color: 'black', text:stop.id, fontWeight:'bold', fontSize:'15px'}"
+         [longitude]="stop.lng" [latitude]="stop.lat" (markerClick)="markerClickHandle(stop.id)"></agm-marker>
+        <!-- [iconUrl]="markerIconUrl()"  ZA ICON 
+        DIRECTIONS <agm-direction *ngFor="let point of busStops" [origin]="point.origin" [destination]="point.dest"></agm-direction>-->
+      </agm-map>
+    </div>
+  <div class="col-3 top_padding">
+    <div class="bottom_padding">
+    </div>
+    <div>
+      <ol class="list-group">
+        <li class="list-group-item list-group-item-info text-center" *ngFor="let stop of selectedStops">Station no. : {{stop.id}}</li>
+      </ol>
+    </div>
+  </div>
+  <div class="col"></div>
+</div>
 
-<ol>
-  <li *ngFor="let stop of selectedStops">Bus stop -> {{stop.id}}</li>
-</ol>
 
-<p>Your line will be added based on selected stops from above..</p>
-<button (click)="addStopToSelected()">Add Stop</button>
-<button (click)="addLine()">Add Line</button>
 

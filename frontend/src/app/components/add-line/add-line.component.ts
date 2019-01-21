@@ -10,27 +10,29 @@ import { Observable,throwError } from 'rxjs';
 })
 export class AddLineComponent implements OnInit {
 
-  public busStops = []
-  public selectedStops =[{
-    id: "1"
-  },{
-    id: "2"
-  },{
-    id: "3"
-  }]
+  public busStops;
+  public selectedStops;
 
-  constructor(private mapService: MapService) { }
+  constructor(private mapService: MapService) { 
+    this.busStops = [];
+    this.selectedStops  =[{
+      id: "1"
+    }];
 
-  ngOnInit() {
+
+    var _this = this;
+
     var observer = {
       next(value) {
-        this.busStops = value;
-      },
-      error(msg) {
-        alert("Couldn't load the existing stops");
-      }
+        _this.busStops = JSON.parse(value);
+        for(let stop of _this.busStops){
+          stop.id = String(stop.id);
+        }
+        },
+        error(msg) {
+          alert("Couldn't load the existing stops." + msg);
+        }
     }
-
 
     this.mapService.getBusStations().pipe(catchError(err => {
       return throwError(err);
@@ -38,17 +40,38 @@ export class AddLineComponent implements OnInit {
 
   }
 
-  addStopToSelected(){
-    this.selectedStops.push({
-      id:"5"
-    })
+  ngOnInit() {
+  }
+
+  markerClickHandle(id){
+    var isSelected = false;
+    var index;
+
+    for(let stop of this.selectedStops){
+      if(stop.id == id){
+        isSelected = true;
+        index = this.selectedStops.indexOf(stop);
+        break;
+      }
+    }
+
+    if(isSelected){
+      this.selectedStops.splice(index,1);
+      return;
+    }else{
+      for(let stop of this.busStops){
+        if(stop.id == id){
+          this.selectedStops.push(stop);
+        }
+      }
+    }
+
   }
 
   addLine(){
-
     var observer = {
       next(value) {
-        this.busStops = value;
+        console.log(value);
       },
       error(msg) {
         alert(msg.error);

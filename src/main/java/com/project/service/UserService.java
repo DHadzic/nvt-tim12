@@ -42,7 +42,7 @@ public class UserService {
 			throw new InvalidDataException("Username is null");
 		}
 		if(passengerDTO.getPassword() == null) {
-			throw new InvalidDataException("Password in null");
+			throw new InvalidDataException("Password is null");
 		}
 		if(passengerDTO.getName() == null) {
 			throw new InvalidDataException("Name is null");

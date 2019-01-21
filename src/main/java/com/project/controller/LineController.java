@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.BusStation;
 import com.project.domain.Line;
+import com.project.exceptions.EntityAlreadyExistsException;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.service.LineService;
@@ -37,7 +38,7 @@ public class LineController {
 		try {
 			this.lineService.addStation(station);
 			return new ResponseEntity<String>("Station added.",HttpStatus.OK);
-		}catch(InvalidDataException e) {
+		}catch(InvalidDataException | EntityAlreadyExistsException e) {
 			return new ResponseEntity<String>("Invalid adding of station.",HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -49,7 +50,7 @@ public class LineController {
 		try {
 			this.lineService.addLine(line);
 			return new ResponseEntity<String>("Line added.",HttpStatus.OK);
-		}catch(InvalidDataException e) {
+		}catch(InvalidDataException | EntityDoesNotExistException e) {
 			return new ResponseEntity<String>("Invalid adding of line.",HttpStatus.BAD_REQUEST);
 		}
 	}
