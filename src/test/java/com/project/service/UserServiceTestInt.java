@@ -212,11 +212,9 @@ public class UserServiceTestInt {
 			assertEquals("Date format",e.getMessage());
 		}
 	}
-	/*	
 	// If there are not exceptions , register is successful
 	@Test
-	@Transactional
-	@Rollback(true)
+	@Rollback
 	public void registerSuccessful() throws EntityAlreadyExistsException, InvalidDataException {
 		PassengerDTO pass = new PassengerDTO();
 		pass.setUsername(PassengerConstants.NEW_USERNAME);
@@ -229,7 +227,6 @@ public class UserServiceTestInt {
 			
 		// asertacije za findByUsername
 	}
-	*/
 	
 	@Test
 	public void registerDataNull(){
