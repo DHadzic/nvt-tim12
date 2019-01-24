@@ -78,9 +78,9 @@ export class AddStopsComponent implements OnInit {
   }
 
   //Za icon url ako bude trebalo
-  markerIconUrl() {
-    return require('../../../assets/bus_station.png')
-  }
+  // markerIconUrl() {
+  //   return require('../../../assets/bus_station.png')
+  // }
 
 
   setMarker(event){

@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.project.domain.Authority;
 import com.project.domain.Passenger;
+import com.project.domain.PassengerType;
 import com.project.domain.Ticket;
 import com.project.domain.UserAuthority;
 import com.project.domain.Validator;
 import com.project.exceptions.EntityAlreadyExistsException;
+import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.AuthorityRepository;
 import com.project.repository.UserAuthorityRepository;
@@ -169,5 +171,30 @@ public class UserService {
 		}
 		
 		return true;
+	}
+	
+	public boolean checkVerification(String username) throws EntityDoesNotExistException {
+		
+		Passenger passenger = (Passenger) userRepository.findByUsername(username);
+		
+		if(passenger == null){
+			throw new EntityDoesNotExistException("Passenger not found.");
+		}
+
+		if (passenger.getDocumentID() == null && passenger.getType() != PassengerType.REGULAR){
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
+	public void setUserIdDocument(String username, String image) throws EntityDoesNotExistException {
+		Passenger passenger = (Passenger) userRepository.findByUsername(username);
+		
+		if (passenger == null) throw new EntityDoesNotExistException("Passenger not found.");
+		
+		passenger.setDocumentID(image);
+		
+		userRepository.save(passenger);
 	}
 }

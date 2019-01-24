@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from './services/security/authentication-service.service';
 import { Router } from '@angular/router';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,13 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
+  private verifyBtn = false;
+  
   constructor(private authService: AuthenticationService,
     public router: Router){}
 
     ngOnInit() {
+      this.checkVerification();
     }
     
     loggedIn():boolean{
@@ -42,4 +46,9 @@ export class AppComponent {
       return roles.includes("PASSENGER_ROLE");
     }
 
+    checkVerification(){
+      if (this.isPassenger()){
+        this.verifyBtn = true;
+      }
+    }
   }

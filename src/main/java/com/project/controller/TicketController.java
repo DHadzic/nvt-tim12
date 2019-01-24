@@ -57,7 +57,6 @@ public class TicketController {
 												 @PathVariable("type") String transportType){
 		try{
 			Ticket ticket = ticketService.getUserTicket(username, transportType);
-		
 			return new ResponseEntity<Ticket>(ticket, HttpStatus.OK);
 		}catch (EntityDoesNotExistException edne){
 			return new ResponseEntity<Ticket>(new Ticket(), HttpStatus.NOT_FOUND);

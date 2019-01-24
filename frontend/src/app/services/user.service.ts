@@ -18,4 +18,11 @@ export class UserService {
           {headers, responseType : 'text' as 'json'});
   }
 
+  checkVerification(passenger){
+    return this.http.get('api/user/checkVerification/' + passenger.username, {responseType: 'text'});
+  }
+
+  uploadDocumentImage(username, image){
+    return this.http.post('api/user/saveUserDocument/'+ username, image, {responseType: 'text'});
+  }
 }

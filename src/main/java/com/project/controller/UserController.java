@@ -114,4 +114,28 @@ public class UserController {
 		}
 		return new ResponseEntity<String>("Passenger removal successful",HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/checkVerification/{username}", method = RequestMethod.GET)
+	public ResponseEntity<String> checkVerification(@PathVariable("username") String username) {
+		try{
+			if (userService.checkVerification(username)){
+				return new ResponseEntity<String>("Verified", HttpStatus.OK);
+			}else{
+				return new ResponseEntity<String>("Not verified", HttpStatus.OK);
+			}
+		}catch (EntityDoesNotExistException edne){
+			return new ResponseEntity<String>("Passenger not found.", HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/saveUserDocument/{username}", method = RequestMethod.POST)
+	public ResponseEntity<String> saveUserId(@PathVariable("username") String username, @RequestBody String image){
+		try{
+			userService.setUserIdDocument(username, image);
+			return new ResponseEntity<String>("Document image added.", HttpStatus.OK);
+		}catch (EntityDoesNotExistException edne){
+			return new ResponseEntity<String>("Document image not added	.", HttpStatus.BAD_REQUEST);
+		}
+		
+	}
 }

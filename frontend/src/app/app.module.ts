@@ -22,6 +22,7 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';
 import { ValidateComponent } from './components/validate/validate.component';
 import { AddLineComponent } from './components/add-line/add-line.component';
+import { VerifyComponent } from './components/verify/verify.component';
 
 const appRoutes: Routes = [
   { path: 'main', 
@@ -50,6 +51,11 @@ const appRoutes: Routes = [
     component: ValidateComponent,
     data: {roles: ['VALIDATOR_ROLE']},
     canActivate: [AuthGuardGuard]
+  },{
+    path: 'verify',
+    component: VerifyComponent,
+    data: {roles: ['PASSENGER_ROLE']},
+    canActivate: [AuthGuardGuard]
   },
   { path: 'tickets',
     component: TicketsComponent,
@@ -69,7 +75,8 @@ const appRoutes: Routes = [
     TicketsComponent,
     AddStopsComponent,
     ValidateComponent,
-    AddLineComponent
+    AddLineComponent,
+    VerifyComponent
   ],
   imports: [
     BrowserModule,

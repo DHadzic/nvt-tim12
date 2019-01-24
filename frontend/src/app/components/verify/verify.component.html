@@ -1,0 +1,4 @@
+<h1>Verify your account</h1>
+<input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+<button type="button" (click)="fileInput.click()">Choose image</button>
+<button type="button" (click)="onUpload()">Upload</button>
