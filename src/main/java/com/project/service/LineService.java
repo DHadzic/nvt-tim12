@@ -12,6 +12,7 @@ import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.BusStationRepository;
 import com.project.repository.LineRepository;
+import com.project.web.dto.LineDTO;
 
 @Service
 public class LineService {
@@ -66,10 +67,11 @@ public class LineService {
 	    	throw new InvalidDataException("Point not in the area");
 	    }
 		
+	    bsRepository.flush();
 		bsRepository.save(bs);
 	}
 	
-	public void addLine(Line line) throws InvalidDataException, EntityDoesNotExistException {
+	public void addLine(LineDTO line) throws InvalidDataException, EntityDoesNotExistException {
 		
 		if(line == null) {
 			throw new InvalidDataException("Data is null");
@@ -81,6 +83,10 @@ public class LineService {
 		
 		if(line.getStations() == null) {
 			throw new InvalidDataException("Stations are null");
+		}
+		
+		if(lineRepository.findByName(line.getName()) != null) {
+			throw new InvalidDataException("Line name taken");
 		}
 
 		if(line.getStations().size() < 2) {
@@ -97,7 +103,7 @@ public class LineService {
 			}if(bs.getLng() == null) {
 				throw new InvalidDataException("Station lng is null");
 			}
-			
+
 			foundBs = bsRepository.findByLat(bs.getLat());
 			
 			if(foundBs != null) {
@@ -118,11 +124,16 @@ public class LineService {
 			}
 		}
 		
-		for (int i = 0;i < line.getStations().size();i++) {
-			line.getStations().set(i, bsRepository.findByLat(line.getStations().get(i).getLat()));
-		}
+		Line new_line = new Line();
 		
-		lineRepository.save(line);
+		new_line.setName(line.getName());
+		new_line.setStations(new ArrayList<BusStation>());
+		
+		for (int i = 0;i < line.getStations().size();i++) {
+			new_line.getStations().add(i, bsRepository.findByLat(line.getStations().get(i).getLat()));
+		}
+
+		lineRepository.save(new_line);
 		
 	}
 	

@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.BusStation;
-import com.project.domain.Line;
 import com.project.exceptions.EntityAlreadyExistsException;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.service.LineService;
+import com.project.web.dto.LineDTO;
 
 @RestController
 @RequestMapping(value = "/line")
@@ -39,19 +39,22 @@ public class LineController {
 			this.lineService.addStation(station);
 			return new ResponseEntity<String>("Station added.",HttpStatus.OK);
 		}catch(InvalidDataException | EntityAlreadyExistsException e) {
-			return new ResponseEntity<String>("Invalid adding of station.",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Invalid adding of station." + e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	
 	@PreAuthorize("hasAuthority('ADMIN_ROLE')")
 	@RequestMapping(value = "/add_line", method = RequestMethod.PUT)
-	public ResponseEntity<String> addLine(@RequestBody Line line){
+	public ResponseEntity<String> addLine(@RequestBody LineDTO line){
 		try {
 			this.lineService.addLine(line);
 			return new ResponseEntity<String>("Line added.",HttpStatus.OK);
 		}catch(InvalidDataException | EntityDoesNotExistException e) {
-			return new ResponseEntity<String>("Invalid adding of line.",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Invalid adding of line."+e.getMessage(),HttpStatus.BAD_REQUEST);
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 	}
 	

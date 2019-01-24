@@ -12,14 +12,24 @@ export class AddLineComponent implements OnInit {
 
   public busStops;
   public selectedStops;
+  public routePoints;
+  public new_line;
+  public nameError;
+  public showRoute;
 
   constructor(private mapService: MapService) { 
     this.busStops = [];
-    this.selectedStops  =[{
-      id: "1"
-    }];
+    this.selectedStops  =[];
+    this.routePoints = {};
 
-
+    this.showRoute = false;
+    this.new_line = {
+      name : "",
+      stations : []
+    }
+    this.nameError = {};
+    this.nameError.nameFormat = false;
+    this.nameError.nameTaken = false;
     var _this = this;
 
     var observer = {
@@ -69,20 +79,78 @@ export class AddLineComponent implements OnInit {
   }
 
   addLine(){
+    
+    this.nameError.nameTaken = false;
+    this.nameError.nameFormat = false;
+
+    if(this.new_line.name.length < 1 || this.new_line.name.length > 10){
+      this.nameError.nameFormat = true;
+      return;
+    }
+
+    if(this.selectedStops.length < 2){
+      return;
+    }
+
+    var _this = this;
+
     var observer = {
       next(value) {
         console.log(value);
       },
       error(msg) {
-        alert(msg.error);
+        if(msg.error.includes("Line name taken")){
+          _this.nameError.nameTaken = true;
+        }
       }
     }
+    
+    this.new_line["stations"] = this.selectedStops;
 
-    var line = JSON.stringify(this.selectedStops);
+    var line_json = JSON.stringify(this.new_line);
 
-    this.mapService.addLine(line).pipe(catchError(err => {
+    console.log(line_json);
+
+    this.mapService.addLine(line_json).pipe(catchError(err => {
       return throwError(err);
     })).subscribe(observer);
+  }
+
+  displayRoute(){
+
+    this.showRoute = !this.showRoute;
+    console.log(this.showRoute);
+
+    if(!this.showRoute){
+      return;
+    }
+
+    if(this.selectedStops.length < 2){
+      return;
+    }
+
+    this.routePoints = {};
+    this.routePoints["origin"] = this.selectedStops[0];
+    this.routePoints["origin"]["lat"] = parseFloat(this.routePoints["origin"]["lat"]);
+    this.routePoints["origin"]["lng"] = parseFloat(this.routePoints["origin"]["lng"]);
+    this.routePoints["dest"] = this.selectedStops[this.selectedStops.length - 1];
+    this.routePoints["dest"]["lat"] = parseFloat(this.routePoints["dest"]["lat"]);
+    this.routePoints["dest"]["lng"] = parseFloat(this.routePoints["dest"]["lng"]);
+    this.routePoints["waypoints"] = [];
+
+    for(let i in this.selectedStops){
+      if(parseInt(i) == (this.selectedStops.length - 1) || i == "0"){
+        continue;
+      }
+
+      this. routePoints["waypoints"].push({
+        location : {
+          lat : parseFloat(this.selectedStops[parseInt(i)]["lat"]),
+          lng : parseFloat(this.selectedStops[parseInt(i)]["lng"])
+        },
+        stopover : false
+      })
+      }
   }
 
 }

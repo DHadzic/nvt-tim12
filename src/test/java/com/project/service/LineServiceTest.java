@@ -24,6 +24,7 @@ import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.BusStationRepository;
 import com.project.repository.LineRepository;
+import com.project.web.dto.LineDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
@@ -48,6 +49,8 @@ public class LineServiceTest {
 		Mockito.when(bsRepository.findByLat("1234")).thenReturn(null);
 		Mockito.when(bsRepository.findByLat("12345")).thenReturn(new BusStation("12345","123"));
 		Mockito.when(bsRepository.findByLat("12")).thenReturn(new BusStation("12","12"));
+		Mockito.when(lineRepository.findByName("8a")).thenReturn(null);
+		Mockito.when(lineRepository.findByName("taken")).thenReturn(new Line());
 	}
 	
 	
@@ -226,7 +229,7 @@ public class LineServiceTest {
 	@Test
     public void addLineNameNull(){
 		try {
-	    	Line line = new Line();
+	    	LineDTO line = new LineDTO();
 	    	lineService.addLine(line);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Name is null",e.getMessage());
@@ -236,7 +239,7 @@ public class LineServiceTest {
 	@Test
     public void addLineStationsNull() {
 		try {
-	    	Line line = new Line();
+	    	LineDTO line = new LineDTO();
 	    	line.setName("8a");
 	    	lineService.addLine(line);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
@@ -245,9 +248,21 @@ public class LineServiceTest {
     }
 
 	@Test
+    public void addLineNameTaken() {
+		try {
+	    	LineDTO line = new LineDTO();
+	    	line.setName("taken");
+	    	line.setStations(new ArrayList<BusStation>());
+	    	lineService.addLine(line);
+		} catch (InvalidDataException | EntityDoesNotExistException e) {
+			assertEquals("Line name taken",e.getMessage());
+		}
+    }
+
+	@Test
     public void addLineStationsNrLow1() {
 		try {
-	    	Line line = new Line();
+	    	LineDTO line = new LineDTO();
 	    	line.setName("8a");
 	    	line.setStations(new ArrayList<BusStation>());
 	    	lineService.addLine(line);
@@ -259,7 +274,7 @@ public class LineServiceTest {
 	@Test
     public void addLineStationsNrLow2() {
 		try {
-	    	Line line = new Line();
+	    	LineDTO line = new LineDTO();
 	    	line.setName("8a");
 	    	line.setStations(new ArrayList<BusStation>());
 	    	line.getStations().add(null);
@@ -272,7 +287,7 @@ public class LineServiceTest {
 	@Test
     public void addLineStationIsNull() {
 		try {
-	    	Line line = new Line();
+	    	LineDTO line = new LineDTO();
 	    	line.setName("8a");
 	    	line.setStations(new ArrayList<BusStation>());
 	    	line.getStations().add(null);
@@ -286,7 +301,7 @@ public class LineServiceTest {
 	@Test
     public void addLineStationLatIsNull() {
 		try {
-	    	Line line = new Line();
+	    	LineDTO line = new LineDTO();
 	    	line.setName("8a");
 	    	line.setStations(new ArrayList<BusStation>());
 	    	line.getStations().add(new BusStation());
@@ -300,7 +315,7 @@ public class LineServiceTest {
 	@Test
     public void addLineStationLngIsNull() {
 		try {
-	    	Line line = new Line();
+	    	LineDTO line = new LineDTO();
 	    	line.setName("8a");
 	    	line.setStations(new ArrayList<BusStation>());
 	    	line.getStations().add(new BusStation("123", null));
@@ -314,7 +329,7 @@ public class LineServiceTest {
 	@Test
     public void addLineStationNotFound1() {
 		try {
-	    	Line line = new Line();
+	    	LineDTO line = new LineDTO();
 	    	line.setName("8a");
 	    	line.setStations(new ArrayList<BusStation>());
 	    	line.getStations().add(new BusStation("1234", "1234"));
@@ -328,7 +343,7 @@ public class LineServiceTest {
 	@Test
     public void addLineStationNotFound2() {
 		try {
-	    	Line line = new Line();
+	    	LineDTO line = new LineDTO();
 	    	line.setName("8a");
 	    	line.setStations(new ArrayList<BusStation>());
 	    	line.getStations().add(new BusStation("12345", "12345"));
@@ -342,7 +357,7 @@ public class LineServiceTest {
 	@Test
     public void addLineStationNotUnique() {
 		try {
-	    	Line line = new Line();
+	    	LineDTO line = new LineDTO();
 	    	line.setName("8a");
 	    	line.setStations(new ArrayList<BusStation>());
 	    	line.getStations().add(new BusStation("123", "123"));
@@ -356,7 +371,7 @@ public class LineServiceTest {
 	@Test
     public void addLineAllGood() {
 		try {
-	    	Line line = new Line();
+	    	LineDTO line = new LineDTO();
 	    	line.setName("8a");
 	    	line.setStations(new ArrayList<BusStation>());
 	    	line.getStations().add(new BusStation("123", "123"));

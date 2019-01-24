@@ -1,12 +1,17 @@
 package com.project.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Line {
@@ -20,8 +25,9 @@ public class Line {
 	@Column
 	private String name;
 	
-	@Column
-	private ArrayList<BusStation> stations;
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinTable(name = "line_station_relation")
+	private List<BusStation> stations;
 
 	public Long getId() {
 		return id;
@@ -39,7 +45,7 @@ public class Line {
 		this.name = name;
 	}
 
-	public ArrayList<BusStation> getStations() {
+	public List<BusStation> getStations() {
 		return stations;
 	}
 

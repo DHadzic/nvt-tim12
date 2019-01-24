@@ -1,6 +1,7 @@
 package com.project.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -61,6 +62,7 @@ public class UserServiceTest {
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Username taken",e.getMessage());
 		}
@@ -77,6 +79,7 @@ public class UserServiceTest {
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Username format",e.getMessage());
 		}
@@ -92,7 +95,8 @@ public class UserServiceTest {
 			pass.setSurname("TestUser1");
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Username format",e.getMessage());
 		}
@@ -109,6 +113,7 @@ public class UserServiceTest {
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Password format",e.getMessage());
 		}
@@ -119,12 +124,14 @@ public class UserServiceTest {
 		try {
 			PassengerDTO pass = new PassengerDTO();
 			pass.setUsername("TestUser1");
-			pass.setPassword("123456789012345678901");
+			String chars = new String(new char[101]).replace("\0", "-");
+			pass.setPassword(chars);
 			pass.setName("TestUser1");
 			pass.setSurname("TestUser1");
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Password format",e.getMessage());
 		}
@@ -141,6 +148,7 @@ public class UserServiceTest {
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Name format",e.getMessage());
 		}
@@ -157,6 +165,7 @@ public class UserServiceTest {
 			pass.setType(PassengerType.REGULAR);
 			pass.setName("123456789012345678901");
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Name format",e.getMessage());
 		}
@@ -173,6 +182,7 @@ public class UserServiceTest {
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Surname format",e.getMessage());
 		}
@@ -189,6 +199,7 @@ public class UserServiceTest {
 			pass.setType(PassengerType.REGULAR);
 			pass.setSurname("123456789012345678901");
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Surname format",e.getMessage());
 		}
@@ -205,6 +216,7 @@ public class UserServiceTest {
 			pass.setType(PassengerType.REGULAR);
 			pass.setBirthDate(new GregorianCalendar(1900,10,5));
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Date format",e.getMessage());
 		}
@@ -221,6 +233,7 @@ public class UserServiceTest {
 			pass.setBirthDate(new GregorianCalendar(2011,10,5));
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Date format",e.getMessage());
 		}
@@ -260,6 +273,7 @@ public class UserServiceTest {
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Username is null",e.getMessage());
 		}
@@ -276,6 +290,7 @@ public class UserServiceTest {
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Password is null",e.getMessage());
 		}
@@ -292,6 +307,7 @@ public class UserServiceTest {
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Name is null",e.getMessage());
 		}
@@ -308,6 +324,7 @@ public class UserServiceTest {
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Surname is null",e.getMessage());
 		}
@@ -324,6 +341,7 @@ public class UserServiceTest {
 			pass.setBirthDate(null);
 			pass.setType(PassengerType.REGULAR);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("BirthDate is null",e.getMessage());
 		}
@@ -340,6 +358,7 @@ public class UserServiceTest {
 			pass.setBirthDate(new GregorianCalendar(1995,10,5));
 			pass.setType(null);
 			userService.registerUser(pass);
+			assertTrue(false);
 		}catch(Exception e) {
 			assertEquals("Type is null",e.getMessage());
 		}

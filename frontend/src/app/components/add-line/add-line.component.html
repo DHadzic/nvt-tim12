@@ -4,15 +4,43 @@ Line must have atleast 2 stops.</div>
 <div class="row">
     <div class="col-8">
       <agm-map class="my_map" [longitude]="19.840958" [latitude]="45.24604914768334" 
-        (mapClick)="setMarker($event)" [zoom]="13" [clickableIcons]="false">
-        <agm-marker *ngFor="let stop of busStops" [label]="{color: 'black', text:stop.id, fontWeight:'bold', fontSize:'15px'}"
-         [longitude]="stop.lng" [latitude]="stop.lat" (markerClick)="markerClickHandle(stop.id)"></agm-marker>
-        <!-- [iconUrl]="markerIconUrl()"  ZA ICON 
-        DIRECTIONS <agm-direction *ngFor="let point of busStops" [origin]="point.origin" [destination]="point.dest"></agm-direction>-->
+        [zoom]="13" [clickableIcons]="false">
+        <ng-container *ngIf="!showRoute">
+          <agm-marker *ngFor="let stop of busStops" 
+                [label]="{color: 'black', text:stop.id, fontWeight:'bold', fontSize:'15px'}"
+                [longitude]="stop.lng" 
+                [latitude]="stop.lat" 
+                (markerClick)="markerClickHandle(stop.id)">
+          </agm-marker>
+        </ng-container>
+        <!-- [iconUrl]="markerIconUrl()"  ZA ICON ,,, DIRECTIONS
+        <agm-direction *ngFor="let point of routePoints" [origin]="point.origin" [destination]="point.dest"></agm-direction>-->
+        <ng-container >
+          <agm-direction 
+                [visible] = "showRoute"
+                [renderOptions]="{suppressMarkers: true}"
+                [travelMode]="'DRIVING'"
+                [markerOptions]="{
+                    origin:{label: {color: 'black', text:'Start', fontWeight:'bold', fontSize:'12px'}, clickable : false},
+                    destination: {label: {color: 'black', text:'End', fontWeight:'bold', fontSize:'12px'}},
+                    waypoints: {label: {color: 'black', text:'S', fontWeight:'bold', fontSize:'12px'}}}"
+                [origin]="routePoints.origin" 
+                [destination]="routePoints.dest" 
+                [waypoints]="routePoints.waypoints">
+          </agm-direction>
+        </ng-container>
       </agm-map>
     </div>
   <div class="col-3 top_padding">
     <div class="bottom_padding">
+      <div class="bottom_padding">
+      <label for="name"><b>Line name</b></label>
+      <input type="text" class="form-control" id="name" name="name" [(ngModel)]="new_line.name" required />
+      <p class="alert alert-warning box-msg" *ngIf="nameError.nameFormat" style="color:red">Name must be between 1 and 10 characters</p>
+      <p class="alert alert-warning box-msg" *ngIf="nameError.nameTaken" style="color:red">Line name is taken.. Try another one..</p>
+      </div>
+      <button class="btn btn-success btn-block"(click)="addLine()">Add line</button>
+      <button class="btn btn-success btn-block"(click)="displayRoute()">Show/hide route</button>
     </div>
     <div>
       <ol class="list-group">
