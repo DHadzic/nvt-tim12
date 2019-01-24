@@ -20,12 +20,54 @@ public class Vehicle {
 	@Column
 	private TransportType type;
 	
+
+
 	@Column
 	private ArrayList<Ticket> tickets;
 	
 	@ManyToOne
 	private Line line;
-	
+
 	@OneToOne
 	private Schedule schedule;
+	
+	public Vehicle(TransportType type, ArrayList<Ticket> tickets, Line line, Schedule schedule) {
+		super();
+		this.type = type;
+		this.tickets = tickets;
+		this.line = line;
+		this.schedule = schedule;
+	}
+
+	public Vehicle(TransportType type, ArrayList<Ticket> tickets,  Schedule schedule) {
+		// TODO Auto-generated constructor stub
+		super();
+		this.type = type;
+		this.tickets = tickets;
+		this.schedule = schedule;
+	}
+
+	public TransportType getType() {
+		return type;
+	}
+
+	public void setType(TransportType type) {
+		this.type = type;
+	}
+
+	public Schedule getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
+	}
+	
+	public ArrayList<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(ArrayList<Ticket> tickets) {
+		this.tickets = tickets;
+	}
 }
