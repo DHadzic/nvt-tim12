@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
@@ -29,7 +28,10 @@ public class Passenger extends User {
 	@Column
 	private String documentID;
 	
-	@OneToMany(mappedBy="user",fetch = FetchType.EAGER)
+	@Column
+	private boolean isVerified;
+	
+	@OneToMany(mappedBy="user")
 	private List<Ticket> tikcets;
 	
 	public Passenger() {
@@ -37,13 +39,14 @@ public class Passenger extends User {
 	}
 
 	public Passenger(String name, String surname, GregorianCalendar birthDate, PassengerType type, String documentID,
-			ArrayList<Ticket> tikcet) {
+			boolean isVerified ,ArrayList<Ticket> tikcet) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.birthDate = birthDate;
 		this.type = type;
 		this.documentID = documentID;
+		this.isVerified = isVerified;
 		this.tikcets = tikcet;
 	}
 
@@ -94,4 +97,14 @@ public class Passenger extends User {
 	public void setTikcet(ArrayList<Ticket> tikcet) {
 		this.tikcets = tikcet;
 	}
+
+	public boolean isVerified() {
+		return isVerified;
+	}
+
+	public void setVerified(boolean isVerified) {
+		this.isVerified = isVerified;
+	}
+	
+	
 }

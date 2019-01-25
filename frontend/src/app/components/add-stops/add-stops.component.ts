@@ -82,8 +82,9 @@ export class AddStopsComponent implements OnInit {
   isMapClicked(){
     return this.mapNotClicked;
   }
-
-  setMarker(event){
+  
+  
+setMarker(event){
     var lat = parseFloat(event.coords.lat);
     var lng = parseFloat(event.coords.lng);
 

@@ -1,3 +1,5 @@
+alter table user modify documentid BLOB;
+
 insert into authority (name) values ('ADMIN_ROLE');
 insert into authority (name) values ('PASSENGER_ROLE');
 insert into authority (name) values ('VALIDATOR_ROLE');
