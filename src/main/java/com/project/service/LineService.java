@@ -146,4 +146,12 @@ public class LineService {
 
 		return line;
 	}
+	
+	public ArrayList<Line> getLines(){
+		return (ArrayList<Line>) lineRepository.findAll();
+	}
+	
+	public int getLinesSize() {
+		return lineRepository.findAll().size();
+	}
 }

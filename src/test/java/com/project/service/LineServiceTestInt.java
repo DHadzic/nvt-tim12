@@ -2,6 +2,7 @@ package com.project.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,9 +15,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.constants.BusStopConstants;
+import com.project.constants.LineConstants;
 import com.project.domain.BusStation;
 import com.project.exceptions.EntityAlreadyExistsException;
+import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
+import com.project.web.dto.LineDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
@@ -26,6 +30,17 @@ public class LineServiceTestInt {
 
 	@Autowired
 	private LineService lineService;
+
+	// Rollback ne radi ispravno, ne mogu da namestim
+	@Test
+	public void getLines() {
+		assertThat(lineService.getLines()).hasSize(LineConstants.DB_SIZE);
+	}
+
+	@Test
+	public void getStations() {
+		assertThat(lineService.getStations()).hasSize(BusStopConstants.DB_SIZE);
+	}
 
 	@Test
 	public void addStationNullDataSent(){
@@ -245,11 +260,12 @@ public class LineServiceTestInt {
     	
     	assertEquals(BusStopConstants.DB_SIZE,stations_number);
     }
-	/*
-	@Test
+
+    @Test
     public void addLineNullDataSent() {
 		try {
 	    	lineService.addLine(null);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Data is null",e.getMessage());
 		}
@@ -260,6 +276,7 @@ public class LineServiceTestInt {
 		try {
 	    	LineDTO line = new LineDTO();
 	    	lineService.addLine(line);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Name is null",e.getMessage());
 		}
@@ -269,8 +286,9 @@ public class LineServiceTestInt {
     public void addLineStationsNull() {
 		try {
 	    	LineDTO line = new LineDTO();
-	    	line.setName("8a");
+	    	line.setName(LineConstants.NEW_NAME_FOR_INVALID);
 	    	lineService.addLine(line);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Stations are null",e.getMessage());
 		}
@@ -280,9 +298,10 @@ public class LineServiceTestInt {
     public void addLineNameTaken() {
 		try {
 	    	LineDTO line = new LineDTO();
-	    	line.setName("taken");
-	    	line.setStations(new ArrayList<BusStation>());
+	    	line.setName(LineConstants.NEW_NAME_TAKEN);
+	    	line.setStations(LineConstants.NEW_NOT_ENOUGH_STATIONS0);
 	    	lineService.addLine(line);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Line name taken",e.getMessage());
 		}
@@ -292,9 +311,10 @@ public class LineServiceTestInt {
     public void addLineStationsNrLow1() {
 		try {
 	    	LineDTO line = new LineDTO();
-	    	line.setName("8a");
-	    	line.setStations(new ArrayList<BusStation>());
+	    	line.setName(LineConstants.NEW_NAME_FOR_INVALID);
+	    	line.setStations(LineConstants.NEW_NOT_ENOUGH_STATIONS0);
 	    	lineService.addLine(line);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Need atleast 2 stations",e.getMessage());
 		}
@@ -304,10 +324,10 @@ public class LineServiceTestInt {
     public void addLineStationsNrLow2() {
 		try {
 	    	LineDTO line = new LineDTO();
-	    	line.setName("8a");
-	    	line.setStations(new ArrayList<BusStation>());
-	    	line.getStations().add(null);
+	    	line.setName(LineConstants.NEW_NAME_FOR_INVALID);
+	    	line.setStations(LineConstants.NEW_NOT_ENOUGH_STATIONS1);
 	    	lineService.addLine(line);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Need atleast 2 stations",e.getMessage());
 		}
@@ -317,11 +337,10 @@ public class LineServiceTestInt {
     public void addLineStationIsNull() {
 		try {
 	    	LineDTO line = new LineDTO();
-	    	line.setName("8a");
-	    	line.setStations(new ArrayList<BusStation>());
-	    	line.getStations().add(null);
-	    	line.getStations().add(null);
+	    	line.setName(LineConstants.NEW_NAME_FOR_INVALID);
+	    	line.setStations(LineConstants.NEW_STATIONS_ONE_NULL);
 	    	lineService.addLine(line);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Station is null",e.getMessage());
 		}
@@ -331,11 +350,10 @@ public class LineServiceTestInt {
     public void addLineStationLatIsNull() {
 		try {
 	    	LineDTO line = new LineDTO();
-	    	line.setName("8a");
-	    	line.setStations(new ArrayList<BusStation>());
-	    	line.getStations().add(new BusStation());
-	    	line.getStations().add(null);
+	    	line.setName(LineConstants.NEW_NAME_FOR_INVALID);
+	    	line.setStations(LineConstants.NEW_STATIONS_LAT_NULL);
 	    	lineService.addLine(line);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Station lat is null",e.getMessage());
 		}
@@ -345,11 +363,10 @@ public class LineServiceTestInt {
     public void addLineStationLngIsNull() {
 		try {
 	    	LineDTO line = new LineDTO();
-	    	line.setName("8a");
-	    	line.setStations(new ArrayList<BusStation>());
-	    	line.getStations().add(new BusStation("123", null));
-	    	line.getStations().add(null);
+	    	line.setName(LineConstants.NEW_NAME_FOR_INVALID);
+	    	line.setStations(LineConstants.NEW_STATIONS_LNG_NULL);
 	    	lineService.addLine(line);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Station lng is null",e.getMessage());
 		}
@@ -359,11 +376,10 @@ public class LineServiceTestInt {
     public void addLineStationNotFound1() {
 		try {
 	    	LineDTO line = new LineDTO();
-	    	line.setName("8a");
-	    	line.setStations(new ArrayList<BusStation>());
-	    	line.getStations().add(new BusStation("1234", "1234"));
-	    	line.getStations().add(new BusStation("1234","1234"));
+	    	line.setName(LineConstants.NEW_NAME_FOR_INVALID);
+	    	line.setStations(LineConstants.NEW_STATIONS_LAT_INVALID);
 	    	lineService.addLine(line);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Station not in a system",e.getMessage());
 		}
@@ -373,11 +389,10 @@ public class LineServiceTestInt {
     public void addLineStationNotFound2() {
 		try {
 	    	LineDTO line = new LineDTO();
-	    	line.setName("8a");
-	    	line.setStations(new ArrayList<BusStation>());
-	    	line.getStations().add(new BusStation("12345", "12345"));
-	    	line.getStations().add(new BusStation("12345","12345"));
+	    	line.setName(LineConstants.NEW_NAME_FOR_INVALID);
+	    	line.setStations(LineConstants.NEW_STATIONS_LNG_INVALID);
 	    	lineService.addLine(line);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Station not in a system",e.getMessage());
 		}
@@ -387,29 +402,30 @@ public class LineServiceTestInt {
     public void addLineStationNotUnique() {
 		try {
 	    	LineDTO line = new LineDTO();
-	    	line.setName("8a");
-	    	line.setStations(new ArrayList<BusStation>());
-	    	line.getStations().add(new BusStation("123", "123"));
-	    	line.getStations().add(new BusStation("123","123"));
+	    	line.setName(LineConstants.NEW_NAME_FOR_INVALID);
+	    	line.setStations(LineConstants.NEW_STATIONS_NOT_UNIQUE);
 	    	lineService.addLine(line);
+	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertEquals("Uqinue bus stations required",e.getMessage());
 		}
     }
 
 	@Test
+	@Rollback
     public void addLineAllGood() {
 		try {
 	    	LineDTO line = new LineDTO();
-	    	line.setName("8a");
-	    	line.setStations(new ArrayList<BusStation>());
-	    	line.getStations().add(new BusStation("123", "123"));
-	    	line.getStations().add(new BusStation("12","12"));
+	    	int before = lineService.getLines().size();
+	    	line.setName(LineConstants.NEW_NAME);
+	    	line.setStations(LineConstants.NEW_STATIONS);
 	    	lineService.addLine(line);
-	    	assertTrue(true);
+	    	int after = lineService.getLines().size();
+	    	assertEquals(after,before+1);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertTrue(false);
 		}
     }
-	*/
+	
+
 }

@@ -2,6 +2,7 @@ package com.project.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +26,7 @@ import com.project.web.dto.PassengerDTO;
 public class UserServiceTestInt {
 	@Autowired
 	private UserService userService;
-	
+		
 	@Test
 	public void registerUsernameTaken(){
 		try {
@@ -81,7 +82,7 @@ public class UserServiceTestInt {
 	public void registerPasswordShort() {
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD_SHORT);
 			pass.setName(PassengerConstants.NEW_NAME);
 			pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -98,7 +99,7 @@ public class UserServiceTestInt {
 	public void registerPasswordLong() {
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD_LONG);
 			pass.setName(PassengerConstants.NEW_NAME);
 			pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -115,7 +116,7 @@ public class UserServiceTestInt {
 	public void registerNameShort() {
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD);
 			pass.setName(PassengerConstants.NEW_NAME_SHORT);
 			pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -132,7 +133,7 @@ public class UserServiceTestInt {
 	public void registerNameLong() {
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD);
 			pass.setName(PassengerConstants.NEW_NAME_LONG);
 			pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -149,7 +150,7 @@ public class UserServiceTestInt {
 	public void registerSurnameShort() {
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD);
 			pass.setName(PassengerConstants.NEW_NAME);
 			pass.setSurname(PassengerConstants.NEW_SURNAME_SHORT);
@@ -166,7 +167,7 @@ public class UserServiceTestInt {
 	public void registerSurnameLong() {
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD);
 			pass.setName(PassengerConstants.NEW_NAME);
 			pass.setSurname(PassengerConstants.NEW_SURNAME_LONG);
@@ -183,7 +184,7 @@ public class UserServiceTestInt {
 	public void registerBirthDateBefore() {
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD);
 			pass.setName(PassengerConstants.NEW_NAME);
 			pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -200,7 +201,7 @@ public class UserServiceTestInt {
 	public void registerBirthDateAfter() {
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD);
 			pass.setName(PassengerConstants.NEW_NAME);
 			pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -211,21 +212,6 @@ public class UserServiceTestInt {
 		}catch(Exception e) {
 			assertEquals("Date format",e.getMessage());
 		}
-	}
-	// If there are not exceptions , register is successful
-	@Test
-	@Rollback
-	public void registerSuccessful() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername(PassengerConstants.NEW_USERNAME);
-		pass.setPassword(PassengerConstants.NEW_PASSWORD);
-		pass.setName(PassengerConstants.NEW_NAME);
-		pass.setSurname(PassengerConstants.NEW_SURNAME);
-		pass.setBirthDate(PassengerConstants.NEW_BIRTHDATE);
-		pass.setType(PassengerConstants.NEW_TYPE);
-		userService.registerUser(pass);
-			
-		// asertacije za findByUsername
 	}
 	
 	@Test
@@ -260,7 +246,7 @@ public class UserServiceTestInt {
 	public void registerPasswordNull(){
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(null);
 			pass.setName(PassengerConstants.NEW_NAME);
 			pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -277,7 +263,7 @@ public class UserServiceTestInt {
 	public void registerNameNull(){
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD);
 			pass.setName(null);
 			pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -294,7 +280,7 @@ public class UserServiceTestInt {
 	public void registerSurnameNull(){
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD);
 			pass.setName(PassengerConstants.NEW_NAME);
 			pass.setSurname(null);
@@ -311,7 +297,7 @@ public class UserServiceTestInt {
 	public void registerBirthDateNull(){
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD);
 			pass.setName(PassengerConstants.NEW_NAME);
 			pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -328,7 +314,7 @@ public class UserServiceTestInt {
 	public void registerTypeNull(){
 		try {
 			PassengerDTO pass = new PassengerDTO();
-			pass.setUsername(PassengerConstants.NEW_USERNAME);
+			pass.setUsername(PassengerConstants.NEW_USERNAME_FOR_INVALID);
 			pass.setPassword(PassengerConstants.NEW_PASSWORD);
 			pass.setName(PassengerConstants.NEW_NAME);
 			pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -340,5 +326,22 @@ public class UserServiceTestInt {
 			assertEquals("Type is null",e.getMessage());
 		}
 	}
-	
+
+	// If there are not exceptions , register is successful
+	@Test
+	@Rollback
+	public void registerSuccessful() throws EntityAlreadyExistsException, InvalidDataException {
+		assertThat(userService.findByUsername(PassengerConstants.NEW_USERNAME)).isNull();
+		
+		PassengerDTO pass = new PassengerDTO();
+		pass.setUsername(PassengerConstants.NEW_USERNAME);
+		pass.setPassword(PassengerConstants.NEW_PASSWORD);
+		pass.setName(PassengerConstants.NEW_NAME);
+		pass.setSurname(PassengerConstants.NEW_SURNAME);
+		pass.setBirthDate(PassengerConstants.NEW_BIRTHDATE);
+		pass.setType(PassengerConstants.NEW_TYPE);
+		userService.registerUser(pass);
+			
+		assertThat(userService.findByUsername(PassengerConstants.NEW_USERNAME)).isNotNull();
+	}
 }

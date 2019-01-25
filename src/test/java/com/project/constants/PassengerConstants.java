@@ -8,6 +8,7 @@ public class PassengerConstants {
 	public static final String NEW_TAKEN_USERNAME = "taken_username";
 	
     public static final String NEW_USERNAME = "Djole123";
+    public static final String NEW_USERNAME_FOR_INVALID = "Djole1234";
     public static final String NEW_PASSWORD = "sifra";
     public static final String NEW_NAME = "Djordje";
     public static final String NEW_SURNAME = "Djordjevic";
@@ -24,4 +25,6 @@ public class PassengerConstants {
     public static final String NEW_SURNAME_LONG = "Djordjevic123456789012345";
     public static final GregorianCalendar NEW_BIRTHDATE_BEFORE = new GregorianCalendar(1700,5,5);
     public static final GregorianCalendar NEW_BIRTHDATE_AFTER = new GregorianCalendar(2015,5,5);
+    public static final int DB_SIZE = 1;
+    
 }

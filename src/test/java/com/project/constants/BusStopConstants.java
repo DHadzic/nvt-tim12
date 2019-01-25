@@ -29,4 +29,5 @@ public class BusStopConstants {
     public static final String NEW_LNG_SECOND_AREA = "19.787163978393484";
     
     public static final int DB_SIZE = 2;
+    public static final int DB_SIZE_AFTER_ADD = 4;
 }

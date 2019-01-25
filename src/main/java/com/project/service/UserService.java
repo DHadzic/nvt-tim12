@@ -2,7 +2,6 @@ package com.project.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.project.domain.Authority;
 import com.project.domain.Passenger;
 import com.project.domain.Ticket;
+import com.project.domain.User;
 import com.project.domain.UserAuthority;
 import com.project.domain.Validator;
 import com.project.exceptions.EntityAlreadyExistsException;
@@ -172,5 +172,9 @@ public class UserService {
 		}
 		
 		return true;
+	}
+	
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
 	}
 }
