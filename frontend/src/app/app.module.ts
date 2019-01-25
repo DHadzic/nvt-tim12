@@ -22,6 +22,8 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';
 import { ValidateComponent } from './components/validate/validate.component';
 import { AddLineComponent } from './components/add-line/add-line.component';
+import { AddVehicleComponent } from './components/add-vehicle/add-vehicle.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   { path: 'main', 
@@ -54,7 +56,11 @@ const appRoutes: Routes = [
   { path: 'tickets',
     component: TicketsComponent,
   },
-  { path: '**', component: NotFoundPageComponent }
+  { path: 'addVehicle',
+  component: AddVehicleComponent,
+  },
+  { path: '**', component: NotFoundPageComponent },
+ 
 ];
 
 
@@ -69,7 +75,8 @@ const appRoutes: Routes = [
     TicketsComponent,
     AddStopsComponent,
     ValidateComponent,
-    AddLineComponent
+    AddLineComponent,
+    AddVehicleComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +88,8 @@ const appRoutes: Routes = [
       apiKey: 'AIzaSyBG-Cyqxezk9fYYllu_VmEe8q3ZBFf30Yc'
     }),
     AgmDirectionModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     AuthGuardGuard,
