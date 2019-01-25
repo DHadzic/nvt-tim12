@@ -2,7 +2,7 @@ package com.project.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +12,7 @@ import com.project.domain.Authority;
 import com.project.domain.Passenger;
 import com.project.domain.PassengerType;
 import com.project.domain.Ticket;
+import com.project.domain.User;
 import com.project.domain.UserAuthority;
 import com.project.domain.Validator;
 import com.project.exceptions.EntityAlreadyExistsException;
@@ -22,6 +23,7 @@ import com.project.repository.UserAuthorityRepository;
 import com.project.repository.UserRepository;
 import com.project.web.dto.PassengerDTO;
 import com.project.web.dto.ValidatorDTO;
+import com.project.web.dto.VerifyRequestDTO;
 
 @Service
 public class UserService {
@@ -83,6 +85,12 @@ public class UserService {
 		passenger.setType(passengerDTO.getType());
 		passenger.setBirthDate(passengerDTO.getBirthDate());
 		passenger.setTikcet(new ArrayList<Ticket>());
+		
+		if (passenger.getType() == PassengerType.REGULAR){
+			passenger.setVerified(true);
+		}else{
+			passenger.setVerified(false);
+		}
 		
 		UserAuthority authorities = new UserAuthority();
 		
@@ -192,12 +200,56 @@ public class UserService {
 	}
 	
 	public void setUserIdDocument(String username, String image) throws EntityDoesNotExistException {
-		Passenger passenger = (Passenger) userRepository.findByUsername(username);
-		
-		if (passenger == null) throw new EntityDoesNotExistException("Passenger not found.");
-		
+		Passenger passenger = findPassenger(username);
 		passenger.setDocumentID(image);
-		
+//		sendVerificationRequest(username, passenger.getType(), image);
 		userRepository.save(passenger);
+	}
+	
+	public void verifyPassenger(String username) throws EntityDoesNotExistException {
+		Passenger passenger = findPassenger(username);
+		passenger.setVerified(true);
+//		closeVerificationRequest(username);
+		userRepository.save(passenger);
+	}
+	
+	public void rejectPassengerVerification(String username) throws EntityDoesNotExistException {
+		Passenger passenger = findPassenger(username);
+		passenger.setDocumentID(null);
+//		closeVerificationRequest(username);
+		userRepository.save(passenger);
+	}
+	
+	private Passenger findPassenger(String username) throws EntityDoesNotExistException{
+		Passenger passenger = (Passenger) userRepository.findByUsername(username);
+		if (passenger == null) throw new EntityDoesNotExistException("Passenger not found");
+		return passenger;
+	}
+	
+	private void sendVerificationRequest(String username, PassengerType type, String image){
+		ArrayList<User> users = (ArrayList<User>) userRepository.findAll();
+		ArrayList<Validator> validatorsToSave = new ArrayList<Validator>();
+		for (User u : users){
+			if (u instanceof Validator){
+				VerifyRequestDTO vr = new VerifyRequestDTO();
+				vr.setImage(image);
+				vr.setType(type);
+				((Validator) u).getVerificationRequest().put(username, vr);
+				validatorsToSave.add((Validator) u);
+			}
+		}
+		userRepository.saveAll(validatorsToSave);
+	}
+	
+	private void closeVerificationRequest(String username) {
+		ArrayList<User> users = (ArrayList<User>) userRepository.findAll();
+		ArrayList<Validator> validatorsToSave = new ArrayList<Validator>();
+		for (User u : users){
+			if (u instanceof Validator){
+				((Validator) u).getVerificationRequest().remove(username);
+				validatorsToSave.add((Validator) u);
+			}
+		}
+		userRepository.saveAll(validatorsToSave);
 	}
 }

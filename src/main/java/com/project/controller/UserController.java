@@ -136,6 +136,30 @@ public class UserController {
 		}catch (EntityDoesNotExistException edne){
 			return new ResponseEntity<String>("Document image not added	.", HttpStatus.BAD_REQUEST);
 		}
-		
+	}
+	
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+	
+	
+	@RequestMapping(value = "/verify/{username}", method = RequestMethod.POST)
+	public ResponseEntity<String> verifyPassenger(@PathVariable("username") String username){
+		try{
+			userService.verifyPassenger(username);
+			return new ResponseEntity<String>("Passenger verified.", HttpStatus.OK);
+		}catch (EntityDoesNotExistException edne) {
+			return new ResponseEntity<String>(edne.getMessage(), HttpStatus.BAD_REQUEST);
+
+		}
+	}
+	
+	@RequestMapping(value = "/rejectVerification/{username}", method = RequestMethod.POST)
+	public ResponseEntity<String> rejectPassengerVerification(@PathVariable("username") String username){
+		try{
+			userService.rejectPassengerVerification(username);
+			return new ResponseEntity<String>("Verification rejected.", HttpStatus.OK);
+		}catch (EntityDoesNotExistException edne) {
+			return new ResponseEntity<String>(edne.getMessage(), HttpStatus.BAD_REQUEST);
+
+		}
 	}
 }
