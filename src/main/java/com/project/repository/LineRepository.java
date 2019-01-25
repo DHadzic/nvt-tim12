@@ -6,4 +6,5 @@ import com.project.domain.Line;
 
 public interface LineRepository  extends  JpaRepository<Line, Long>{
 	Line findByName(String name);
+	
 }

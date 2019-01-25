@@ -15,5 +15,7 @@ insert into user_authority (user_id, authority_id) values (3, 3); -- validator h
 insert into pricelist (id, date_formed) values (1, '2017-12-18 13:17:17');
 insert into pricelist_item (id, price, ticket_type, pricelist_id) values (1, 500, 1, 1);
 
-insert into bus_station (id,lat,lng) values (1, '41.333','41.333');
-insert into bus_station (id,lat,lng) values (2, '41.334','41.334');
+insert into bus_station (id,lat,lng) values (999,'45.264054514190796','19.83022916394043');
+insert into bus_station (id,lat,lng) values (998,'45.26042973161276','19.832632423217774');
+insert into bus_station (id,lat,lng) values (997,'45.25148761176708','19.837610603149415');
+insert into bus_station (id,lat,lng) values (996,'45.25252355951289','19.847634710688453');

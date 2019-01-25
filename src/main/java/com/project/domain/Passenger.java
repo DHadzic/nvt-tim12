@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
@@ -28,8 +29,7 @@ public class Passenger extends User {
 	@Column
 	private String documentID;
 	
-	@OneToMany(mappedBy="user")
-    @OrderBy("name ASC")
+	@OneToMany(mappedBy="user",fetch = FetchType.EAGER)
 	private List<Ticket> tikcets;
 	
 	public Passenger() {

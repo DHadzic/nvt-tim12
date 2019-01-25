@@ -1,16 +1,55 @@
-<p>
-  add-line works!
-</p>
+<div class="alert alert-info box-msg text-center">Clicking on a marker will either add or remove that stop from list.
+Line must have atleast 2 stops.</div>
 
-<agm-map class="my_map" [longitude]="19.843958" [latitude]="45.253322" (mapClick)="setMarker($event)">
-  <!-- <agm-marker *ngFor="let stop of busStops" [longitude]="stop.lng" [latitude]="stop.lat"></agm-marker>-->
-</agm-map>
+<div class="row">
+    <div class="col-8">
+      <agm-map class="my_map" [longitude]="19.840958" [latitude]="45.24604914768334" 
+        [zoom]="13" [clickableIcons]="false">
+        <ng-container *ngIf="!showRoute">
+          <agm-marker *ngFor="let stop of busStops" 
+                [label]="{color: 'black', text:stop.id, fontWeight:'bold', fontSize:'15px'}"
+                [longitude]="stop.lng" 
+                [latitude]="stop.lat" 
+                (markerClick)="markerClickHandle(stop.id)">
+          </agm-marker>
+        </ng-container>
+        <!-- [iconUrl]="markerIconUrl()"  ZA ICON ,,, DIRECTIONS
+        <agm-direction *ngFor="let point of routePoints" [origin]="point.origin" [destination]="point.dest"></agm-direction>-->
+        <ng-container >
+          <agm-direction 
+                [visible] = "showRoute"
+                [renderOptions]="{suppressMarkers: true}"
+                [travelMode]="'DRIVING'"
+                [markerOptions]="{
+                    origin:{label: {color: 'black', text:'Start', fontWeight:'bold', fontSize:'12px'}, clickable : false},
+                    destination: {label: {color: 'black', text:'End', fontWeight:'bold', fontSize:'12px'}},
+                    waypoints: {label: {color: 'black', text:'S', fontWeight:'bold', fontSize:'12px'}}}"
+                [origin]="routePoints.origin" 
+                [destination]="routePoints.dest" 
+                [waypoints]="routePoints.waypoints">
+          </agm-direction>
+        </ng-container>
+      </agm-map>
+    </div>
+  <div class="col-3 top_padding">
+    <div class="bottom_padding">
+      <div class="bottom_padding">
+      <label for="name"><b>Line name</b></label>
+      <input type="text" class="form-control" id="name" name="name" [(ngModel)]="new_line.name" required />
+      <p class="alert alert-warning box-msg" *ngIf="nameError.nameFormat" style="color:red">Name must be between 1 and 10 characters</p>
+      <p class="alert alert-warning box-msg" *ngIf="nameError.nameTaken" style="color:red">Line name is taken.. Try another one..</p>
+      </div>
+      <button class="btn btn-success btn-block"(click)="addLine()">Add line</button>
+      <button class="btn btn-success btn-block"(click)="displayRoute()">Show/hide route</button>
+    </div>
+    <div>
+      <ol class="list-group">
+        <li class="list-group-item list-group-item-info text-center" *ngFor="let stop of selectedStops">Station no. : {{stop.id}}</li>
+      </ol>
+    </div>
+  </div>
+  <div class="col"></div>
+</div>
 
-<ol>
-  <li *ngFor="let stop of selectedStops">Bus stop -> {{stop.id}}</li>
-</ol>
 
-<p>Your line will be added based on selected stops from above..</p>
-<button (click)="addStopToSelected()">Add Stop</button>
-<button (click)="addLine()">Add Line</button>
 

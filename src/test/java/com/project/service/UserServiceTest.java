@@ -1,5 +1,8 @@
 package com.project.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 
@@ -48,140 +51,196 @@ public class UserServiceTest {
 		Mockito.when(authRepository.findByName("PASSENGER_ROLE")).thenReturn(auth);
 	}
 	
-	@Test(expected = EntityAlreadyExistsException.class)
-	public void registerUsernameTaken() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TakenUser");
-		pass.setPassword("TestUser1");
-		pass.setName("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerUsernameTaken(){
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TakenUser");
+			pass.setPassword("TestUser1");
+			pass.setName("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Username taken",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerUsernameShort() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("cc");
-		pass.setPassword("TestUser1");
-		pass.setName("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerUsernameShort() {
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("cc");
+			pass.setPassword("TestUser1");
+			pass.setName("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Username format",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerUsernameLong() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("123456789012345678901");
-		pass.setPassword("TestUser1");
-		pass.setName("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerUsernameLong() {
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("123456789012345678901");
+			pass.setPassword("TestUser1");
+			pass.setName("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Username format",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerPasswordShort() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("cc");
-		pass.setName("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerPasswordShort() {
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword("cc");
+			pass.setName("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Password format",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerPasswordLong() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("123456789012345678901");
-		pass.setName("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerPasswordLong() {
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			String chars = new String(new char[101]).replace("\0", "-");
+			pass.setPassword(chars);
+			pass.setName("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Password format",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerNameShort() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("TestUser1");
-		pass.setName("cc");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerNameShort() {
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword("TestUser1");
+			pass.setName("cc");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Name format",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerNameLong() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		pass.setName("123456789012345678901");
-		userService.registerUser(pass);
+	@Test
+	public void registerNameLong() {
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			pass.setName("123456789012345678901");
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Name format",e.getMessage());
+		}
 	}
 	
-	@Test(expected = InvalidDataException.class)
-	public void registerSurnameShort() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("TestUser1");
-		pass.setName("TestUser1");
-		pass.setSurname("cc");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerSurnameShort() {
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword("TestUser1");
+			pass.setName("TestUser1");
+			pass.setSurname("cc");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Surname format",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerSurnameLong() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("TestUser1");
-		pass.setName("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		pass.setSurname("123456789012345678901");
-		userService.registerUser(pass);
+	@Test
+	public void registerSurnameLong() {
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword("TestUser1");
+			pass.setName("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			pass.setSurname("123456789012345678901");
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Surname format",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerBirthDateBefore() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("TestUser1");
-		pass.setName("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setType(PassengerType.REGULAR);
-		pass.setBirthDate(new GregorianCalendar(1900,10,5));
-		userService.registerUser(pass);
+	@Test
+	public void registerBirthDateBefore() {
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword("TestUser1");
+			pass.setName("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setType(PassengerType.REGULAR);
+			pass.setBirthDate(new GregorianCalendar(1900,10,5));
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Date format",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerBirthDateAfter() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("TestUser1");
-		pass.setName("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(2011,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerBirthDateAfter() {
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword("TestUser1");
+			pass.setName("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(2011,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Date format",e.getMessage());
+		}
 	}
 	
 	// If there are not exceptions , register is successful
-	@Test()
+	@Test
 	public void registerSuccessful() throws EntityAlreadyExistsException, InvalidDataException {
 		PassengerDTO pass = new PassengerDTO();
 		pass.setUsername("TestUser1");
@@ -192,76 +251,116 @@ public class UserServiceTest {
 		pass.setType(PassengerType.REGULAR);
 		userService.registerUser(pass);
 	}
+	
+	@Test
+	public void registerDataNull(){
+		try {
+			userService.registerUser(null);
+		}catch(Exception e) {
+			assertEquals("Data is null",e.getMessage());
+		}
+	}
+	
 
-	@Test(expected = InvalidDataException.class)
-	public void registerUsernameNull() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername(null);
-		pass.setPassword("TestUser1");
-		pass.setName("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerUsernameNull(){
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername(null);
+			pass.setPassword("TestUser1");
+			pass.setName("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Username is null",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerPasswordNull() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword(null);
-		pass.setName("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerPasswordNull(){
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword(null);
+			pass.setName("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Password is null",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerNameNull() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("TestUser1");
-		pass.setName(null);
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerNameNull(){
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword("TestUser1");
+			pass.setName(null);
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Name is null",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerSurnameNull() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("TestUser1");
-		pass.setName("TestUser1");
-		pass.setSurname(null);
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerSurnameNull(){
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword("TestUser1");
+			pass.setName("TestUser1");
+			pass.setSurname(null);
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Surname is null",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerBirthDateNull() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("TestUser1");
-		pass.setName("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(null);
-		pass.setType(PassengerType.REGULAR);
-		userService.registerUser(pass);
+	@Test
+	public void registerBirthDateNull(){
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword("TestUser1");
+			pass.setName("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(null);
+			pass.setType(PassengerType.REGULAR);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("BirthDate is null",e.getMessage());
+		}
 	}
 
-	@Test(expected = InvalidDataException.class)
-	public void registerTypeNull() throws EntityAlreadyExistsException, InvalidDataException {
-		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername("TestUser1");
-		pass.setPassword("TestUser1");
-		pass.setName("TestUser1");
-		pass.setSurname("TestUser1");
-		pass.setBirthDate(new GregorianCalendar(1995,10,5));
-		pass.setType(null);
-		userService.registerUser(pass);
+	@Test
+	public void registerTypeNull(){
+		try {
+			PassengerDTO pass = new PassengerDTO();
+			pass.setUsername("TestUser1");
+			pass.setPassword("TestUser1");
+			pass.setName("TestUser1");
+			pass.setSurname("TestUser1");
+			pass.setBirthDate(new GregorianCalendar(1995,10,5));
+			pass.setType(null);
+			userService.registerUser(pass);
+			assertTrue(false);
+		}catch(Exception e) {
+			assertEquals("Type is null",e.getMessage());
+		}
 	}
 }

@@ -51,9 +51,11 @@ export class RegisterComponent implements OnInit {
     delete this.passenger.password_r;
     console.log(this.passenger);
 
+    var _this = this;
+
     var observer = {
       next(value) {
-        this.router.navigate(['/login']);
+        _this.router.navigate(['/login']);
       },
       error(msg) {
         console.log(msg.error);

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.domain.Authority;
@@ -44,7 +45,7 @@ public class UserService {
 			throw new InvalidDataException("Username is null");
 		}
 		if(passengerDTO.getPassword() == null) {
-			throw new InvalidDataException("Password in null");
+			throw new InvalidDataException("Password is null");
 		}
 		if(passengerDTO.getName() == null) {
 			throw new InvalidDataException("Name is null");
@@ -65,7 +66,7 @@ public class UserService {
 		
 		if(passengerDTO.getUsername().length() < 3 || passengerDTO.getUsername().length() > 20)
 			throw new InvalidDataException("Username format");
-		if(passengerDTO.getPassword().length() < 3 || passengerDTO.getPassword().length() > 100)
+		if(passengerDTO.getPassword().length() < 3 || passengerDTO.getPassword().length() > 20)
 			throw new InvalidDataException("Password format");
 		if(passengerDTO.getName().length() < 3 || passengerDTO.getName().length() > 20)
 			throw new InvalidDataException("Name format");
@@ -91,7 +92,9 @@ public class UserService {
 		authorities.setAuthority(auth);
 		authorities.setUser(passenger);
 		passenger.getUserAuthorities().add(authorities);
-		
+		BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+		System.out.println(enc.encode(passenger.getPassword()));
+		passenger.setPassword(enc.encode(passenger.getPassword()));
 		userRepository.save(passenger);
 		
 		return;

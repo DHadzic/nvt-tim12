@@ -10,10 +10,10 @@
           <agm-polyline-point *ngFor="let point of polygonDots" [latitude]="point.lat" [longitude]="point.lng">
           </agm-polyline-point>
         </agm-polyline>
-        <!-- <agm-marker *ngFor="let stop of busStops" [longitude]="stop.lng" [latitude]="stop.lat"></agm-marker>
+        <agm-marker *ngFor="let stop of busStops" [label]="{color: 'black', text:stop.id, fontWeight:'bold', fontSize:'15px'}" [longitude]="stop.lng" [latitude]="stop.lat"></agm-marker>
+        <agm-marker [label]="{color: 'black', text:'NEW', fontWeight:'bold', fontSize:'12px'}" [longitude]="marker.lng" [latitude]="marker.lat"></agm-marker>
+        <!-- [iconUrl]="markerIconUrl()"  ZA ICON 
         DIRECTIONS <agm-direction *ngFor="let point of busStops" [origin]="point.origin" [destination]="point.dest"></agm-direction>-->
-        <agm-marker [title]="New" [longitude]="marker.lng" [latitude]="marker.lat"></agm-marker>
-        <!-- [iconUrl]="markerIconUrl()"  ZA ICON -->
       </agm-map>
     </div>
   <div class="col-3 top_padding">
