@@ -19,6 +19,7 @@ export class AddVehicleComponent implements OnInit {
   public scheduleTime = "workDay";
   public type = "BUS";
   public lines;
+  public nrSelect = "";
 
   
   constructor(private addVehicleService:AddVehicleService) { 
@@ -31,13 +32,15 @@ export class AddVehicleComponent implements OnInit {
 
   setLines(data){
     this.lines = data;
+    this.nrSelect = this.lines[0].name;
     console.log(this.lines);
-
   }
-  
 
-  create(){
-    
+  typeIs(){
+    this.vehicle.type = this.type;
+  }
+
+  addToSchedule(){
     if (this.scheduleTime == "workDay"){
       var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
       var converted = this.time.hour.toString() + ":" + this.time.minute.toString();
@@ -67,11 +70,22 @@ export class AddVehicleComponent implements OnInit {
         this.vehicle.type = this.type;
       }
     }
+  }
+  
+
+  create(){
+    
+        
     console.log(this.vehicle.schedule);
 
     this.addVehicleService.create(this.vehicle).subscribe(success => {console.log(success);},
     error => {console.log(error);});
-    
+    this.workDay = [];
+    this.saturday = [];
+    this.sunday = [];
+    this.vehicle.workDay = [];
+    this.vehicle.saturday = [];
+    this.vehicle.sunday = [];
   }
 
 }

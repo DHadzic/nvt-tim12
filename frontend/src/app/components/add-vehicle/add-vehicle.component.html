@@ -8,7 +8,7 @@
           <h2 class="form-signin-heading">Create</h2>
           <form role="form" (ngSubmit)="create()">
           <div class="form-group">
-              <select class="form-control" id="vehicle" name="vehicle" [(ngModel)]="vehicle.type"  required (change)="priceDisplay()">
+              <select class="form-control" id="vehicle" name="vehicle" [(ngModel)]="type"  required (change)="typeIs()">
                   <option value="BUS">BUS</option>
                   <option value="TRAM">TRAM</option>
                   <option value="TROLLEYBUS">TROLLEYBUS</option>
@@ -16,14 +16,14 @@
           </div>
 
           <div class="form-group">
-            <select class="form-control" id="line" name="line" [(ngModel)]="lines">
- 
+            <select class="form-control" [(ngModel)] =  'nrSelect' id="line" name="line" [(ngModel)]="lines" required > 
+                <option *ngFor="let line of lines;"  [value]="line.name">{{line.name}}</option>
               </select>
         </div>
           
             <div class="form-group">
                     <div class="col-xs-3">
-                        <select class="form-control" id="scheduleTime" name="scheduleTime" [(ngModel)]="scheduleTime" required selected = "selected">
+                        <select class="form-control" id="scheduleTime" name="scheduleTime" [(ngModel)]="scheduleTime" required selected = "selected" (change)="typeIs()">
                             <option value="workDay">Work day</option>
                             <option value="saturday">Saturday</option>
                             <option value="sunday">Sunday</option>
@@ -33,10 +33,10 @@
                         <ngb-timepicker [(ngModel)]="time" [meridian]="meridian" name = "time" [(ngModel)]="vehicle.time" ></ngb-timepicker>
                     </div>
                     <div class="col-xs-3">
-                        <button type="submit" class="btn btn btn-primary" id="create">Create</button>
+                        <button type="button" class="btn btn btn-primary" id="create"(click)="addToSchedule()">Add</button>
                     </div>
                     <div class="col-xs-3">
-                        
+                        <p *ngIf="vehicle.type">Tip: {{vehicle.type}} .</p>
                         <h3 class="list-heading">Workday schedule</h3>
                         <ul>
                                 <li *ngFor="let w of workDay">
@@ -57,6 +57,9 @@
                                 {{ w }}
                                 </li>
                         </ul>
+                    </div>
+                    <div class="col-xs-3">
+                            <button type="submit" class="btn btn btn-primary" id="create">Create</button>
                     </div>
                    
 
