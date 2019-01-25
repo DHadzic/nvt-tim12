@@ -21,6 +21,7 @@ import com.project.domain.Passenger;
 import com.project.domain.PassengerType;
 import com.project.domain.UserAuthority;
 import com.project.exceptions.EntityAlreadyExistsException;
+import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.AuthorityRepository;
 import com.project.repository.UserRepository;
@@ -49,6 +50,10 @@ public class UserServiceTest {
 		Mockito.when(userRepository.findByUsername("123456789012345678901")).thenReturn(null);
 		Mockito.when(userRepository.findByUsername("TestUser1")).thenReturn(null);
 		Mockito.when(authRepository.findByName("PASSENGER_ROLE")).thenReturn(auth);
+		Passenger p = new Passenger();
+		p.setUsername("pName");
+		Mockito.when(userRepository.save(p)).thenReturn(p);
+		Mockito.when(userRepository.findByUsername("pName")).thenReturn(p);
 	}
 	
 	@Test
@@ -362,5 +367,37 @@ public class UserServiceTest {
 		}catch(Exception e) {
 			assertEquals("Type is null",e.getMessage());
 		}
+	}
+	
+	@Test()
+	public void setUserIdDocumentSuccessful() throws EntityDoesNotExistException {
+		String image = "testImage";
+		userService.setUserIdDocument("pName", image);
+	}
+	
+	@Test(expected = EntityDoesNotExistException.class)
+	public void setUserIdDocumentPassengerNotFound() throws EntityDoesNotExistException {
+		String image = "testImage";
+		userService.setUserIdDocument("cc", image);
+	}
+	
+	@Test()
+	public void verifyPassengerSuccessful() throws EntityDoesNotExistException {
+		userService.verifyPassenger("pName");
+	}
+	
+	@Test(expected = EntityDoesNotExistException.class)
+	public void verifyPassengerPassengerNotFound() throws EntityDoesNotExistException {
+		userService.verifyPassenger("cc");
+	}
+	
+	@Test()
+	public void rejectVerificationSuccessful() throws EntityDoesNotExistException{
+		userService.rejectPassengerVerification("pName");
+	}
+	
+	@Test(expected = EntityDoesNotExistException.class)
+	public void rejectVerificationPassengerNotFound() throws EntityDoesNotExistException{
+		userService.rejectPassengerVerification("cc");
 	}
 }
