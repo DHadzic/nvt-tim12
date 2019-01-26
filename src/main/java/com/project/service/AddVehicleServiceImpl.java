@@ -52,4 +52,12 @@ public class AddVehicleServiceImpl {
 		System.out.println(lines.size()  + "OVO JE");
 		return lines;
 	}
+	
+	public ArrayList<Vehicle> getVehiclesWithoutLines(){
+		return (ArrayList<Vehicle>) vehicleRepository.findByLineIsNull();
+	}
+
+	public ArrayList<Vehicle> getVehiclesWithLines(){
+		return (ArrayList<Vehicle>) vehicleRepository.findByLineNotNull();
+	}
 }

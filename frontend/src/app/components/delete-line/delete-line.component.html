@@ -1,0 +1,8 @@
+<div class="list-group">
+  <button *ngFor="let line of lines" type="button" class="list-group-item list-group-item-action"
+          (click)="displayLine(lines.id)">{{line.id}}</button>
+</div>
+
+<div class="row">
+<p>Line to delete: {{ selectedLine.id }} , {{ selectedLine.name}}</p>
+</div>

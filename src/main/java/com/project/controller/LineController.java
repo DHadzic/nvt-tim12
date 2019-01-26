@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.BusStation;
+import com.project.domain.Line;
 import com.project.exceptions.EntityAlreadyExistsException;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
@@ -31,7 +33,12 @@ public class LineController {
 	public ResponseEntity<ArrayList<BusStation>> getStations(){
 		return new ResponseEntity<ArrayList<BusStation>>( this.lineService.getStations() ,HttpStatus.OK);
 	}
-	
+
+	@RequestMapping(value = "/get_lines", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<Line>> getLines(){
+		return new ResponseEntity<ArrayList<Line>>( this.lineService.getLines() ,HttpStatus.OK);
+	}
+
 	@PreAuthorize("hasAuthority('ADMIN_ROLE')")
 	@RequestMapping(value = "/add_station", method = RequestMethod.PUT)
 	public ResponseEntity<String> addStation(@RequestBody BusStation station){
@@ -43,6 +50,16 @@ public class LineController {
 		}
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN_ROLE')")
+	@RequestMapping(value = "/delete_station/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteStation(@PathVariable Long id){
+		try {
+			this.lineService.deleteBusStation(id);
+			return new ResponseEntity<String>("Station deleted.",HttpStatus.OK);
+		}catch(EntityDoesNotExistException e) {
+			return new ResponseEntity<String>("Entity doesn't exist",HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 	@PreAuthorize("hasAuthority('ADMIN_ROLE')")
 	@RequestMapping(value = "/add_line", method = RequestMethod.PUT)
@@ -66,6 +83,17 @@ public class LineController {
 			return new ResponseEntity<String>("Line added.",HttpStatus.OK);
 		}catch(EntityDoesNotExistException e) {
 			return new ResponseEntity<String>("Invalid adding of line.",HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PreAuthorize("hasAuthority('ADMIN_ROLE')")
+	@RequestMapping(value = "/delete_line/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteLine(@PathVariable Long id){
+		try {
+			this.lineService.deleteLine(id);
+			return new ResponseEntity<String>("Line deleted.",HttpStatus.OK);
+		}catch(EntityDoesNotExistException e) {
+			return new ResponseEntity<String>("Entity doesn't exist",HttpStatus.BAD_REQUEST);
 		}
 	}
 }

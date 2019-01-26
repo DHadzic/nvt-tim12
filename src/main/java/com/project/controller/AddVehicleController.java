@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Line;
 import com.project.domain.Schedule;
 import com.project.domain.Ticket;
+import com.project.domain.Vehicle;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.repository.ScheduleRepository;
 import com.project.repository.VehicleRepository;
@@ -53,5 +54,17 @@ public class AddVehicleController {
 		} catch (EntityDoesNotExistException edne) {
 			return new ResponseEntity<ArrayList<Line>>(new ArrayList<Line>(), HttpStatus.NOT_FOUND);
 		}
+	}
+
+	@PreAuthorize("permitAll()")
+	@RequestMapping(value = "/getVehiclesWithLine", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<Vehicle>> getVehiclesWithLine() {
+		return new ResponseEntity<ArrayList<Vehicle>>(addVehicleService.getVehiclesWithLines(), HttpStatus.OK);
+	}
+
+	@PreAuthorize("permitAll()")
+	@RequestMapping(value = "/getVehiclesWithoutLine", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<Vehicle>> getVehiclesWithoutLine() {
+		return new ResponseEntity<ArrayList<Vehicle>>(addVehicleService.getVehiclesWithoutLines(), HttpStatus.OK);
 	}
 }

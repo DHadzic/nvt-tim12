@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.project.domain.BusStation;
 import com.project.domain.Line;
+import com.project.domain.Vehicle;
 import com.project.exceptions.EntityAlreadyExistsException;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.BusStationRepository;
 import com.project.repository.LineRepository;
+import com.project.repository.VehicleRepository;
 import com.project.web.dto.LineDTO;
 
 @Service
@@ -23,6 +25,9 @@ public class LineService {
 	@Autowired
 	private LineRepository lineRepository;
 	
+	@Autowired
+	private VehicleRepository vehicleRepository;
+
 	public ArrayList<BusStation> getStations(){
 		return (ArrayList<BusStation>) this.bsRepository.findAll();
 	}
@@ -119,7 +124,7 @@ public class LineService {
 		for (int i = 0; i < line.getStations().size();i++) {
 			for(int j = i+1; j<line.getStations().size();j++) {
 				if(line.getStations().get(i).equals(line.getStations().get(j))) {
-					throw new InvalidDataException("Uqinue bus stations required");
+					throw new InvalidDataException("Unique bus stations required");
 				}
 			}
 		}
@@ -146,4 +151,55 @@ public class LineService {
 
 		return line;
 	}
+	
+	public ArrayList<Line> getLines(){
+		return (ArrayList<Line>) lineRepository.findAll();
+	}
+	
+	public int getLinesSize() {
+		return lineRepository.findAll().size();
+	}
+	
+	public void deleteBusStation(Long id) throws EntityDoesNotExistException {
+		if(!bsRepository.findById(id).isPresent()) {
+			throw new EntityDoesNotExistException();
+		}
+		
+		ArrayList<Line> lines = (ArrayList<Line>) lineRepository.findAll();
+		
+		int index_to_remove = -1;
+		for (Line line : lines) {
+			index_to_remove = -1;
+			for (BusStation station : line.getStations()) {
+				if(station.getId() == id) {
+					index_to_remove = line.getStations().indexOf(station);
+					break;
+				}
+			}
+			if(index_to_remove != -1l) {
+				line.getStations().remove(index_to_remove);
+				lineRepository.save(line);
+			}
+		}
+		
+		bsRepository.deleteById(id);	
+	}
+
+	public void deleteLine(Long id) throws EntityDoesNotExistException {
+		if(!lineRepository.findById(id).isPresent()) {
+			throw new EntityDoesNotExistException();
+		}
+		
+		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) vehicleRepository.findByLineNotNull();
+		
+		for (Vehicle vehicle : vehicles) {
+			if(vehicle.getLine().getId() == id) {
+				vehicle.setLine(null);
+				vehicleRepository.save(vehicle);
+			}
+		}
+		
+		lineRepository.deleteById(id);	
+	}
+
 }

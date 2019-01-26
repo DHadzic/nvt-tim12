@@ -184,6 +184,10 @@ public class UserService {
 		return true;
 	}
 	
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+	
 	public boolean checkVerification(String username) throws EntityDoesNotExistException {
 		
 		Passenger passenger = (Passenger) userRepository.findByUsername(username);
