@@ -22,6 +22,7 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';
 import { ValidateComponent } from './components/validate/validate.component';
 import { AddLineComponent } from './components/add-line/add-line.component';
+import { VerifyComponent } from './components/verify/verify.component';
 import { AddVehicleComponent } from './components/add-vehicle/add-vehicle.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DeleteBusStopComponent } from './components/delete-bus-stop/delete-bus-stop.component';
@@ -54,9 +55,16 @@ const appRoutes: Routes = [
     component: ValidateComponent,
     data: {roles: ['VALIDATOR_ROLE']},
     canActivate: [AuthGuardGuard]
+  },{
+    path: 'verify',
+    component: VerifyComponent,
+    data: {roles: ['PASSENGER_ROLE', 'VALIDATOR_ROLE']},
+    canActivate: [AuthGuardGuard]
   },
   { path: 'tickets',
     component: TicketsComponent,
+    data: {roles: ['PASSENGER_ROLE']},
+    canActivate: [AuthGuardGuard]
   },
   { path: 'addVehicle',
   component: AddVehicleComponent,
@@ -75,6 +83,7 @@ const appRoutes: Routes = [
     NotFoundPageComponent,
     RegisterComponent,
     TicketsComponent,
+    VerifyComponent,
     AddStopsComponent,
     ValidateComponent,
     AddLineComponent,

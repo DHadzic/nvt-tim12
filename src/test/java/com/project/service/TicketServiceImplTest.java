@@ -51,7 +51,7 @@ public class TicketServiceImplTest {
 		p1.setUsername("p1");
 		p1.setPassword("p11");
 		Pricelist pl1 = new Pricelist();
-		PricelistItem pli1 = new PricelistItem(pl1, TicketType.ONE_TIME, 500);
+		PricelistItem pli1 = new PricelistItem(pl1, TicketType.ONE_TIME, TransportType.BUS, 500);
 		Ticket t1 = new Ticket(p1, TicketType.MONTHLY, TransportType.BUS, pli1);
 		Mockito.when(userRepository.findByUsername("p1")).thenReturn(p1);
 		Mockito.when(userRepository.findByUsername("p2")).thenReturn(null);
