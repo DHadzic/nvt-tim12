@@ -16,8 +16,9 @@
           </div>
 
           <div class="form-group">
-            <select class="form-control" [(ngModel)] =  'nrSelect' id="line" name="line" [(ngModel)]="lines" required > 
+            <select class="form-control" [(ngModel)] =  'nrSelect' id="line" name="line"  required > 
                 <option *ngFor="let line of lines;"  [value]="line.name">{{line.name}}</option>
+                <option value = "none">No line</option>
               </select>
         </div>
           

@@ -30,12 +30,15 @@ public class AddVehicleServiceImpl {
 	private LineRepository lineRepository;
 	
 	public boolean create(AddVehicleDTO addVehicleDTO) throws EntityDoesNotExistException{
-		//Line l = lineRepository.findByName();
+		
+		Line l = lineRepository.findByName(addVehicleDTO.getLine());
+		if(l == null) throw new EntityNotFoundException("Line not exists");
 		TransportType tt = TransportType.valueOf(addVehicleDTO.getType());
 		if(tt == null) throw new EntityNotFoundException("Type not exists");
 		ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 		Schedule schedule = new Schedule(addVehicleDTO.getSchedule());
-		Vehicle v = new Vehicle(tt,tickets,schedule);
+		Vehicle v = new Vehicle(tt,tickets,l,schedule);
+		System.out.println(v.getLine().getName());
 		scheduleRepository.save(schedule);
 		vehicleRepository.save(v);
 		return true;

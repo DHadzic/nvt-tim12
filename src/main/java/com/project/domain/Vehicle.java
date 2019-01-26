@@ -70,4 +70,12 @@ public class Vehicle {
 	public void setTickets(ArrayList<Ticket> tickets) {
 		this.tickets = tickets;
 	}
+
+	public Line getLine() {
+		return line;
+	}
+
+	public void setLine(Line line) {
+		this.line = line;
+	}
 }
