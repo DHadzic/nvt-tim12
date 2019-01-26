@@ -55,9 +55,9 @@ public class LineController {
 	public ResponseEntity<String> deleteStation(@PathVariable Long id){
 		try {
 			this.lineService.deleteBusStation(id);
-			return new ResponseEntity<String>("Station added.",HttpStatus.OK);
+			return new ResponseEntity<String>("Station deleted.",HttpStatus.OK);
 		}catch(EntityDoesNotExistException e) {
-			return new ResponseEntity<String>("Station doesn't exist." + e.getMessage(),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Entity doesn't exist",HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -83,6 +83,17 @@ public class LineController {
 			return new ResponseEntity<String>("Line added.",HttpStatus.OK);
 		}catch(EntityDoesNotExistException e) {
 			return new ResponseEntity<String>("Invalid adding of line.",HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PreAuthorize("hasAuthority('ADMIN_ROLE')")
+	@RequestMapping(value = "/delete_line/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteLine(@PathVariable Long id){
+		try {
+			this.lineService.deleteLine(id);
+			return new ResponseEntity<String>("Line deleted.",HttpStatus.OK);
+		}catch(EntityDoesNotExistException e) {
+			return new ResponseEntity<String>("Entity doesn't exist",HttpStatus.BAD_REQUEST);
 		}
 	}
 }

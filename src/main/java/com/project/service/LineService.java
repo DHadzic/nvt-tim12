@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.project.domain.BusStation;
 import com.project.domain.Line;
+import com.project.domain.Vehicle;
 import com.project.exceptions.EntityAlreadyExistsException;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.BusStationRepository;
 import com.project.repository.LineRepository;
+import com.project.repository.VehicleRepository;
 import com.project.web.dto.LineDTO;
 
 @Service
@@ -23,6 +25,9 @@ public class LineService {
 	@Autowired
 	private LineRepository lineRepository;
 	
+	@Autowired
+	private VehicleRepository vehicleRepository;
+
 	public ArrayList<BusStation> getStations(){
 		return (ArrayList<BusStation>) this.bsRepository.findAll();
 	}
@@ -179,4 +184,22 @@ public class LineService {
 		
 		bsRepository.deleteById(id);	
 	}
+
+	public void deleteLine(Long id) throws EntityDoesNotExistException {
+		if(!lineRepository.findById(id).isPresent()) {
+			throw new EntityDoesNotExistException();
+		}
+		
+		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) vehicleRepository.findByLineNotNull();
+		
+		for (Vehicle vehicle : vehicles) {
+			if(vehicle.getLine().getId() == id) {
+				vehicle.setLine(null);
+				vehicleRepository.save(vehicle);
+			}
+		}
+		
+		lineRepository.deleteById(id);	
+	}
+
 }

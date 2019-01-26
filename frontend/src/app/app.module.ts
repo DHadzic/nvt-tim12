@@ -24,6 +24,8 @@ import { ValidateComponent } from './components/validate/validate.component';
 import { AddLineComponent } from './components/add-line/add-line.component';
 import { AddVehicleComponent } from './components/add-vehicle/add-vehicle.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DeleteBusStopComponent } from './components/delete-bus-stop/delete-bus-stop.component';
+import { DeleteLineComponent } from './components/delete-line/delete-line.component';
 
 const appRoutes: Routes = [
   { path: 'main', 
@@ -76,7 +78,9 @@ const appRoutes: Routes = [
     AddStopsComponent,
     ValidateComponent,
     AddLineComponent,
-    AddVehicleComponent
+    AddVehicleComponent,
+    DeleteBusStopComponent,
+    DeleteLineComponent
   ],
   imports: [
     BrowserModule,
