@@ -19,3 +19,17 @@ insert into bus_station (id,lat,lng) values (999,'45.264054514190796','19.830229
 insert into bus_station (id,lat,lng) values (998,'45.26042973161276','19.832632423217774');
 insert into bus_station (id,lat,lng) values (997,'45.25148761176708','19.837610603149415');
 insert into bus_station (id,lat,lng) values (996,'45.25252355951289','19.847634710688453');
+
+insert into line(id,name) values(999,'8a');
+insert into line(id,name) values(998,'8b');
+
+insert into line_station_relation(line_id,station_id) values (999,999);
+insert into line_station_relation(line_id,station_id) values (999,998);
+insert into line_station_relation(line_id,station_id) values (999,997);
+insert into line_station_relation(line_id,station_id) values (999,996);
+
+insert into line_station_relation(line_id,station_id) values (998,998);
+insert into line_station_relation(line_id,station_id) values (998,997);
+
+insert into vehicle(id,line_id) values (999,999);
+insert into vehicle(id) values (998);

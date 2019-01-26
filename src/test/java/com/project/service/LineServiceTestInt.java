@@ -407,7 +407,7 @@ public class LineServiceTestInt {
 	    	lineService.addLine(line);
 	    	assertTrue(false);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
-			assertEquals("Uqinue bus stations required",e.getMessage());
+			assertEquals("Unique bus stations required",e.getMessage());
 		}
     }
 

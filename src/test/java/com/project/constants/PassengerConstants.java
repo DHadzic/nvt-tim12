@@ -27,4 +27,7 @@ public class PassengerConstants {
     public static final GregorianCalendar NEW_BIRTHDATE_AFTER = new GregorianCalendar(2015,5,5);
     public static final int DB_SIZE = 1;
     
+    public static final String SUCC_LOGIN_USERNAME = "taken_username";
+    public static final String SUCC_LOGIN_PASSWORD = "user";
+    public static final String BAD_LOGIN_PASSWORD = "user2";
 }

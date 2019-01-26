@@ -364,7 +364,7 @@ public class LineServiceTest {
 	    	line.getStations().add(new BusStation("123","123"));
 	    	lineService.addLine(line);
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
-			assertEquals("Uqinue bus stations required",e.getMessage());
+			assertEquals("Unique bus stations required",e.getMessage());
 		}
     }
 

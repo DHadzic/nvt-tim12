@@ -2,7 +2,7 @@ insert into authority (name) values ('ADMIN_ROLE');
 insert into authority (name) values ('PASSENGER_ROLE');
 insert into authority (name) values ('VALIDATOR_ROLE');
 
-insert into user (username, password,dtype) values ('taken_username', 'password','Passenger');
+insert into user (username, password,dtype) values ('taken_username', '$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq','Passenger');
 insert into user_authority (user_id, authority_id) values (1, 2); -- user has PASSENGER_ROLE
 
 insert into bus_station (id,lat,lng) values (999,'45.264054514190796','19.83022916394043');

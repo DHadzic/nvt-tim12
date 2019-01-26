@@ -20,8 +20,6 @@ public class Vehicle {
 	@Column
 	private TransportType type;
 	
-
-
 	@Column
 	private ArrayList<Ticket> tickets;
 	
@@ -30,6 +28,8 @@ public class Vehicle {
 
 	@OneToOne
 	private Schedule schedule;
+	
+	public Vehicle() {};
 	
 	public Vehicle(TransportType type, ArrayList<Ticket> tickets, Line line, Schedule schedule) {
 		super();
@@ -70,4 +70,14 @@ public class Vehicle {
 	public void setTickets(ArrayList<Ticket> tickets) {
 		this.tickets = tickets;
 	}
+
+	public Line getLine() {
+		return line;
+	}
+
+	public void setLine(Line line) {
+		this.line = line;
+	}
+	
+	
 }

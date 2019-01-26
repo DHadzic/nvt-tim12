@@ -29,7 +29,7 @@ public class Passenger extends User {
 	private String documentID;
 	
 	@Column
-	private boolean isVerified;
+	private Boolean isVerified;
 	
 	@OneToMany(mappedBy="user")
 	private List<Ticket> tikcets;
@@ -98,11 +98,11 @@ public class Passenger extends User {
 		this.tikcets = tikcet;
 	}
 
-	public boolean isVerified() {
+	public Boolean isVerified() {
 		return isVerified;
 	}
 
-	public void setVerified(boolean isVerified) {
+	public void setVerified(Boolean isVerified) {
 		this.isVerified = isVerified;
 	}
 	

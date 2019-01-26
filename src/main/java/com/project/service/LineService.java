@@ -119,7 +119,7 @@ public class LineService {
 		for (int i = 0; i < line.getStations().size();i++) {
 			for(int j = i+1; j<line.getStations().size();j++) {
 				if(line.getStations().get(i).equals(line.getStations().get(j))) {
-					throw new InvalidDataException("Uqinue bus stations required");
+					throw new InvalidDataException("Unique bus stations required");
 				}
 			}
 		}
@@ -153,5 +153,30 @@ public class LineService {
 	
 	public int getLinesSize() {
 		return lineRepository.findAll().size();
+	}
+	
+	public void deleteBusStation(Long id) throws EntityDoesNotExistException {
+		if(!bsRepository.findById(id).isPresent()) {
+			throw new EntityDoesNotExistException();
+		}
+		
+		ArrayList<Line> lines = (ArrayList<Line>) lineRepository.findAll();
+		
+		int index_to_remove = -1;
+		for (Line line : lines) {
+			index_to_remove = -1;
+			for (BusStation station : line.getStations()) {
+				if(station.getId() == id) {
+					index_to_remove = line.getStations().indexOf(station);
+					break;
+				}
+			}
+			if(index_to_remove != -1l) {
+				line.getStations().remove(index_to_remove);
+				lineRepository.save(line);
+			}
+		}
+		
+		bsRepository.deleteById(id);	
 	}
 }
