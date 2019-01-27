@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventEmitter,Output } from '@angular/core';
 import { AddVehicleService } from 'src/app/services/add-vehicle.service';
 import { scheduleMicroTask } from '@angular/core/src/util';
+import { TicketService } from 'src/app/services/ticket.service';
 
 @Component({
   selector: 'app-add-vehicle',
@@ -23,7 +24,7 @@ export class AddVehicleComponent implements OnInit {
 
   
   constructor(private addVehicleService:AddVehicleService) { 
-    this.vehicle = {type:"BUS",schedule:{}}
+    this.vehicle = {type:"BUS",schedule:{},line:"none"}
   }
 
   ngOnInit() {
@@ -49,6 +50,7 @@ export class AddVehicleComponent implements OnInit {
         this.workDay.sort(collator.compare);
         this.vehicle.schedule.workDay = this.workDay;
         this.vehicle.type = this.type;
+        this.vehicle.line = this.nrSelect;
       }
     }else if (this.scheduleTime == "saturday" ){
       var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
@@ -58,6 +60,7 @@ export class AddVehicleComponent implements OnInit {
         this.saturday.sort(collator.compare);
         this.vehicle.schedule.saturday = this.saturday;
         this.vehicle.type = this.type;
+        this.vehicle.line = this.nrSelect;
       }
       
     }else if (this.scheduleTime == "sunday" ){
@@ -68,6 +71,7 @@ export class AddVehicleComponent implements OnInit {
         this.sunday.sort(collator.compare);
         this.vehicle.schedule.sunday = this.sunday;
         this.vehicle.type = this.type;
+        this.vehicle.line = this.nrSelect;
       }
     }
   }

@@ -12,4 +12,5 @@ import com.project.domain.User;
 public interface TicketRepository extends  JpaRepository<Ticket, Long>{
 	Ticket findByUserAndType(Passenger p, TicketType tt);
 	ArrayList<Ticket> findByUser(User u);
+	ArrayList<Ticket> findByIsActiveTrue();
 }

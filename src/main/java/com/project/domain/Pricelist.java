@@ -44,6 +44,11 @@ public class Pricelist {
 	public void setDate_invalidated(Date date_invalidated) {
 		this.date_invalidated = date_invalidated;
 	}
-	
+
+	public Pricelist() {
+		super();
+		this.date_formed = new Date();
+		this.date_invalidated = null;
+	}	
 	
 }

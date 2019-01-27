@@ -11,11 +11,24 @@ export class VerifyComponent implements OnInit {
 
   selectedFile = null;
   currUser = null;
+  validatorRole = false;
+  requests = [];
 
   constructor(private userService:UserService, private authenticationService:AuthenticationService) { }
 
   ngOnInit() {
     this.currUser = this.authenticationService.getCurrentUser();
+    if (this.isValidator()){
+      this.validatorRole = true;
+      this.getVerificatonRequests();
+    }else{
+      this.validatorRole = false;
+    }
+  }
+
+  isValidator(){
+    var roles = this.authenticationService.getRoles();
+    return roles.includes("VALIDATOR_ROLE");
   }
 
   onFileSelected(event){
@@ -27,5 +40,12 @@ export class VerifyComponent implements OnInit {
     this.userService.uploadDocumentImage(this.currUser.username, this.selectedFile).subscribe(success => {
       console.log('uspeh');
     })
+  }
+
+  getVerificatonRequests(){
+    this.userService.getVerificationRequests(this.currUser.username).subscribe(success => {
+      console.log(success);
+    },
+    error => { console.log("There are no requests."); })
   }
 }

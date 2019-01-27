@@ -2,7 +2,7 @@ package com.project.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -206,21 +206,29 @@ public class UserService {
 	public void setUserIdDocument(String username, String image) throws EntityDoesNotExistException {
 		Passenger passenger = findPassenger(username);
 		passenger.setDocumentID(image);
-//		sendVerificationRequest(username, passenger.getType(), image);
+		sendVerificationRequest(username, passenger.getType(), image);
 		userRepository.save(passenger);
+	}
+	
+	public ArrayList<VerifyRequestDTO> getVerifyRequests(String username) throws EntityDoesNotExistException{
+		Validator validator = (Validator) userRepository.findByUsername(username);
+		if (validator == null) throw new EntityDoesNotExistException("Validator does no exist.");
+		HashMap<String, VerifyRequestDTO> requests = validator.getVerificationRequest();
+		if (requests == null) return new ArrayList<VerifyRequestDTO>();
+		return (ArrayList<VerifyRequestDTO>) requests.values();
 	}
 	
 	public void verifyPassenger(String username) throws EntityDoesNotExistException {
 		Passenger passenger = findPassenger(username);
 		passenger.setVerified(true);
-//		closeVerificationRequest(username);
+		closeVerificationRequest(username);
 		userRepository.save(passenger);
 	}
 	
 	public void rejectPassengerVerification(String username) throws EntityDoesNotExistException {
 		Passenger passenger = findPassenger(username);
 		passenger.setDocumentID(null);
-//		closeVerificationRequest(username);
+		closeVerificationRequest(username);
 		userRepository.save(passenger);
 	}
 	
@@ -238,7 +246,12 @@ public class UserService {
 				VerifyRequestDTO vr = new VerifyRequestDTO();
 				vr.setImage(image);
 				vr.setType(type);
-				((Validator) u).getVerificationRequest().put(username, vr);
+				HashMap<String, VerifyRequestDTO> requests = ((Validator) u).getVerificationRequest();
+				if (requests == null){
+					requests = new HashMap<String, VerifyRequestDTO>();
+				}
+				requests.put(username, vr);
+				((Validator) u).setVerificationRequest(requests);
 				validatorsToSave.add((Validator) u);
 			}
 		}
