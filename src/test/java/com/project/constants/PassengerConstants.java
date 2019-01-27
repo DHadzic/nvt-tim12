@@ -2,6 +2,8 @@ package com.project.constants;
 
 import java.util.GregorianCalendar;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+
 import com.project.domain.PassengerType;
 
 public class PassengerConstants {
@@ -31,4 +33,18 @@ public class PassengerConstants {
     public static final String SUCC_LOGIN_USERNAME = "taken_username";
     public static final String SUCC_LOGIN_PASSWORD = "user";
     public static final String BAD_LOGIN_PASSWORD = "user2";
+    
+    public static final String VERIFY_PASSENGER = "pName";
+    public static final String VERIFY_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADh"
+    		+ "CAMAAAAJbSJIAAAAYFBMVEUlroj///9DuZm95tr3/Pu55NgZq4Ty+vg8tpVfxKjq9/Tk9PAnr4owso49tpbW8On"
+    		+ "E6N7g8+6u4NJWvqBJu5x4zbSl3c2X18WO1MB+zrdvya+W18TR7uWh2spjxKgAqoFYBRDgAAALv0lEQVR4nOWd6Z"
+    		+ "ajIBCFXUtcaJWoUTvL+7/laMwCxgUEDOm5P/tkEr4BKWqhtGzdijJ3UOa3DsIJRk7rP/8Waf99S9cXe56X+p1IU"
+    		+ "zh3IbAGAXr8qWhI/6G0+7SugWgh9IIgJuTcop+fH4QfXFMCfPtMeyYkDgItlOoJgyhyz+fGQShZYmM4E4Sc5nx2"
+    		+ "oyhQPh7FhEF0+q2bA8aLMzc9mxgfmvr3pBpSJaEXp8fmgnEiCPdSgvGlOaaxyuWqjjBOqzbE1na8O6SFw7ZKY2X"
+    		+ "jUkQYn0hYYBBdmtMCwEVIToogVR1q7MpiNBmHV4uvlujB1k9gHC2A31rc6xINw+jRsJY79F+wH23kjrb2TcROil"
+    		+ "jbMj3iCnSTdtqxsIvbwq8e6AloXLKt/AKE4YVSXaY4N5V4LKStxyCBNGR50GcFmdeTwKIwoSeulx1x3mjREdRZ9"
+    		+ "GMcKgCj/xBNLCYSXmIgsRBp++SkL/YM4KfYoTkYuQGPQIvgQFUUXoGwnYI/LM4jqhZ+QSvQkOHNvNKqFn4CbzEg"
+    		+ "fiGmFnJj5Nsah1o7FCaPYM9lqdxRVC4wHXjcYyoZlmgtWa0VgkNNVMsFoxGguEBpsJVstGY57wawBXEOcJM7PNB"
+    		+ "KtwPuw/SxjUZrlLy8L1rEs8R+iR4tOjFlJB5tbpHGH2FdvoS1DMrdMZwu9ao71m1+k0oRFhQ0HNBRknCb3q+wAtQNXkozhJmO6Y/FQnCFNewuj4";
+    
 }

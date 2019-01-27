@@ -54,6 +54,7 @@ public class UserServiceTest {
 		Mockito.when(userRepository.findByUsername("123456789012345678901")).thenReturn(null);
 		Mockito.when(userRepository.findByUsername("TestUser1")).thenReturn(null);
 		Mockito.when(authRepository.findByName("PASSENGER_ROLE")).thenReturn(auth);
+		
 		Passenger p = new Passenger();
 		p.setUsername("pName");
 		p.setType(PassengerType.REGULAR);
@@ -383,30 +384,36 @@ public class UserServiceTest {
 	}
 	
 	@Test()
-	public void setUserIdDocumentSuccessful() throws EntityDoesNotExistException {
+	public void setUserIdDocumentSuccess() throws EntityDoesNotExistException, InvalidDataException {
 		String image = "testImage";
 		userService.setUserIdDocument("pName", image);
 	}
 	
 	@Test(expected = EntityDoesNotExistException.class)
-	public void setUserIdDocumentPassengerNotFound() throws EntityDoesNotExistException {
+	public void setUserIdDocumentPassengerNotFound() throws EntityDoesNotExistException, InvalidDataException {
 		String image = "testImage";
 		userService.setUserIdDocument("cc", image);
 	}
 	
-	@Test(expected = Exception.class)
-	public void setUserIdDocumentPassengerisNull() throws EntityDoesNotExistException {
+	@Test(expected = InvalidDataException.class)
+	public void setUserIdDocumentUsernameIsNull() throws EntityDoesNotExistException, InvalidDataException {
 		String image = "testImage";
 		userService.setUserIdDocument(null, image);
 	}
 	
-	@Test(expected = Exception.class)
-	public void setUserIdDocumentImageIsNull() throws EntityDoesNotExistException {
+	@Test(expected = InvalidDataException.class)
+	public void setUserIdDocumentUsernameIsEmptyString() throws EntityDoesNotExistException, InvalidDataException {
+		String image = "testImage";
+		userService.setUserIdDocument("", image);
+	}
+	
+	@Test(expected = InvalidDataException.class)
+	public void setUserIdDocumentImageIsNull() throws EntityDoesNotExistException, InvalidDataException {
 		userService.setUserIdDocument("cc", null);
 	}
 	
-	@Test(expected = Exception.class)
-	public void setUserIdDocumentImageIsEmptyString() throws EntityDoesNotExistException {
+	@Test(expected = InvalidDataException.class)
+	public void setUserIdDocumentImageIsEmptyString() throws EntityDoesNotExistException, InvalidDataException {
 		userService.setUserIdDocument("cc", "");
 	}
 	

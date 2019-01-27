@@ -90,12 +90,12 @@ public class Passenger extends User {
 		this.documentID = documentID;
 	}
 
-	public List<Ticket> getTikcet() {
+	public List<Ticket> getTikcets() {
 		return tikcets;
 	}
 
-	public void setTikcet(ArrayList<Ticket> tikcet) {
-		this.tikcets = tikcet;
+	public void setTikcets(ArrayList<Ticket> tikcets) {
+		this.tikcets = tikcets;
 	}
 
 	public Boolean isVerified() {

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.Pricelist;
+import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.service.PricelistService;
 import com.project.web.dto.PricelistItemDTO;
@@ -35,8 +36,14 @@ public class PricelistController {
 	
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
 	public ResponseEntity<ArrayList<Pricelist>> getPricelists() {
-		ArrayList<Pricelist> pricelists = pricelistService.getPricelists();
-		return new ResponseEntity<ArrayList<Pricelist>>(pricelists, HttpStatus.OK);
+		ArrayList<Pricelist> pricelists;
+		try {
+			pricelists = pricelistService.getPricelists();
+			return new ResponseEntity<ArrayList<Pricelist>>(pricelists, HttpStatus.OK);
+		} catch (EntityDoesNotExistException e) {
+			return new ResponseEntity<ArrayList<Pricelist>>(new ArrayList<Pricelist>(), HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 	
 	@RequestMapping(value = "/deletePricelist", method = RequestMethod.POST)

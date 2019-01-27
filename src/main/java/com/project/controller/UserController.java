@@ -137,7 +137,7 @@ public class UserController {
 		try{
 			userService.setUserIdDocument(username, image);
 			return new ResponseEntity<String>("Document image added.", HttpStatus.OK);
-		}catch (EntityDoesNotExistException edne){
+		}catch (EntityDoesNotExistException | InvalidDataException edne){
 			return new ResponseEntity<String>("Document image not added	.", HttpStatus.BAD_REQUEST);
 		}
 	}

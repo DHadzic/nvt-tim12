@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.constants.PassengerConstants;
 import com.project.exceptions.EntityAlreadyExistsException;
+import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.web.dto.PassengerDTO;
 
@@ -343,5 +344,174 @@ public class UserServiceTestInt {
 		userService.registerUser(pass);
 			
 		assertThat(userService.findByUsername(PassengerConstants.NEW_USERNAME2)).isNotNull();
+	}
+	
+	@Test
+	@Rollback
+	public void setUserIdDocumentSuccess(){
+		try {
+			userService.setUserIdDocument(PassengerConstants.VERIFY_PASSENGER, PassengerConstants.VERIFY_IMAGE);
+		} catch (EntityDoesNotExistException e) {
+			assertTrue(false);
+		} catch (InvalidDataException e) {
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void setUserIdDocumentPassengerNotFound(){
+		try {
+			userService.setUserIdDocument("badUsername", PassengerConstants.VERIFY_IMAGE);
+			assertTrue(false);
+		} catch (EntityDoesNotExistException e) {
+			assertEquals("Passenger not found", e.getMessage());
+		} catch (InvalidDataException e) {
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void setUserIdDocumentUsernameIsNull(){
+		try {
+			userService.setUserIdDocument(null, PassengerConstants.VERIFY_IMAGE);
+			assertTrue(false);
+		} catch (EntityDoesNotExistException e) {
+			assertTrue(false);
+		} catch (InvalidDataException e) {
+			assertEquals("Parameters can not be null or empty string.", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void setUserIdDocumentUsernameIsEmptyString(){
+		try {
+			userService.setUserIdDocument("", PassengerConstants.VERIFY_IMAGE);
+			assertTrue(false);
+		} catch (EntityDoesNotExistException e) {
+			assertTrue(false);
+		} catch (InvalidDataException e) {
+			assertEquals("Parameters can not be null or empty string.", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void setUserIdDocumentImageIsNull(){
+		try {
+			userService.setUserIdDocument(PassengerConstants.VERIFY_PASSENGER, null);
+			assertTrue(false);
+		} catch (EntityDoesNotExistException e) {
+			assertTrue(false);
+		} catch (InvalidDataException e) {
+			assertEquals("Parameters can not be null or empty string.", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void setUserIdDocumentImageIsEmptyString(){
+		try {
+			userService.setUserIdDocument(PassengerConstants.VERIFY_PASSENGER, "");
+			assertTrue(false);
+		} catch (EntityDoesNotExistException e) {
+			assertTrue(false);
+		} catch (InvalidDataException e) {
+			assertEquals("Parameters can not be null or empty string.", e.getMessage());
+		}
+	}
+	
+	@Test
+	@Rollback
+	public void verifyPassengerSuccessful(){
+		try {
+			userService.verifyPassenger(PassengerConstants.VERIFY_PASSENGER);
+		} catch (EntityDoesNotExistException e) {
+			assertTrue(false);
+		} catch (InvalidDataException e) {
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void verifyPassengerPassengerNotFound(){
+		try {
+			userService.verifyPassenger("badUsername");
+			assertTrue(false);
+		} catch (EntityDoesNotExistException e) {
+			assertEquals("Passenger not found", e.getMessage());
+		} catch (InvalidDataException e) {
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void verifyPassengerUsernameIsNull(){
+		try {
+			userService.verifyPassenger(null);
+			assertTrue(false);
+		} catch (EntityDoesNotExistException e) {
+			assertTrue(false);
+		} catch (InvalidDataException e) {
+			assertEquals("Username can not be null or empty string.", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void verifyPassengerUsernameIsEmptyString(){
+		try {
+			userService.verifyPassenger("");
+			assertTrue(false);
+		} catch (EntityDoesNotExistException e) {
+			assertTrue(false);
+		} catch (InvalidDataException e) {
+			assertEquals("Username can not be null or empty string.", e.getMessage());
+		}
+	}
+	
+	@Test
+	@Rollback
+	public void rejectVerificationSuccessful(){
+		try {
+			userService.rejectPassengerVerification(PassengerConstants.VERIFY_PASSENGER);
+			assertTrue(true);
+		} catch (EntityDoesNotExistException e) {
+			assertTrue(false);
+		} catch (InvalidDataException e) {
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void rejectVerificationPassengerNotFound(){
+		try {
+			userService.rejectPassengerVerification("badUsername");
+			assertTrue(false);
+		} catch (EntityDoesNotExistException e) {
+			assertEquals("Passenger not found", e.getMessage());
+		} catch (InvalidDataException e) {
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void rejectVerificationPassengerUsernameIsNull(){
+		try {
+			userService.rejectPassengerVerification(null);
+			assertTrue(false);
+		} catch (EntityDoesNotExistException e) {
+			assertTrue(false);
+		} catch (InvalidDataException e) {
+			assertEquals("Username can not be null or empty string.", e.getMessage());
+		}
+	}
+	
+	@Test
+	public void rejectVerificationPassengerUsernameIsEmptyString(){
+		try {
+			userService.rejectPassengerVerification("");
+			assertTrue(false);
+		} catch (EntityDoesNotExistException e) {
+			assertTrue(false);
+		} catch (InvalidDataException e) {
+			assertEquals("Username can not be null or empty string.", e.getMessage());
+		}
 	}
 }

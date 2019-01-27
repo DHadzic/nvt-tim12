@@ -19,6 +19,9 @@ public class Pricelist {
 	private Date date_formed;
 
 	@Column
+	private Date date_reactivated;
+	
+	@Column
 	private Date date_invalidated;
 
 	public Long getId() {
@@ -39,6 +42,14 @@ public class Pricelist {
 
 	public Date getDate_invalidated() {
 		return date_invalidated;
+	}
+
+	public Date getDate_reactivated() {
+		return date_reactivated;
+	}
+
+	public void setDate_reactivated(Date date_reactivated) {
+		this.date_reactivated = date_reactivated;
 	}
 
 	public void setDate_invalidated(Date date_invalidated) {
