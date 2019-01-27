@@ -17,6 +17,7 @@ import com.project.repository.LineRepository;
 import com.project.repository.ScheduleRepository;
 import com.project.repository.VehicleRepository;
 import com.project.web.dto.AddVehicleDTO;
+import com.project.web.dto.LinesPerTypeDTO;
 
 @Service
 public class AddVehicleServiceImpl {
@@ -60,4 +61,32 @@ public class AddVehicleServiceImpl {
 	public ArrayList<Vehicle> getVehiclesWithLines(){
 		return (ArrayList<Vehicle>) vehicleRepository.findByLineNotNull();
 	}
+	
+	public LinesPerTypeDTO getLinesPerType() {
+		LinesPerTypeDTO linesPT = new LinesPerTypeDTO();
+		ArrayList<Vehicle> found_vehicles;
+		found_vehicles = (ArrayList<Vehicle>) vehicleRepository.findByType(TransportType.BUS);
+		for (Vehicle vehicle : found_vehicles) {
+			if(vehicle.getLine() != null) {
+				linesPT.busAddLine(vehicle.getLine());
+				linesPT.busAddStationAt(vehicle.getAtStation());
+			}
+		}
+		found_vehicles = (ArrayList<Vehicle>) vehicleRepository.findByType(TransportType.TRAM);
+		for (Vehicle vehicle : found_vehicles) {
+			if(vehicle.getLine() != null) {
+				linesPT.tramAddLine(vehicle.getLine());
+				linesPT.tramAddStationAt(vehicle.getAtStation());
+			}
+		}
+		found_vehicles = (ArrayList<Vehicle>) vehicleRepository.findByType(TransportType.TROLLEYBUS);
+		for (Vehicle vehicle : found_vehicles) {
+			if(vehicle.getLine() != null) {
+				linesPT.trolleybusAddLine(vehicle.getLine());
+				linesPT.trolleybusAddStationAt(vehicle.getAtStation());
+			}
+		}
+		return linesPT;
+	}
+	
 }

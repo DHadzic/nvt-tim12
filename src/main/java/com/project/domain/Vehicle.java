@@ -20,7 +20,13 @@ public class Vehicle {
 	@Column
 	private TransportType type;
 	
+	// potrebno za kontrolu gde je vozilo
+	@Column
+	private Integer atStation;
 
+	// potrebno za kontrolu gde je vozilo
+	@Column
+	private Boolean startToEnd;
 
 	@Column
 	private ArrayList<Ticket> tickets;
@@ -30,6 +36,9 @@ public class Vehicle {
 
 	@OneToOne
 	private Schedule schedule;
+	
+	public Vehicle() {
+	}
 	
 	public Vehicle(TransportType type, ArrayList<Ticket> tickets, Line line, Schedule schedule) {
 		super();
@@ -45,6 +54,9 @@ public class Vehicle {
 		this.type = type;
 		this.tickets = tickets;
 		this.schedule = schedule;
+		// potrebno za kontrolu gde je vozilo
+		this.atStation = 0;
+		this.startToEnd = true;
 	}
 
 	public TransportType getType() {
@@ -77,5 +89,21 @@ public class Vehicle {
 
 	public void setLine(Line line) {
 		this.line = line;
+	}
+
+	public Integer getAtStation() {
+		return atStation;
+	}
+
+	public void setAtStation(Integer atStation) {
+		this.atStation = atStation;
+	}
+
+	public Boolean getStartToEnd() {
+		return startToEnd;
+	}
+
+	public void setStartToEnd(Boolean startToEnd) {
+		this.startToEnd = startToEnd;
 	}
 }

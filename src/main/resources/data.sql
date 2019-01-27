@@ -31,5 +31,6 @@ insert into line_station_relation(line_id,station_id) values (999,996);
 insert into line_station_relation(line_id,station_id) values (998,998);
 insert into line_station_relation(line_id,station_id) values (998,997);
 
-insert into vehicle(id,line_id) values (999,999);
+insert into vehicle(id,line_id,start_to_end,at_station,type) values (999,999,true,0,0);
+insert into vehicle(id,line_id,start_to_end,at_station,type) values (997,999,true,1,1);
 insert into vehicle(id) values (998);
