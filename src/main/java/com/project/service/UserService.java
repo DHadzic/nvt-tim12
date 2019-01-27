@@ -218,14 +218,16 @@ public class UserService {
 		return (ArrayList<VerifyRequestDTO>) requests.values();
 	}
 	
-	public void verifyPassenger(String username) throws EntityDoesNotExistException {
+	public void verifyPassenger(String username) throws EntityDoesNotExistException, InvalidDataException {
+		if (username == null || username == "") throw new InvalidDataException("Username can not be null or empty string.");
 		Passenger passenger = findPassenger(username);
 		passenger.setVerified(true);
 		closeVerificationRequest(username);
 		userRepository.save(passenger);
 	}
 	
-	public void rejectPassengerVerification(String username) throws EntityDoesNotExistException {
+	public void rejectPassengerVerification(String username) throws EntityDoesNotExistException, InvalidDataException {
+		if (username == null || username == "") throw new InvalidDataException("Username can not be null or empty string.");
 		Passenger passenger = findPassenger(username);
 		passenger.setDocumentID(null);
 		closeVerificationRequest(username);

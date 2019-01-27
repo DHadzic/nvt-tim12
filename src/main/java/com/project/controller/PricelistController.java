@@ -25,9 +25,12 @@ public class PricelistController {
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ResponseEntity<String> createPricelist(@RequestBody ArrayList<PricelistItemDTO> plItems){
-		Pricelist pl = pricelistService.createPricelist();
-		pricelistService.createPricelistItems(pl, plItems);
-		return new ResponseEntity<String>("Pricelist successfully created.", HttpStatus.OK);
+		try {
+			pricelistService.createPricelistAndPricelistItems(plItems);
+			return new ResponseEntity<String>("Pricelist successfully created.", HttpStatus.OK);
+		} catch (InvalidDataException e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)

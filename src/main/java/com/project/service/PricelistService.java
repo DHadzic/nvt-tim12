@@ -2,7 +2,9 @@ package com.project.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.project.domain.Pricelist;
 import com.project.domain.PricelistItem;
 import com.project.domain.Ticket;
+import com.project.domain.TicketType;
+import com.project.domain.TransportType;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.PricelistItemRepository;
 import com.project.repository.PricelistRepository;
@@ -28,7 +32,7 @@ public class PricelistService {
 	@Autowired
 	private TicketRepository ticketRepository;
 	
-	public Pricelist createPricelist(){
+	public void createPricelistAndPricelistItems(ArrayList<PricelistItemDTO> plItemsDTO) throws InvalidDataException{
 		Pricelist pl = new Pricelist();
 		Pricelist old_pl = pricelistRepository.findTopByOrderByIdDesc();
 		if (old_pl != null){
@@ -36,28 +40,32 @@ public class PricelistService {
 			pricelistRepository.save(old_pl);
 		}
 		pricelistRepository.save(pl);
-		return pl;
+		createPricelistItems(pl, plItemsDTO);
 	}
 	
-	public void createPricelistItem(Pricelist pl, PricelistItemDTO pliDTO){
-		PricelistItem pli = new PricelistItem(pl, pliDTO);
-		pricelistItemRepository.save(pli);
-	}
-	
-	public void createPricelistItems(Pricelist pl, ArrayList<PricelistItemDTO> plItemsDTO){
+	private void createPricelistItems(Pricelist pl, ArrayList<PricelistItemDTO> plItemsDTO) throws InvalidDataException{
+		int requiredNumOfPrices = TicketType.values().length * TransportType.values().length;
+		if (plItemsDTO == null) throw new InvalidDataException("List is null.");
+		if (plItemsDTO.size() != requiredNumOfPrices) throw new InvalidDataException("Number of pricelist items too small or too big.");
+		checkPlItemListItems(plItemsDTO);
 		ArrayList<PricelistItem> plItems = new ArrayList<PricelistItem>();
 		for (PricelistItemDTO plDTO : plItemsDTO){
+			if (plDTO.getPrice() <= 0) throw new InvalidDataException("Price can not be negative value or zero.");
+			if (plDTO.getPrice() > 99999) throw new InvalidDataException("Price is too high.");
+//			if (!checkTicketAndTransportTypes(plDTO)) throw new InvalidDataException("Ticket type or transport type is not valid.");
 			plItems.add(new PricelistItem(pl, plDTO));
 		}
 		pricelistItemRepository.saveAll(plItems);
 	}
-	
+
+
 	public ArrayList<Pricelist> getPricelists(){
 		ArrayList<Pricelist> pricelists = (ArrayList<Pricelist>) pricelistRepository.findAll();
 		return pricelists;
 	}
 	
 	public void deletePricelist(Long pricelistId) throws NoSuchElementException, InvalidDataException{
+		if (pricelistId == null) throw new InvalidDataException("Id can not be null.");
 		Pricelist pl = pricelistRepository.findById(pricelistId).get();
 		if (pl.getDate_invalidated() == null) throw new InvalidDataException("Pricelist is currently active. Can not be deleted.");
 		if (checkActiveTickets(pl)){
@@ -76,5 +84,55 @@ public class PricelistService {
 			}
 		}
 		return true;
+	}
+
+	private void checkPlItemListItems(ArrayList<PricelistItemDTO> plItemsDTO) throws InvalidDataException {
+		try{
+			ArrayList<Integer> types = new ArrayList<Integer>();
+			for (PricelistItemDTO pliDTO : plItemsDTO){
+				TicketType ticketT = TicketType.valueOf(pliDTO.getTicketType());
+				TransportType transportT = TransportType.valueOf(pliDTO.getTransportType());
+				if (transportT == TransportType.BUS){
+					if (ticketT == TicketType.ONE_TIME){
+						types.add(1);
+					}else if (ticketT == TicketType.ONE_DAY){
+						types.add(2);
+					}else if (ticketT == TicketType.MONTHLY){
+						types.add(3);
+					}else if (ticketT == TicketType.YEARLY){
+						types.add(4);
+					}
+				}else if (transportT == TransportType.TRAM){
+					if (ticketT == TicketType.ONE_TIME){
+						types.add(5);
+					}else if (ticketT == TicketType.ONE_DAY){
+						types.add(6);
+					}else if (ticketT == TicketType.MONTHLY){
+						types.add(7);
+					}else if (ticketT == TicketType.YEARLY){
+						types.add(8);
+					}
+				}else if (transportT == TransportType.TROLLEYBUS){
+					if (ticketT == TicketType.ONE_TIME){
+						types.add(9);
+					}else if (ticketT == TicketType.ONE_DAY){
+						types.add(10);
+					}else if (ticketT == TicketType.MONTHLY){
+						types.add(11);
+					}else if (ticketT == TicketType.YEARLY){
+						types.add(12);
+					}
+				}
+			}
+			Set<Integer> set = new HashSet<Integer>(types);
+			if(set.size() < types.size()){
+			   throw new InvalidDataException("List contains multiple prices for same ticket and transport type.");
+			}
+
+		}catch (IllegalArgumentException iae){
+			throw new InvalidDataException("Invalid value for Transport type or Ticket type.");
+		}catch (NullPointerException npe){
+			throw new InvalidDataException("Null can not be Transport type or Ticket type.");
+		}
 	}
 }

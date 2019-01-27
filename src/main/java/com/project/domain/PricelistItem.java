@@ -57,4 +57,36 @@ public class PricelistItem {
 		this.price = pliDTO.getPrice();
 	}
 
+	public Pricelist getPricelist() {
+		return pricelist;
+	}
+
+	public void setPricelist(Pricelist pricelist) {
+		this.pricelist = pricelist;
+	}
+
+	public TicketType getTicketType() {
+		return ticketType;
+	}
+
+	public void setTicketType(TicketType ticketType) {
+		this.ticketType = ticketType;
+	}
+
+	public TransportType getTransportType() {
+		return transportType;
+	}
+
+	public void setTransportType(TransportType transportType) {
+		this.transportType = transportType;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
 }

@@ -3,7 +3,9 @@ package com.project.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import org.junit.Before;
@@ -19,13 +21,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.project.domain.Authority;
 import com.project.domain.Passenger;
 import com.project.domain.PassengerType;
-import com.project.domain.UserAuthority;
+import com.project.domain.User;
+import com.project.domain.Validator;
 import com.project.exceptions.EntityAlreadyExistsException;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.AuthorityRepository;
 import com.project.repository.UserRepository;
 import com.project.web.dto.PassengerDTO;
+import com.project.web.dto.VerifyRequestDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
@@ -52,8 +56,17 @@ public class UserServiceTest {
 		Mockito.when(authRepository.findByName("PASSENGER_ROLE")).thenReturn(auth);
 		Passenger p = new Passenger();
 		p.setUsername("pName");
-		Mockito.when(userRepository.save(p)).thenReturn(p);
+		p.setType(PassengerType.REGULAR);
 		Mockito.when(userRepository.findByUsername("pName")).thenReturn(p);
+		ArrayList<User> users = new ArrayList<User>();
+		Validator v1 = new Validator();
+		HashMap<String, VerifyRequestDTO> req = new HashMap<String, VerifyRequestDTO>();
+		req.put("pName", new VerifyRequestDTO());
+		v1.setVerificationRequest(req);
+		users.add(p);
+		users.add(v1);
+		Mockito.when(userRepository.findAll()).thenReturn(users);
+		
 	}
 	
 	@Test
@@ -381,23 +394,59 @@ public class UserServiceTest {
 		userService.setUserIdDocument("cc", image);
 	}
 	
+	@Test(expected = Exception.class)
+	public void setUserIdDocumentPassengerisNull() throws EntityDoesNotExistException {
+		String image = "testImage";
+		userService.setUserIdDocument(null, image);
+	}
+	
+	@Test(expected = Exception.class)
+	public void setUserIdDocumentImageIsNull() throws EntityDoesNotExistException {
+		userService.setUserIdDocument("cc", null);
+	}
+	
+	@Test(expected = Exception.class)
+	public void setUserIdDocumentImageIsEmptyString() throws EntityDoesNotExistException {
+		userService.setUserIdDocument("cc", "");
+	}
+	
 	@Test()
-	public void verifyPassengerSuccessful() throws EntityDoesNotExistException {
+	public void verifyPassengerSuccessful() throws EntityDoesNotExistException, InvalidDataException {
 		userService.verifyPassenger("pName");
 	}
 	
 	@Test(expected = EntityDoesNotExistException.class)
-	public void verifyPassengerPassengerNotFound() throws EntityDoesNotExistException {
+	public void verifyPassengerPassengerNotFound() throws EntityDoesNotExistException, InvalidDataException {
 		userService.verifyPassenger("cc");
 	}
 	
+	@Test(expected = InvalidDataException.class)
+	public void verifyPassengerUsernameIsNull() throws EntityDoesNotExistException, InvalidDataException {
+		userService.verifyPassenger(null);
+	}
+	
+	@Test(expected = InvalidDataException.class)
+	public void verifyPassengerUsernameIsEmptyString() throws EntityDoesNotExistException, InvalidDataException {
+		userService.verifyPassenger("");
+	}
+	
 	@Test()
-	public void rejectVerificationSuccessful() throws EntityDoesNotExistException{
+	public void rejectVerificationSuccessful() throws EntityDoesNotExistException, InvalidDataException{
 		userService.rejectPassengerVerification("pName");
 	}
 	
 	@Test(expected = EntityDoesNotExistException.class)
-	public void rejectVerificationPassengerNotFound() throws EntityDoesNotExistException{
+	public void rejectVerificationPassengerNotFound() throws EntityDoesNotExistException, InvalidDataException{
 		userService.rejectPassengerVerification("cc");
+	}
+	
+	@Test(expected = InvalidDataException.class)
+	public void rejectVerificationPassengerUsernameIsNull() throws EntityDoesNotExistException, InvalidDataException{
+		userService.rejectPassengerVerification(null);
+	}
+	
+	@Test(expected = InvalidDataException.class)
+	public void rejectVerificationPassengerUsernameIsEmptyString() throws EntityDoesNotExistException, InvalidDataException{
+		userService.rejectPassengerVerification("");
 	}
 }

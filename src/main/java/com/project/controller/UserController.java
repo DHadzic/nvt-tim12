@@ -158,7 +158,7 @@ public class UserController {
 		try{
 			userService.verifyPassenger(username);
 			return new ResponseEntity<String>("Passenger verified.", HttpStatus.OK);
-		}catch (EntityDoesNotExistException edne) {
+		}catch (EntityDoesNotExistException | InvalidDataException edne) {
 			return new ResponseEntity<String>(edne.getMessage(), HttpStatus.BAD_REQUEST);
 
 		}
@@ -169,7 +169,7 @@ public class UserController {
 		try{
 			userService.rejectPassengerVerification(username);
 			return new ResponseEntity<String>("Verification rejected.", HttpStatus.OK);
-		}catch (EntityDoesNotExistException edne) {
+		}catch (EntityDoesNotExistException | InvalidDataException edne) {
 			return new ResponseEntity<String>(edne.getMessage(), HttpStatus.BAD_REQUEST);
 
 		}
