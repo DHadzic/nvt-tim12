@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MapService } from 'src/app/services/map.service';
 import { catchError } from 'rxjs/operators';
 import { Observable,throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-stops',
@@ -16,7 +17,7 @@ export class AddStopsComponent implements OnInit {
   public mapNotClicked;
   public polygonDots;
 
-  constructor(private mapService: MapService) { 
+  constructor(private mapService: MapService,private router: Router) { 
     this.marker = {};
     this.busStops = [];
     this.mapNotClicked = true;
@@ -107,11 +108,12 @@ setMarker(event){
   }
 
   addStation(){
+    var _this = this;
 
     var observer = {
       next(value) {
-        alert("Bus stop added")
-        this.router.navigate(['/addStop']);
+        alert(value)
+        _this.router.navigate(['/main']);
       },
       error(msg) {
         alert(msg.error);

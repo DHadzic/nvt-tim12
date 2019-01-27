@@ -7,7 +7,8 @@ import com.project.domain.PassengerType;
 public class PassengerConstants {
 	public static final String NEW_TAKEN_USERNAME = "taken_username";
 	
-    public static final String NEW_USERNAME = "Djole123";
+    public static final String NEW_USERNAME1 = "Djole123";
+    public static final String NEW_USERNAME2 = "Djole_123";
     public static final String NEW_USERNAME_FOR_INVALID = "Djole1234";
     public static final String NEW_PASSWORD = "sifra";
     public static final String NEW_NAME = "Djordje";

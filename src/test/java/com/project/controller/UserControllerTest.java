@@ -85,7 +85,7 @@ public class UserControllerTest {
 	@Rollback
 	public void successfulRegister() throws Exception {
 		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername(PassengerConstants.NEW_USERNAME);
+		pass.setUsername(PassengerConstants.NEW_USERNAME1);
 		pass.setPassword(PassengerConstants.NEW_PASSWORD);
 		pass.setName(PassengerConstants.NEW_NAME);
 		pass.setSurname(PassengerConstants.NEW_SURNAME);

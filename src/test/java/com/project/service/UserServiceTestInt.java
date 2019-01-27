@@ -331,10 +331,10 @@ public class UserServiceTestInt {
 	@Test
 	@Rollback
 	public void registerSuccessful() throws EntityAlreadyExistsException, InvalidDataException {
-		assertThat(userService.findByUsername(PassengerConstants.NEW_USERNAME)).isNull();
+		assertThat(userService.findByUsername(PassengerConstants.NEW_USERNAME2)).isNull();
 		
 		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername(PassengerConstants.NEW_USERNAME);
+		pass.setUsername(PassengerConstants.NEW_USERNAME2);
 		pass.setPassword(PassengerConstants.NEW_PASSWORD);
 		pass.setName(PassengerConstants.NEW_NAME);
 		pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -342,6 +342,6 @@ public class UserServiceTestInt {
 		pass.setType(PassengerConstants.NEW_TYPE);
 		userService.registerUser(pass);
 			
-		assertThat(userService.findByUsername(PassengerConstants.NEW_USERNAME)).isNotNull();
+		assertThat(userService.findByUsername(PassengerConstants.NEW_USERNAME2)).isNotNull();
 	}
 }

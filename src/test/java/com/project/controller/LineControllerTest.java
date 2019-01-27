@@ -58,7 +58,7 @@ public class LineControllerTest {
 	@Test
 	public void getLines() throws Exception {
 		mockMvc.perform(get(URL_PREFIX + "/get_lines")).andExpect(status().isOk())
-				.andExpect(jsonPath("$", hasSize(LineConstants.DB_SIZE)));
+				.andExpect(jsonPath("$", hasSize(LineConstants.DB_SIZE + 1)));
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class LineControllerTest {
 	public void addStationNullLatSent() throws Exception {
 		BusStation bs = new BusStation();
 		bs.setLat(null);
-		bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA);
+		bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA2);
 		String json = TestUtil.json(bs);
 
 		MvcResult result = mockMvc.perform(put(URL_PREFIX + "/add_station").contentType(contentType).content(json))
@@ -84,8 +84,8 @@ public class LineControllerTest {
 	@Test
 	@WithMockUser(authorities = { "ADMIN_ROLE" })
 	public void addStationNullLngSent() throws Exception {
-		BusStation bs = new BusStation(BusStopConstants.NEW_LAT_FIRST_AREA, null);
-		bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA);
+		BusStation bs = new BusStation();
+		bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA2);
 		bs.setLng(null);
 		String json = TestUtil.json(bs);
 
@@ -127,7 +127,7 @@ public class LineControllerTest {
 	@WithMockUser(authorities = { "ADMIN_ROLE" })
 	public void addStationLngNotParsable() throws Exception {
 		BusStation bs = new BusStation();
-		bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA);
+		bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA2);
 		bs.setLng(BusStopConstants.NEW_LNG_NAN);
 		String json = TestUtil.json(bs);
 
@@ -142,7 +142,7 @@ public class LineControllerTest {
 	public void addStationLatOutOfBounds1() throws Exception {
 		BusStation bs = new BusStation();
 		bs.setLat(BusStopConstants.NEW_LAT_OOB1);
-		bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA);
+		bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA2);
 		String json = TestUtil.json(bs);
 
 		MvcResult result = mockMvc.perform(put(URL_PREFIX + "/add_station").contentType(contentType).content(json))
@@ -156,7 +156,7 @@ public class LineControllerTest {
 	public void addStationLatOutOfBounds2() throws Exception {
 		BusStation bs = new BusStation();
 		bs.setLat(BusStopConstants.NEW_LAT_OOB2);
-		bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA);
+		bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA2);
 		String json = TestUtil.json(bs);
 
 		MvcResult result = mockMvc.perform(put(URL_PREFIX + "/add_station").contentType(contentType).content(json))
@@ -169,7 +169,7 @@ public class LineControllerTest {
 	@WithMockUser(authorities = { "ADMIN_ROLE" })
 	public void addStationLngOutOfBounds1() throws Exception {
 		BusStation bs = new BusStation();
-		bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA);
+		bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA2);
 		bs.setLng(BusStopConstants.NEW_LNG_OOB1);
 		String json = TestUtil.json(bs);
 
@@ -183,7 +183,7 @@ public class LineControllerTest {
 	@WithMockUser(authorities = { "ADMIN_ROLE" })
 	public void addStationLngOutOfBounds2() throws Exception {
 		BusStation bs = new BusStation();
-		bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA);
+		bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA2);
 		bs.setLng(BusStopConstants.NEW_LNG_OOB2);
 		String json = TestUtil.json(bs);
 
@@ -198,7 +198,7 @@ public class LineControllerTest {
 	public void addStationLatOutOfBounds3() throws Exception {
 		BusStation bs = new BusStation();
 		bs.setLat(BusStopConstants.NEW_LAT_OOB3);
-		bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA);
+		bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA2);
 		String json = TestUtil.json(bs);
 
 		MvcResult result = mockMvc.perform(put(URL_PREFIX + "/add_station").contentType(contentType).content(json))
@@ -212,7 +212,7 @@ public class LineControllerTest {
 	public void addStationLatOutOfBounds4() throws Exception {
 		BusStation bs = new BusStation();
 		bs.setLat(BusStopConstants.NEW_LAT_OOB4);
-		bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA);
+		bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA2);
 		String json = TestUtil.json(bs);
 
 		MvcResult result = mockMvc.perform(put(URL_PREFIX + "/add_station").contentType(contentType).content(json))
@@ -225,7 +225,7 @@ public class LineControllerTest {
 	@WithMockUser(authorities = { "ADMIN_ROLE" })
 	public void addStationLngOutOfBounds3() throws Exception {
 		BusStation bs = new BusStation();
-		bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA);
+		bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA2);
 		bs.setLng(BusStopConstants.NEW_LNG_OOB3);
 		String json = TestUtil.json(bs);
 
@@ -239,7 +239,7 @@ public class LineControllerTest {
 	@WithMockUser(authorities = { "ADMIN_ROLE" })
 	public void addStationLngOutOfBounds4() throws Exception {
 		BusStation bs = new BusStation();
-		bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA);
+		bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA2);
 		bs.setLng(BusStopConstants.NEW_LNG_OOB4);
 		String json = TestUtil.json(bs);
 
@@ -254,8 +254,8 @@ public class LineControllerTest {
 	@Rollback
 	public void addStationInsideFirstArea() throws Exception {
 		BusStation bs = new BusStation();
-		bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA);
-		bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA);
+		bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA2);
+		bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA2);
 		String json = TestUtil.json(bs);
 
 		MvcResult result = mockMvc.perform(put(URL_PREFIX + "/add_station").contentType(contentType).content(json))
@@ -269,8 +269,8 @@ public class LineControllerTest {
 	@Rollback
 	public void addStationInsideSecondArea() throws Exception {
 		BusStation bs = new BusStation();
-		bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA);
-		bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA);
+		bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA2);
+		bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA2);
 		String json = TestUtil.json(bs);
 
 		MvcResult result = mockMvc.perform(put(URL_PREFIX + "/add_station").contentType(contentType).content(json))
@@ -435,7 +435,7 @@ public class LineControllerTest {
 	@Rollback
 	public void addLineAllGood() throws Exception {
 		LineDTO line = new LineDTO();
-		line.setName(LineConstants.NEW_NAME);
+		line.setName(LineConstants.NEW_NAME1);
 		line.setStations(LineConstants.NEW_STATIONS);
 		String json = TestUtil.json(line);
 

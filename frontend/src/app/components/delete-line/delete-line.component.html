@@ -1,8 +1,34 @@
-<div class="list-group">
-  <button *ngFor="let line of lines" type="button" class="list-group-item list-group-item-action"
-          (click)="displayLine(lines.id)">{{line.id}}</button>
-</div>
+<div class="alert alert-info box-msg text-center">Clicking the line will enable Delete Line button and display given line.</div>
 
 <div class="row">
-<p>Line to delete: {{ selectedLine.id }} , {{ selectedLine.name}}</p>
+  <div class="col-8">
+    <div class="row">
+    <agm-map class="my_map" [longitude]="19.840958" [latitude]="45.24604914768334" 
+      [zoom]="13" [clickableIcons]="false">
+      <ng-container>
+        <agm-direction 
+              [renderOptions]="{suppressMarkers: true}"
+              [travelMode]="'DRIVING'"
+              [markerOptions]="{
+                  origin:{label: {color: 'black', text:'Start', fontWeight:'bold', fontSize:'12px'}, clickable : false},
+                  destination: {label: {color: 'black', text:'End', fontWeight:'bold', fontSize:'12px'}},
+                  waypoints: {label: {color: 'black', text:'S', fontWeight:'bold', fontSize:'12px'}}}"
+              [origin]="routePoints.origin" 
+              [destination]="routePoints.dest" 
+              [waypoints]="routePoints.waypoints">
+        </agm-direction>
+      </ng-container>
+    </agm-map>
+    </div>
+    <div class="row">
+      <div class="alert alert-info selected_output text-center">Selected line : {{ selectedLine.id }} , {{ selectedLine.name}}</div>
+      <button class="btn btn-success button_delete" [disabled]="isSelected()" (click)="deleteLine()">Delete line</button>
+    </div>
+</div>
+  <div class="col-4 top_padding">
+      <div class="list-group">
+          <button *ngFor="let line of lines" type="button" class="list-group-item list-group-item-action text-center"
+                  (click)="displayLine(line.id)">{{line.name}}</button>
+        </div>
+        </div>
 </div>

@@ -50,6 +50,16 @@ const appRoutes: Routes = [
     data: {roles: ['ADMIN_ROLE']},
     canActivate: [AuthGuardGuard]
   },{
+    path: 'deleteStop',
+    component: DeleteBusStopComponent,
+    data: {roles: ['ADMIN_ROLE']},
+    canActivate: [AuthGuardGuard]
+  },{
+    path: 'deleteLine',
+    component: DeleteLineComponent,
+    data: {roles: ['ADMIN_ROLE']},
+    canActivate: [AuthGuardGuard]
+  },{
     path: 'validate',
     component: ValidateComponent,
     data: {roles: ['VALIDATOR_ROLE']},

@@ -10,7 +10,8 @@ import com.project.domain.BusStation;
 
 public class LineConstants {
     public static final String NEW_NAME_TAKEN = "taken_line";
-    public static final String NEW_NAME = "8a";
+    public static final String NEW_NAME1 = "100a";
+    public static final String NEW_NAME2 = "100b";
     public static final String NEW_NAME_FOR_INVALID = "8aa";
     public static final ArrayList<BusStation> NEW_NOT_ENOUGH_STATIONS0 = new ArrayList<BusStation>();
     public static final ArrayList<BusStation> NEW_NOT_ENOUGH_STATIONS1 = new ArrayList<BusStation>() {{
@@ -45,7 +46,6 @@ public class LineConstants {
 		add(new BusStation("45.26042973161276","19.832632423217774"));
     }};
     
-    public static int DB_SIZE_AFTER_ADD = 4;
-    public static int DB_SIZE = 2;
+    public static int DB_SIZE = 1;
 
 }
