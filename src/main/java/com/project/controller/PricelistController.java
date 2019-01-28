@@ -58,10 +58,21 @@ public class PricelistController {
 		return new ResponseEntity<ArrayList<PricelistItemDTO>>(pricesToReturn, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/deletePricelist", method = RequestMethod.POST)
-	public ResponseEntity<String> deletePricelist(Long pricelistId){
+	@RequestMapping(value = "/reactivatePricelist", method = RequestMethod.POST)
+	public ResponseEntity<String> reactivate(@RequestBody String pricelistId){
 		try{
-			pricelistService.deletePricelist(pricelistId);
+			pricelistService.reactivatePricelist(Long.parseLong(pricelistId, 10));
+			return new ResponseEntity<String>("Pricelist reactivated.", HttpStatus.OK);
+		} catch (EntityDoesNotExistException e) {
+			return new ResponseEntity<String>("Pricelist not found.", HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	@RequestMapping(value = "/deletePricelist", method = RequestMethod.POST)
+	public ResponseEntity<String> deletePricelist(@RequestBody String pricelistId){
+		try{
+			pricelistService.deletePricelist(Long.parseLong(pricelistId, 10));
 			return new ResponseEntity<String>("Pricelist deleted.", HttpStatus.OK);
 		}catch (NoSuchElementException nsee){
 			return new ResponseEntity<String>("Pricelist not found.", HttpStatus.BAD_REQUEST);

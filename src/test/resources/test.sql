@@ -31,6 +31,7 @@ insert into user (username, password, dtype) values ('vName', '$2a$04$Amda.Gm4Q.
 insert into pricelist (id,formed,invalidated) values (999, '2017-12-18 13:17:17', '2017-12-18 23:55:17');
 insert into pricelist (id,formed) values (998, '2017-12-18 13:17:17');
 insert into pricelist (id,formed,invalidated) values (997, '2017-12-18 13:17:17', '2017-12-18 23:47:17');
+insert into pricelist (id,formed) values (996, '2017-12-28 13:17:17');
 insert into pricelist_item (id, pricelist_id, ticket_type, transport_type) values (999, 997,1,1);
 insert into pricelist_item (id, pricelist_id, ticket_type, transport_type) values (998, 997,1,2);
 insert into pricelist_item (id, pricelist_id, ticket_type, transport_type) values (997, 998,0,1);

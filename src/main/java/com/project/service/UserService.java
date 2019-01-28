@@ -210,7 +210,7 @@ public class UserService {
 		if (username == null || image == null || username == "" || image == "") throw new InvalidDataException("Parameters can not be null or empty string.");
 		Passenger passenger = findPassenger(username);
 		passenger.setDocumentID(image);
-		sendVerificationRequest(username, passenger.getType(), image);
+//		sendVerificationRequest(username, passenger.getType(), image);
 		userRepository.save(passenger);
 	}
 	

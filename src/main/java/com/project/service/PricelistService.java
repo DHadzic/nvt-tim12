@@ -39,7 +39,7 @@ public class PricelistService {
 		ArrayList<PricelistItem> plItems = createPricelistItems(pl, plItemsDTO);
 		
 		ArrayList<Pricelist> activePl = pricelistRepository.findByInvalidatedIsNull();
-		if (activePl.size() > 1) throw new InvalidDataException("There is more than one active pricelist.");
+//		if (activePl.size() > 1) throw new InvalidDataException("There is more than one active pricelist.");
 		if (activePl.get(0) != null){
 			activePl.get(0).setDate_invalidated(new Date());
 			pricelistRepository.saveAll(activePl);
