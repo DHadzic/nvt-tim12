@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.Pricelist;
+import com.project.domain.PricelistItem;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.service.PricelistService;
@@ -44,6 +45,17 @@ public class PricelistController {
 			return new ResponseEntity<ArrayList<Pricelist>>(new ArrayList<Pricelist>(), HttpStatus.BAD_REQUEST);
 		}
 		
+	}
+	
+	@RequestMapping(value = "/getPrices", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<PricelistItemDTO>> getPrices(){
+		ArrayList<PricelistItem> prices = pricelistService.getPrices();
+		ArrayList<PricelistItemDTO> pricesToReturn = new ArrayList<PricelistItemDTO>();
+		for (PricelistItem pli : prices){
+			PricelistItemDTO pliDTO = new PricelistItemDTO(pli.getTicketType().toString(), pli.getTransportType().toString(), pli.getPrice());
+			pricesToReturn.add(pliDTO);
+		}
+		return new ResponseEntity<ArrayList<PricelistItemDTO>>(pricesToReturn, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/deletePricelist", method = RequestMethod.POST)

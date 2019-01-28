@@ -91,25 +91,25 @@ public class TicketServiceTest {
 		ticketService.create(null);
 	}
 	
-	@Test(expected = EntityDoesNotExistException.class)
+	@Test(expected = InvalidDataException.class)
 	public void createTransportTypeNull() throws EntityDoesNotExistException, InvalidDataException {
 		TicketDTO t1dto = new TicketDTO("p2", "ONE_TIME", null);
 		ticketService.create(t1dto);
 	}
 	
-	@Test(expected = EntityDoesNotExistException.class)
+	@Test(expected = InvalidDataException.class)
 	public void createTransportTypeInvalid() throws EntityDoesNotExistException, InvalidDataException {
 		TicketDTO t1dto = new TicketDTO("p2", "ONE_TIME", " ");
 		ticketService.create(t1dto);
 	}
 	
-	@Test(expected = EntityDoesNotExistException.class)
+	@Test(expected = InvalidDataException.class)
 	public void createTicketTypeNull() throws EntityDoesNotExistException, InvalidDataException {
 		TicketDTO t1dto = new TicketDTO("p2", null, "BUS");
 		ticketService.create(t1dto);
 	}
 	
-	@Test(expected = EntityDoesNotExistException.class)
+	@Test(expected = InvalidDataException.class)
 	public void createTicketTypeInvalid() throws EntityDoesNotExistException, InvalidDataException {
 		TicketDTO t1dto = new TicketDTO("p2", " ", "BUS");
 		ticketService.create(t1dto);

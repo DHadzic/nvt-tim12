@@ -41,8 +41,10 @@ public class TicketService {
 			if (u == null) throw new EntityDoesNotExistException("User does not exist.");	
 			TicketType ticketT = TicketType.valueOf(ticketDTO.getTicketType());
 			TransportType transportT = TransportType.valueOf(ticketDTO.getTransportType());
-			Pricelist pl = pricelistRepository.findTopByOrderByIdDesc();
+			Pricelist pl = pricelistRepository.findByInvalidatedIsNull().get(0);
+			System.out.println("\n\npl je "+pl.getId() + "ticket je " + ticketT + " transport je "+transportT);
 			PricelistItem pli = pricelistItemRepository.findByPricelistAndTicketTypeAndTransportType(pl, ticketT, transportT);
+			System.out.println(pli);
 			if (pli == null) throw new EntityDoesNotExistException("Price list item does not exist.");
 	//		System.out.println("Pricelist item je " + pli);
 			Ticket ticket = new Ticket(u, ticketT, transportT, pli);
@@ -62,7 +64,8 @@ public class TicketService {
 		if (username == null) throw new InvalidDataException("Username is null.");
 		Passenger p = (Passenger) userRepository.findByUsername(username);
 		if (p == null) throw new EntityDoesNotExistException("User does not exist.");
-		return (ArrayList<Ticket>) p.getTikcets();
+		ArrayList<Ticket> tickets = ticketRepository.findByUser(p);
+		return tickets;
 	}
 	
 	public Ticket getUserTicket(String username, String transportType) throws EntityDoesNotExistException, InvalidDataException {

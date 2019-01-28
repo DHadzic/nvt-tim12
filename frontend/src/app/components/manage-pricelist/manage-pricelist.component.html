@@ -1,0 +1,57 @@
+<div class="col-md-6">
+  <button class="btn btn btn-primary" (click)="toggleCreate()">Create new pricelist</button>
+  <div *ngIf="createPricelistForm">
+    <h2 class="form-signin-heading">Create pricelist</h2>
+    <form role="form" (ngSubmit)="create()">
+    <div class="form-group">
+      <label for="priceBugOneTime">Price for Bus and One time ticket</label>
+      <input type="number" id="priceBugOneTime" class="form-control" name="bus_oneTime" [(ngModel)]="prices[0].price">
+    </div>
+    <div class="form-group">
+      <label for="priceBugOneday">Price for Bus and One day ticket</label>
+      <input type="number" id="priceBugOneDay" class="form-control" name="bus_oneDay" [(ngModel)]="prices[1].price">
+    </div>
+    <div class="form-group">
+      <label for="priceBugOneday">Price for Bus and monthly ticket</label>
+      <input type="number" id="priceBugOneDay" class="form-control" name="bus_oneDay" [(ngModel)]="prices[2].price">
+    </div>
+    <div class="form-group">
+      <label for="priceBugOneday">Price for Bus and yearly ticket</label>
+      <input type="number" id="priceBugOneDay" class="form-control" name="bus_oneDay" [(ngModel)]="prices[3].price">
+    </div>
+    <div class="form-group">
+      <label for="priceBugOneday">Price for Tram and One time ticket</label>
+      <input type="number" id="priceBugOneDay" class="form-control" name="bus_oneDay" [(ngModel)]="prices[4].price">
+    </div>
+    <div class="form-group">
+      <label for="priceBugOneday">Price for Tram and One day ticket</label>
+      <input type="number" id="priceBugOneDay" class="form-control" name="bus_oneDay" [(ngModel)]="prices[5].price">
+    </div>
+    <div class="form-group">
+      <label for="priceBugOneday">Price for Tram and monthly ticket</label>
+      <input type="number" id="priceBugOneDay" class="form-control" name="bus_oneDay" [(ngModel)]="prices[6].price">
+    </div>
+    <div class="form-group">
+      <label for="priceBugOneday">Price for Tram and yearly ticket</label>
+      <input type="number" id="priceBugOneDay" class="form-control" name="bus_oneDay" [(ngModel)]="prices[7].price">
+    </div>
+    <div class="form-group">
+      <label for="priceBugOneday">Price for Trolleybus and One time ticket</label>
+      <input type="number" id="priceBugOneDay" class="form-control" name="bus_oneDay" [(ngModel)]="prices[8].price">
+    </div>
+    <div class="form-group">
+      <label for="priceBugOneday">Price for Trolleybus and One day ticket</label>
+      <input type="number" id="priceBugOneDay" class="form-control" name="bus_oneDay" [(ngModel)]="prices[9].price">
+    </div>
+    <div class="form-group">
+      <label for="priceBugOneday">Price for Trolleybus and monthly ticket</label>
+      <input type="number" id="priceBugOneDay" class="form-control" name="bus_oneDay" [(ngModel)]="prices[10].price">
+    </div>
+    <div class="form-group">
+      <label for="priceBugOneday">Price for Trolleybus and yearly ticket</label>
+      <input type="number" id="priceBugOneDay" class="form-control" name="bus_oneDay" [(ngModel)]="prices[11].price">
+    </div>
+    <button type="submit" class="btn btn btn-primary" id="create">Create</button>
+    </form>
+  </div>
+</div>

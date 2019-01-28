@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class Pricelist {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column
@@ -60,6 +60,14 @@ public class Pricelist {
 		super();
 		this.formed = new Date();
 		this.invalidated = null;
-	}	
+	}
+
+	public Pricelist(Long id, Date formed, Date reactivated, Date invalidated) {
+		super();
+		this.id = id;
+		this.formed = formed;
+		this.reactivated = reactivated;
+		this.invalidated = invalidated;
+	}
 	
 }

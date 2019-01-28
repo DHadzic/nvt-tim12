@@ -27,6 +27,7 @@ import { AddVehicleComponent } from './components/add-vehicle/add-vehicle.compon
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DeleteBusStopComponent } from './components/delete-bus-stop/delete-bus-stop.component';
 import { DeleteLineComponent } from './components/delete-line/delete-line.component';
+import { ManagePricelistComponent } from './components/manage-pricelist/manage-pricelist.component';
 
 const appRoutes: Routes = [
   { path: 'main', 
@@ -75,6 +76,11 @@ const appRoutes: Routes = [
     component: TicketsComponent,
     data: {roles: ['PASSENGER_ROLE']},
     canActivate: [AuthGuardGuard]
+  },{
+    path: 'pricelists',
+    component: ManagePricelistComponent,
+    data: {roles: ['ADMIN_ROLE']},
+    canActivate: [AuthGuardGuard]
   },
   { path: 'addVehicle',
   component: AddVehicleComponent,
@@ -99,7 +105,8 @@ const appRoutes: Routes = [
     AddLineComponent,
     AddVehicleComponent,
     DeleteBusStopComponent,
-    DeleteLineComponent
+    DeleteLineComponent,
+    ManagePricelistComponent
   ],
   imports: [
     BrowserModule,
