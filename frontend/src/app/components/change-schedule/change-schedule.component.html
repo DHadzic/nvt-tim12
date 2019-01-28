@@ -1,0 +1,63 @@
+<div class = "container">
+    <div class="row">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <h2 class="form-signin-heading">Select vehicle to change his schedule.</h2>
+            <form role="form">
+                <select class="form-control" [(ngModel)] =  'vehicle' id="vehicle" name="vehicle" (change)="getSchedule()" required > 
+                    <option *ngFor="let veh of vehicles"  [value]="veh.name">{{veh.name}}</option>
+                </select>
+                
+              </form>
+        </div>
+    </div>
+    <div class = "row">
+          <div class="col-md-2"></div>
+          <div style="margin: 10px;border-radius: 7px;border: 2px solid gray;">
+             <h3 class="list-heading"> Workday schedule</h3>
+                <ul >
+                    <div >
+                        <li *ngFor="let w of workDay">
+                           {{ w }}
+                           <button style = "margin:10px;" type="button" class = "btn btn-danger" (click)="deleteHours_workday(w)">Remove</button>
+                           
+                        </li>
+                        <ngb-timepicker *ngIf = "bool" [(ngModel)]="time" [meridian]="meridian" name = "time" [(ngModel)]="addedHours" ></ngb-timepicker>
+                        <button *ngIf = "bool" style = "margin:10px;" type="button" class = "btn btn-success" (click)="addHours_workday()">Add</button>                      
+                        
+                     </div>
+                        
+                </ul>
+                
+          </div>
+          <div style="margin: 10px;border-radius: 7px;border: 2px solid gray;">
+                <h3 class="list-heading"> Saturday schedule</h3>
+                <ul>
+                    <div>
+                      <li *ngFor="let w of saturday">
+                      {{ w }}
+                      <button style = "margin:10px;" type="button" class = "btn btn-danger" (click)="deleteHours_saturday(w)">Remove</button>
+                      </li>
+                      <ngb-timepicker *ngIf = "bool" [(ngModel)]="time2" [meridian]="meridian" name = "time" [(ngModel)]="addedHours" required></ngb-timepicker>
+                        <button *ngIf = "bool" style = "margin:10px;" type="button" class = "btn btn-success" (click)="addHours_saturday()">Add</button>                      
+                     
+                  </div>
+                 
+               </ul>
+          </div>
+          <div style="margin: 10px;border-radius: 7px;border: 2px solid gray;">
+               <h3 class="list-heading"> Sunday schedule</h3>
+              <ul>
+              <div>
+              <li *ngFor="let w of sunday">
+                  {{ w }}
+                  <button style = "margin:10px;" type="button" class = "btn btn-danger" (click)="deleteHours_sunday(w)">Remove</button>
+                  </li>
+                  <ngb-timepicker *ngIf = "bool" [(ngModel)]="time3" [meridian]="meridian" name = "time" [(ngModel)]="addedHours" ></ngb-timepicker>
+                        <button *ngIf = "bool" style = "margin:10px;" type="button" class = "btn btn-success" (click)="addHours_sunday()">Add</button>                      
+              </div>
+              </ul>
+          </div>
+            
+    </div>
+  </div>

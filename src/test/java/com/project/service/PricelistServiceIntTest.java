@@ -209,7 +209,7 @@ public class PricelistServiceIntTest {
 	@Rollback
 	public void reactivatePricelistSuccess(){
 		try {
-			pricelistService.reactivatePricelist(1l);
+			pricelistService.reactivatePricelist(999l);
 		} catch (EntityDoesNotExistException e) {
 			assertTrue(false);
 		}
@@ -218,7 +218,7 @@ public class PricelistServiceIntTest {
 	@Test
 	public void reactivatePricelistNotFound(){
 		try {
-			pricelistService.reactivatePricelist(999l);
+			pricelistService.reactivatePricelist(900l);
 			assertTrue(false);
 		} catch (EntityDoesNotExistException e) {
 			assertEquals("Pricelist not found.", e.getMessage());
@@ -230,7 +230,7 @@ public class PricelistServiceIntTest {
 	@Rollback
 	public void deletePricelistSuccess(){
 		try {
-			pricelistService.deletePricelist(1L);
+			pricelistService.deletePricelist(999L);
 		} catch (NoSuchElementException e) {
 			assertTrue(false);
 		} catch (InvalidDataException e) {
@@ -254,7 +254,7 @@ public class PricelistServiceIntTest {
 	@Test
 	public void deletePricelistNotFound(){
 		try {
-			pricelistService.deletePricelist(999l);
+			pricelistService.deletePricelist(900l);
 			assertTrue(false);
 		} catch (NoSuchElementException e) {
 			assertTrue(true);
@@ -267,7 +267,7 @@ public class PricelistServiceIntTest {
 	@Test
 	public void deletePricelistIsActive(){
 		try {
-			pricelistService.deletePricelist(2l);
+			pricelistService.deletePricelist(998l);
 			assertTrue(false);
 		} catch (NoSuchElementException e) {
 			assertTrue(false);
@@ -279,7 +279,7 @@ public class PricelistServiceIntTest {
 	@Test
 	public void deletePricelistActiveTicketsUsingIt(){
 		try {
-			pricelistService.deletePricelist(3L);
+			pricelistService.deletePricelist(997L);
 			assertTrue(false);
 		} catch (NoSuchElementException e) {
 			assertTrue(false);

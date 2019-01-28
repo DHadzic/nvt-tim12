@@ -34,8 +34,8 @@
           <select class="form-control" id="ticketType" name="ticketType" [(ngModel)]="ticket.ticketType" (change)="priceDisplay()" required >
             <option value="ONE_TIME">One use</option>
             <option value="ONE_DAY">One day</option>
-            <option value="ONE_MONTH">One month</option>
-            <option value="ONE_YEAR">One year</option>
+            <option value="MONTHLY">One month</option>
+            <option value="YEARLY">One year</option>
           </select>
           <p *ngIf="price">Price is: {{price}} RSD</p>
         </div>

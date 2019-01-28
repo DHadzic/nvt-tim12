@@ -39,14 +39,17 @@ public class PricelistService {
 		ArrayList<PricelistItem> plItems = createPricelistItems(pl, plItemsDTO);
 		
 		ArrayList<Pricelist> activePl = pricelistRepository.findByInvalidatedIsNull();
-		if (activePl.size() > 1) throw new InvalidDataException("There is more than one active pricelist.");
+//		if (activePl.size() > 1) throw new InvalidDataException("There is more than one active pricelist.");
 		if (activePl.get(0) != null){
 			activePl.get(0).setDate_invalidated(new Date());
 			pricelistRepository.saveAll(activePl);
+			pricelistRepository.flush();
 		}
 		
+
 		pricelistRepository.save(pl);
 		pricelistItemRepository.saveAll(plItems);
+
 	}
 	
 	private ArrayList<PricelistItem> createPricelistItems(Pricelist pl, ArrayList<PricelistItemDTO> plItemsDTO) throws InvalidDataException{
@@ -57,8 +60,10 @@ public class PricelistService {
 		for (PricelistItemDTO plDTO : plItemsDTO){
 			if (plDTO.getPrice() <= 0) throw new InvalidDataException("Price can not be negative value or zero.");
 			if (plDTO.getPrice() > 99999) throw new InvalidDataException("Price is too high.");
+						
 			plItems.add(new PricelistItem(pl, plDTO));
 		}
+		
 		return plItems;
 	}
 
@@ -67,6 +72,12 @@ public class PricelistService {
 		ArrayList<Pricelist> pricelists = (ArrayList<Pricelist>) pricelistRepository.findAll();
 		if (pricelists.size() == 0) throw new EntityDoesNotExistException("No pricelists found. There must be at least one pricelist.");
 		return pricelists;
+	}
+	
+	public ArrayList<PricelistItem> getPrices() {
+		Pricelist currPricelist = pricelistRepository.findByInvalidatedIsNull().get(0);
+		ArrayList<PricelistItem> prices = pricelistItemRepository.findByPricelist(currPricelist);
+		return prices;
 	}
 	
 	public void reactivatePricelist(Long plId) throws EntityDoesNotExistException{

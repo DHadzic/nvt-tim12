@@ -37,7 +37,15 @@ public class Vehicle {
 	@OneToOne
 	private Schedule schedule;
 	
+<<<<<<< HEAD
+	@Column
+	private String name;
+	
 	public Vehicle() {
+		
+=======
+	public Vehicle() {
+>>>>>>> branch 'master' of https://github.com/DHadzic/nvt-tim12
 	}
 	
 	public Vehicle(TransportType type, ArrayList<Ticket> tickets, Line line, Schedule schedule) {
@@ -48,6 +56,15 @@ public class Vehicle {
 		this.schedule = schedule;
 	}
 
+	public Vehicle(TransportType type, ArrayList<Ticket> tickets, Line line, Schedule schedule,String name) {
+		super();
+		this.type = type;
+		this.tickets = tickets;
+		this.line = line;
+		this.schedule = schedule;
+		this.name = name;
+	}
+	
 	public Vehicle(TransportType type, ArrayList<Ticket> tickets,  Schedule schedule) {
 		// TODO Auto-generated constructor stub
 		super();
@@ -91,6 +108,17 @@ public class Vehicle {
 		this.line = line;
 	}
 
+<<<<<<< HEAD
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+=======
 	public Integer getAtStation() {
 		return atStation;
 	}
@@ -106,4 +134,5 @@ public class Vehicle {
 	public void setStartToEnd(Boolean startToEnd) {
 		this.startToEnd = startToEnd;
 	}
+>>>>>>> branch 'master' of https://github.com/DHadzic/nvt-tim12
 }

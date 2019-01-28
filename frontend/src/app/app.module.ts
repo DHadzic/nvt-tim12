@@ -22,11 +22,15 @@ import { AgmCoreModule } from '@agm/core';
 import { AgmDirectionModule } from 'agm-direction';
 import { ValidateComponent } from './components/validate/validate.component';
 import { AddLineComponent } from './components/add-line/add-line.component';
-import { VerifyComponent } from './components/verify/verify.component';
 import { AddVehicleComponent } from './components/add-vehicle/add-vehicle.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DeleteBusStopComponent } from './components/delete-bus-stop/delete-bus-stop.component';
 import { DeleteLineComponent } from './components/delete-line/delete-line.component';
+import { AssignLineToVehicleComponent } from './components/assign-line-to-vehicle/assign-line-to-vehicle.component';
+import { ListScheduleComponent } from './components/list-schedule/list-schedule.component';
+import { ChangeScheduleComponent } from './components/change-schedule/change-schedule.component';
+import { ManagePricelistComponent } from './components/manage-pricelist/manage-pricelist.component';
+
 
 const appRoutes: Routes = [
   { path: 'main', 
@@ -51,33 +55,27 @@ const appRoutes: Routes = [
     data: {roles: ['ADMIN_ROLE']},
     canActivate: [AuthGuardGuard]
   },{
-    path: 'deleteStop',
-    component: DeleteBusStopComponent,
-    data: {roles: ['ADMIN_ROLE']},
-    canActivate: [AuthGuardGuard]
-  },{
-    path: 'deleteLine',
-    component: DeleteLineComponent,
-    data: {roles: ['ADMIN_ROLE']},
-    canActivate: [AuthGuardGuard]
-  },{
     path: 'validate',
     component: ValidateComponent,
     data: {roles: ['VALIDATOR_ROLE']},
     canActivate: [AuthGuardGuard]
-  },{
-    path: 'verify',
-    component: VerifyComponent,
-    data: {roles: ['PASSENGER_ROLE', 'VALIDATOR_ROLE']},
-    canActivate: [AuthGuardGuard]
   },
   { path: 'tickets',
     component: TicketsComponent,
-    data: {roles: ['PASSENGER_ROLE']},
-    canActivate: [AuthGuardGuard]
   },
   { path: 'addVehicle',
-  component: AddVehicleComponent,
+    component: AddVehicleComponent,
+  },
+  { path: 'assignLine',
+    component: AssignLineToVehicleComponent,
+    data: {roles: ['ADMIN_ROLE']},
+    canActivate: [AuthGuardGuard]
+  },
+  { path: 'listSchedule',
+  component: ListScheduleComponent
+  },
+  { path: 'changeSchedule',
+  component: ChangeScheduleComponent
   },
   { path: '**', component: NotFoundPageComponent },
  
@@ -93,13 +91,15 @@ const appRoutes: Routes = [
     NotFoundPageComponent,
     RegisterComponent,
     TicketsComponent,
-    VerifyComponent,
     AddStopsComponent,
     ValidateComponent,
     AddLineComponent,
     AddVehicleComponent,
     DeleteBusStopComponent,
-    DeleteLineComponent
+    DeleteLineComponent,
+    AssignLineToVehicleComponent,
+    ListScheduleComponent,
+    ChangeScheduleComponent
   ],
   imports: [
     BrowserModule,
