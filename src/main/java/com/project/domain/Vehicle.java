@@ -31,6 +31,13 @@ public class Vehicle {
 	@OneToOne
 	private Schedule schedule;
 	
+	@Column
+	private String name;
+	
+	public Vehicle() {
+		
+	}
+	
 	public Vehicle(TransportType type, ArrayList<Ticket> tickets, Line line, Schedule schedule) {
 		super();
 		this.type = type;
@@ -39,6 +46,15 @@ public class Vehicle {
 		this.schedule = schedule;
 	}
 
+	public Vehicle(TransportType type, ArrayList<Ticket> tickets, Line line, Schedule schedule,String name) {
+		super();
+		this.type = type;
+		this.tickets = tickets;
+		this.line = line;
+		this.schedule = schedule;
+		this.name = name;
+	}
+	
 	public Vehicle(TransportType type, ArrayList<Ticket> tickets,  Schedule schedule) {
 		// TODO Auto-generated constructor stub
 		super();
@@ -78,4 +94,14 @@ public class Vehicle {
 	public void setLine(Line line) {
 		this.line = line;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
 }

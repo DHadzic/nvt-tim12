@@ -26,6 +26,9 @@ import { AddVehicleComponent } from './components/add-vehicle/add-vehicle.compon
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DeleteBusStopComponent } from './components/delete-bus-stop/delete-bus-stop.component';
 import { DeleteLineComponent } from './components/delete-line/delete-line.component';
+import { AssignLineToVehicleComponent } from './components/assign-line-to-vehicle/assign-line-to-vehicle.component';
+import { ListScheduleComponent } from './components/list-schedule/list-schedule.component';
+import { ChangeScheduleComponent } from './components/change-schedule/change-schedule.component';
 
 const appRoutes: Routes = [
   { path: 'main', 
@@ -59,7 +62,18 @@ const appRoutes: Routes = [
     component: TicketsComponent,
   },
   { path: 'addVehicle',
-  component: AddVehicleComponent,
+    component: AddVehicleComponent,
+  },
+  { path: 'assignLine',
+    component: AssignLineToVehicleComponent,
+    data: {roles: ['ADMIN_ROLE']},
+    canActivate: [AuthGuardGuard]
+  },
+  { path: 'listSchedule',
+  component: ListScheduleComponent
+  },
+  { path: 'changeSchedule',
+  component: ChangeScheduleComponent
   },
   { path: '**', component: NotFoundPageComponent },
  
@@ -80,7 +94,10 @@ const appRoutes: Routes = [
     AddLineComponent,
     AddVehicleComponent,
     DeleteBusStopComponent,
-    DeleteLineComponent
+    DeleteLineComponent,
+    AssignLineToVehicleComponent,
+    ListScheduleComponent,
+    ChangeScheduleComponent
   ],
   imports: [
     BrowserModule,

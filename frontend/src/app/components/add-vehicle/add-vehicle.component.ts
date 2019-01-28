@@ -21,10 +21,11 @@ export class AddVehicleComponent implements OnInit {
   public type = "BUS";
   public lines;
   public nrSelect = "";
+  public name = "";
 
   
   constructor(private addVehicleService:AddVehicleService) { 
-    this.vehicle = {type:"BUS",schedule:{},line:"none"}
+    this.vehicle = {type:"BUS",schedule:{},line:"none",name : "default"}
   }
 
   ngOnInit() {
@@ -51,6 +52,7 @@ export class AddVehicleComponent implements OnInit {
         this.vehicle.schedule.workDay = this.workDay;
         this.vehicle.type = this.type;
         this.vehicle.line = this.nrSelect;
+        this.vehicle.name = this.name;
       }
     }else if (this.scheduleTime == "saturday" ){
       var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
@@ -61,6 +63,7 @@ export class AddVehicleComponent implements OnInit {
         this.vehicle.schedule.saturday = this.saturday;
         this.vehicle.type = this.type;
         this.vehicle.line = this.nrSelect;
+        this.vehicle.name = this.name;
       }
       
     }else if (this.scheduleTime == "sunday" ){
@@ -72,6 +75,7 @@ export class AddVehicleComponent implements OnInit {
         this.vehicle.schedule.sunday = this.sunday;
         this.vehicle.type = this.type;
         this.vehicle.line = this.nrSelect;
+        this.vehicle.name = this.name;
       }
     }
   }

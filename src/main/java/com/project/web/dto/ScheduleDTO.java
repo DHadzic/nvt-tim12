@@ -3,6 +3,7 @@ package com.project.web.dto;
 import java.util.ArrayList;
 
 public class ScheduleDTO {
+	
 	ArrayList<String> workDay;
 	ArrayList<String> saturday;
 	ArrayList<String> sunday;

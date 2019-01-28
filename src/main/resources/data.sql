@@ -31,5 +31,18 @@ insert into line_station_relation(line_id,station_id) values (999,996);
 insert into line_station_relation(line_id,station_id) values (998,998);
 insert into line_station_relation(line_id,station_id) values (998,997);
 
-insert into vehicle(id,line_id) values (999,999);
-insert into vehicle(id) values (998);
+insert into schedule_work_day(schedule_id,work_day) values 
+(0,"13:30"),
+(0,"14:30"),
+(0,"15:30"),
+(0,"16:30"),
+(0,"17:30");
+
+
+insert into schedule(id)  values (0);
+
+insert into vehicle(id,line_id,schedule_id,name,type) values (999,null,0,'g11',0);
+insert into vehicle(id,line_id,schedule_id,name,type) values (998,999,0,'g12',0);
+insert into vehicle(id,line_id,schedule_id,name,type) values (997,998,0,'g13',0);
+
+

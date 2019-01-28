@@ -1,8 +1,10 @@
 package com.project.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,53 +22,59 @@ public class Schedule {
 
 
 	@Column
-	private ArrayList<String> workDay;
+	@ElementCollection(targetClass=String.class)
+	private List<String> workDay;
 	
 	@Column
-	private ArrayList<String> saturday;
+	@ElementCollection(targetClass=String.class)
+	private List<String> saturday;
 	
 	@Column
-	private ArrayList<String> sunday;
+	@ElementCollection(targetClass=String.class)
+	private List<String> sunday;
 	
 	
 
+	public Schedule() {
+		
+	}
 	public Schedule(ScheduleDTO schedule) {
 		this.workDay = schedule.getWorkDay();
 		this.sunday = schedule.getSunday();
 		this.saturday = schedule.getSaturday();
 	}
 	
-	public ArrayList<String> getWorkDay() {
+	public List<String> getWorkDay() {
 		return workDay;
 	}
 
 
 
-	public void setWorkDay(ArrayList<String> workDay) {
+	public void setWorkDay(List<String> workDay) {
 		this.workDay = workDay;
 	}
 
 
 
-	public ArrayList<String> getSaturday() {
+	public List<String> getSaturday() {
 		return saturday;
 	}
 
 
 
-	public void setSaturday(ArrayList<String> saturday) {
+	public void setSaturday(List<String> saturday) {
 		this.saturday = saturday;
 	}
 
 
 
-	public ArrayList<String> getSunday() {
+	public List<String>  getSunday() {
 		return sunday;
 	}
 
 
 
-	public void setSunday(ArrayList<String> sunday) {
+	public void setSunday(List<String> sunday) {
 		this.sunday = sunday;
 	}
 
