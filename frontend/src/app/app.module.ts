@@ -32,7 +32,6 @@ import { ListScheduleComponent } from './components/list-schedule/list-schedule.
 import { ChangeScheduleComponent } from './components/change-schedule/change-schedule.component';
 import { ManagePricelistComponent } from './components/manage-pricelist/manage-pricelist.component';
 import { DeleteVehicleComponent } from './components/delete-vehicle/delete-vehicle.component';
-import { VerifyComponent } from './components/verify/verify.component';
 
 
 const appRoutes: Routes = [
@@ -148,6 +147,7 @@ const appRoutes: Routes = [
     ChangeScheduleComponent,
     VerifyComponent,
     ManagePricelistComponent,
+    DeleteVehicleComponent
   ],
   imports: [
     BrowserModule,

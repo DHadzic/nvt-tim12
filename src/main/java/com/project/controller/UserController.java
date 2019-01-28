@@ -145,7 +145,9 @@ public class UserController {
 	@RequestMapping(value = "/getVerifyRequests/{username}", method = RequestMethod.GET)
 	public ResponseEntity<ArrayList<VerifyRequestDTO>> getVerificationRequests(@PathVariable("username") String username) throws EntityDoesNotExistException {
 		try {
+			System.out.println("dosao");
 			ArrayList<VerifyRequestDTO> requests = userService.getVerifyRequests(username);
+			System.out.println(requests.size());
 			return new ResponseEntity<ArrayList<VerifyRequestDTO>>(requests, HttpStatus.OK);
 		}catch (EntityDoesNotExistException edne){
 			return new ResponseEntity<ArrayList<VerifyRequestDTO>>(new ArrayList<VerifyRequestDTO>(), HttpStatus.BAD_REQUEST);

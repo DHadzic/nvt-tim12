@@ -39,6 +39,8 @@ public class UserService {
 	
 	@Autowired
 	private ValidatorRepository validatorRepository;
+	
+	private ArrayList<VerifyRequestDTO> req = new ArrayList<VerifyRequestDTO>();
 
 	public void registerUser(PassengerDTO passengerDTO) throws EntityAlreadyExistsException, InvalidDataException {
 		if(passengerDTO == null) {
@@ -210,16 +212,16 @@ public class UserService {
 		if (username == null || image == null || username == "" || image == "") throw new InvalidDataException("Parameters can not be null or empty string.");
 		Passenger passenger = findPassenger(username);
 		passenger.setDocumentID(image);
-//		sendVerificationRequest(username, passenger.getType(), image);
+		sendVerificationRequest(username, passenger.getType(), image);
 		userRepository.save(passenger);
 	}
 	
 	public ArrayList<VerifyRequestDTO> getVerifyRequests(String username) throws EntityDoesNotExistException{
 		Validator validator = (Validator) userRepository.findByUsername(username);
 		if (validator == null) throw new EntityDoesNotExistException("Validator does no exist.");
-		HashMap<String, VerifyRequestDTO> requests = validator.getVerificationRequest();
+		ArrayList<String> requests = validator.getVerificationRequest();
 		if (requests == null) return new ArrayList<VerifyRequestDTO>();
-		return (ArrayList<VerifyRequestDTO>) requests.values();
+		return req;
 	}
 	
 	public void verifyPassenger(String username) throws EntityDoesNotExistException, InvalidDataException {
@@ -246,16 +248,18 @@ public class UserService {
 	
 	private void sendVerificationRequest(String username, PassengerType type, String image){
 		ArrayList<Validator> validators = (ArrayList<Validator>) validatorRepository.findAll();
+		ArrayList<VerifyRequestDTO> dtos = new ArrayList<VerifyRequestDTO>();
 		for (Validator v : validators){
 			VerifyRequestDTO vr = new VerifyRequestDTO();
 			vr.setUsername(username);
 			vr.setImage(image);
 			vr.setType(type);
-			HashMap<String, VerifyRequestDTO> requests = v.getVerificationRequest();
+			ArrayList<String> requests = v.getVerificationRequest();
 			if (requests == null){
-				requests = new HashMap<String, VerifyRequestDTO>();
+				requests = new ArrayList<String>();
 			}
-			requests.put(username, vr);
+			req.add(vr);
+			requests.add(username);
 			v.setVerificationRequest(requests);
 		}
 		userRepository.saveAll(validators);

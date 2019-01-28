@@ -44,8 +44,27 @@ export class VerifyComponent implements OnInit {
 
   getVerificatonRequests(){
     this.userService.getVerificationRequests(this.currUser.username).subscribe(success => {
-      console.log(success);
+      this.setRequests(success)
     },
     error => { console.log("There are no requests."); })
+  }
+
+  setRequests(data){
+    console.log(data);
+    console.log("ovde");
+    this.requests = data;
+  }
+
+  accept(data){
+    alert("Accepted")!
+    var a = this.requests.indexOf(data);
+    this.requests.splice(a,1);
+    }
+
+  decline(data){
+    alert("Declined")!
+    var a = this.requests.indexOf(data);
+    this.requests.splice(a,1);
+
   }
 }

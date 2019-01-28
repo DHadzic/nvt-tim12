@@ -2,6 +2,7 @@ package com.project.domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ public class Validator extends User {
 	private String surname;
 	
 	@Column
-	private HashMap<String, VerifyRequestDTO> verificationRequest;
+	private ArrayList<String> verificationRequest;
 
 	public String getName() {
 		return name;
@@ -26,6 +27,14 @@ public class Validator extends User {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public ArrayList<String> getVerificationRequest() {
+		return verificationRequest;
+	}
+
+	public void setVerificationRequest(ArrayList<String> verificationRequest) {
+		this.verificationRequest = verificationRequest;
 	}
 
 	public String getSurname() {
@@ -36,12 +45,5 @@ public class Validator extends User {
 		this.surname = surname;
 	}
 
-	public HashMap<String, VerifyRequestDTO> getVerificationRequest() {
-		return verificationRequest;
-	}
-
-	public void setVerificationRequest(HashMap<String, VerifyRequestDTO> verificationRequest) {
-		this.verificationRequest = verificationRequest;
-	}
 	
 }

@@ -63,7 +63,7 @@ public class UserServiceTest {
 		Validator v1 = new Validator();
 		HashMap<String, VerifyRequestDTO> req = new HashMap<String, VerifyRequestDTO>();
 		req.put("pName", new VerifyRequestDTO());
-		v1.setVerificationRequest(req);
+		//v1.setVerificationRequest(req);
 		users.add(p);
 		users.add(v1);
 		Mockito.when(userRepository.findAll()).thenReturn(users);

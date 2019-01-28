@@ -1,5 +1,15 @@
 <div *ngIf="validatorRole">
     <h2>Validate passenger accounts</h2>
+    <ul >
+        <div >
+            <li *ngFor="let w of requests">
+               {{ w.username }}  
+               <button style = "margin:10px;" type="button" class = "btn btn-danger" (click)="accept(w.username)">Accept</button>
+               <button style = "margin:10px;" type="button" class = "btn btn-danger" (click)="decline(w.username)">Remove</button>
+            </li>
+         </div>
+            
+    </ul>
     
 </div>
 <div *ngIf="!validatorRole">
