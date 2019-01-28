@@ -28,6 +28,9 @@
                     <a *ngIf="isAdmin()" class="nav-link" href="addVehicle" id="add_vehicle_link">Add vehicle</a>
             </li>
             <li class="nav-item active">
+                    <a *ngIf="isAdmin()" class="nav-link" href="deleteVehicle" id="delete_vehicle_link">Delete Vehicle</a>
+            </li>
+            <li class="nav-item active">
                     <a *ngIf="isAdmin()" class="nav-link" href="assignLine" id="assign_line_link">Assign Line to Vehicle</a>
             </li>
         </ul>

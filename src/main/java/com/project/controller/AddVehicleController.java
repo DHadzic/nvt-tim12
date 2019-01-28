@@ -54,6 +54,14 @@ public class AddVehicleController {
 				"Vehicle successfully created.", HttpStatus.OK);
 	}
 	
+	@PreAuthorize("permitAll()")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public ResponseEntity<String> delete(@RequestBody AddVehicleDTO ticketDTO) throws EntityDoesNotExistException, InvalidDataException {
+		addVehicleService.delete(ticketDTO);
+        return new ResponseEntity<String>(
+				"Vehicle successfully deleted.", HttpStatus.OK);
+	}
+	
 	
 	@PreAuthorize("permitAll()")
 	@RequestMapping(value = "/getLines", method = RequestMethod.GET)
@@ -90,6 +98,12 @@ public class AddVehicleController {
 	@RequestMapping(value = "/getVehicleByName", method = RequestMethod.POST)
 	public ResponseEntity<Vehicle> getVehicleByName(@RequestBody String vehicle) {
 		return new ResponseEntity<Vehicle>(addVehicleService.getVehicleByName(vehicle), HttpStatus.OK);
+	}
+	
+	@PreAuthorize("permitAll()")
+	@RequestMapping(value = "/getAllVehicles", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<Vehicle>> getAllVehicles() {
+		return new ResponseEntity<ArrayList<Vehicle>>(addVehicleService.getAllVehicles(), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("permitAll()")

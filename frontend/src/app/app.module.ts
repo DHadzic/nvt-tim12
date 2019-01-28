@@ -30,6 +30,8 @@ import { AssignLineToVehicleComponent } from './components/assign-line-to-vehicl
 import { ListScheduleComponent } from './components/list-schedule/list-schedule.component';
 import { ChangeScheduleComponent } from './components/change-schedule/change-schedule.component';
 import { ManagePricelistComponent } from './components/manage-pricelist/manage-pricelist.component';
+import { DeleteVehicleComponent } from './components/delete-vehicle/delete-vehicle.component';
+import { VerifyComponent } from './components/verify/verify.component';
 
 
 const appRoutes: Routes = [
@@ -75,17 +77,29 @@ const appRoutes: Routes = [
   component: ListScheduleComponent
   },
   { path: 'changeSchedule',
-  component: ChangeScheduleComponent
+  component: ChangeScheduleComponent,
+  data: {roles: ['ADMIN_ROLE']},
+  canActivate: [AuthGuardGuard]
   },
   {
     path: 'deleteStop',
-    component:  DeleteBusStopComponent
+    component:  DeleteBusStopComponent,
+    data: {roles: ['ADMIN_ROLE']},
+    canActivate: [AuthGuardGuard]
+    
   },
   {
     path: 'deleteLine',
-    component:  DeleteLineComponent
+    component:  DeleteLineComponent,
+    data: {roles: ['ADMIN_ROLE']},
+    canActivate: [AuthGuardGuard]
   },
-
+  {
+    path: 'deleteVehicle',
+    component:  DeleteVehicleComponent,
+    data: {roles: ['ADMIN_ROLE']},
+    canActivate: [AuthGuardGuard]
+  },
   { path: '**', component: NotFoundPageComponent },
  
 ];

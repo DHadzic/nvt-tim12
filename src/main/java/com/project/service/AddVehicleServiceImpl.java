@@ -183,5 +183,17 @@ public class AddVehicleServiceImpl {
 		
 		return line_info;
 	}
+
+
+	public ArrayList<Vehicle> getAllVehicles() {
+		ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+		vehicles = (ArrayList<Vehicle>) vehicleRepository.findAll();
+		return vehicles;
+	}
+
+
+	public void delete(AddVehicleDTO vehicleDTO) {
+		vehicleRepository.deleteByName(vehicleDTO.getName());	
+	}
 	
 }
