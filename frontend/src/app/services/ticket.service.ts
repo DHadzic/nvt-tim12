@@ -31,4 +31,8 @@ export class TicketService {
    getPrices(){
      return this.http.get("api/pricelist/getPrices",{responseType: 'json'});
    }
+
+   checkUserDiscount(userId){
+     return this.http.get("api/ticket/checkForDiscount/"+userId,{responseType: 'text'});
+   }
 }

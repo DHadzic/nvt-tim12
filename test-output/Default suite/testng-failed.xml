@@ -3,11 +3,18 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test verbose="2" name="Default test">
     <classes>
-      <class name="com.project.e2e.MainPageAdminTest">
-        <methods>
-          <include name="testDeleteLine"/>
-        </methods>
-      </class> <!-- com.project.e2e.MainPageAdminTest -->
+      <class name="com.project.e2e.AdminAddPricelistTest"/>
     </classes>
   </test> <!-- Default test -->
+  <test name="Default test(failed)">
+    <classes>
+      <class name="com.project.e2e.AdminAddPricelistTest">
+        <methods>
+          <include name="testAddPricelist"/>
+          <include name="setupSelenium"/>
+          <include name="closeSelenium"/>
+        </methods>
+      </class> <!-- com.project.e2e.AdminAddPricelistTest -->
+    </classes>
+  </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
