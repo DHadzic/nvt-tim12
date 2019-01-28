@@ -4,9 +4,16 @@ import com.project.domain.PassengerType;
 
 public class VerifyRequestDTO {
 
+	String username;
 	String type;
 	String image;
 	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public String getType() {
 		return type;
 	}

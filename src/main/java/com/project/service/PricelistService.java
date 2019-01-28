@@ -14,6 +14,7 @@ import com.project.domain.PricelistItem;
 import com.project.domain.Ticket;
 import com.project.domain.TicketType;
 import com.project.domain.TransportType;
+import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.PricelistItemRepository;
 import com.project.repository.PricelistRepository;
@@ -33,35 +34,55 @@ public class PricelistService {
 	private TicketRepository ticketRepository;
 	
 	public void createPricelistAndPricelistItems(ArrayList<PricelistItemDTO> plItemsDTO) throws InvalidDataException{
+		if (plItemsDTO == null) throw new InvalidDataException("List is null.");
 		Pricelist pl = new Pricelist();
-		Pricelist old_pl = pricelistRepository.findTopByOrderByIdDesc();
-		if (old_pl != null){
-			old_pl.setDate_invalidated(new Date());
-			pricelistRepository.save(old_pl);
+		ArrayList<PricelistItem> plItems = createPricelistItems(pl, plItemsDTO);
+		
+		ArrayList<Pricelist> activePl = pricelistRepository.findByInvalidatedIsNull();
+		if (activePl.size() > 1) throw new InvalidDataException("There is more than one active pricelist.");
+		if (activePl.get(0) != null){
+			activePl.get(0).setDate_invalidated(new Date());
+			pricelistRepository.saveAll(activePl);
 		}
+		
 		pricelistRepository.save(pl);
-		createPricelistItems(pl, plItemsDTO);
+		pricelistItemRepository.saveAll(plItems);
 	}
 	
-	private void createPricelistItems(Pricelist pl, ArrayList<PricelistItemDTO> plItemsDTO) throws InvalidDataException{
+	private ArrayList<PricelistItem> createPricelistItems(Pricelist pl, ArrayList<PricelistItemDTO> plItemsDTO) throws InvalidDataException{
 		int requiredNumOfPrices = TicketType.values().length * TransportType.values().length;
-		if (plItemsDTO == null) throw new InvalidDataException("List is null.");
 		if (plItemsDTO.size() != requiredNumOfPrices) throw new InvalidDataException("Number of pricelist items too small or too big.");
 		checkPlItemListItems(plItemsDTO);
 		ArrayList<PricelistItem> plItems = new ArrayList<PricelistItem>();
 		for (PricelistItemDTO plDTO : plItemsDTO){
 			if (plDTO.getPrice() <= 0) throw new InvalidDataException("Price can not be negative value or zero.");
 			if (plDTO.getPrice() > 99999) throw new InvalidDataException("Price is too high.");
-//			if (!checkTicketAndTransportTypes(plDTO)) throw new InvalidDataException("Ticket type or transport type is not valid.");
 			plItems.add(new PricelistItem(pl, plDTO));
 		}
-		pricelistItemRepository.saveAll(plItems);
+		return plItems;
 	}
 
 
-	public ArrayList<Pricelist> getPricelists(){
+	public ArrayList<Pricelist> getPricelists() throws EntityDoesNotExistException{
 		ArrayList<Pricelist> pricelists = (ArrayList<Pricelist>) pricelistRepository.findAll();
+		if (pricelists.size() == 0) throw new EntityDoesNotExistException("No pricelists found. There must be at least one pricelist.");
 		return pricelists;
+	}
+	
+	public void reactivatePricelist(Long plId) throws EntityDoesNotExistException{
+		try{
+			Pricelist pl = pricelistRepository.findById(plId).get();
+			ArrayList<Pricelist> activePl = pricelistRepository.findByInvalidatedIsNull();
+//			if (activePl.size() > 10) throw new InvalidDataException("There is more than one active pricelist.");
+			Pricelist old_pl = activePl.get(0);
+			pl.setDate_reactivated(new Date());
+			old_pl.setDate_invalidated(new Date());
+			pricelistRepository.save(old_pl);
+			pricelistRepository.save(pl);
+			
+		}catch (NoSuchElementException e){
+			throw new EntityDoesNotExistException("Pricelist not found.");
+		}
 	}
 	
 	public void deletePricelist(Long pricelistId) throws NoSuchElementException, InvalidDataException{
@@ -83,6 +104,7 @@ public class PricelistService {
 				if (t.getPrice() == pli) return false;
 			}
 		}
+		pricelistItemRepository.deleteAll(plItems);
 		return true;
 	}
 

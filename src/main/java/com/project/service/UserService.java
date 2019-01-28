@@ -84,7 +84,7 @@ public class UserService {
 		passenger.setSurname(passengerDTO.getSurname());
 		passenger.setType(passengerDTO.getType());
 		passenger.setBirthDate(passengerDTO.getBirthDate());
-		passenger.setTikcet(new ArrayList<Ticket>());
+		passenger.setTikcets(new ArrayList<Ticket>());
 		
 		if (passenger.getType() == PassengerType.REGULAR){
 			passenger.setVerified(true);
@@ -203,7 +203,8 @@ public class UserService {
 		}
 	}
 	
-	public void setUserIdDocument(String username, String image) throws EntityDoesNotExistException {
+	public void setUserIdDocument(String username, String image) throws EntityDoesNotExistException, InvalidDataException {
+		if (username == null || image == null || username == "" || image == "") throw new InvalidDataException("Parameters can not be null or empty string.");
 		Passenger passenger = findPassenger(username);
 		passenger.setDocumentID(image);
 		sendVerificationRequest(username, passenger.getType(), image);
@@ -246,6 +247,7 @@ public class UserService {
 		for (User u : users){
 			if (u instanceof Validator){
 				VerifyRequestDTO vr = new VerifyRequestDTO();
+				vr.setUsername(username);
 				vr.setImage(image);
 				vr.setType(type);
 				HashMap<String, VerifyRequestDTO> requests = ((Validator) u).getVerificationRequest();
@@ -265,6 +267,7 @@ public class UserService {
 		ArrayList<Validator> validatorsToSave = new ArrayList<Validator>();
 		for (User u : users){
 			if (u instanceof Validator){
+				if (((Validator)u).getVerificationRequest() == null) continue;
 				((Validator) u).getVerificationRequest().remove(username);
 				validatorsToSave.add((Validator) u);
 			}

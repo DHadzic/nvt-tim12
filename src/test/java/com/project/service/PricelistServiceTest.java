@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.project.domain.Pricelist;
 import com.project.domain.PricelistItem;
 import com.project.domain.Ticket;
+import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.PricelistItemRepository;
 import com.project.repository.PricelistRepository;
@@ -44,8 +45,8 @@ public class PricelistServiceTest {
 	
 	@Before
 	public void setUp(){
-		Mockito.when(pricelistRepository.findTopByOrderByIdDesc()).thenReturn(null);
 		ArrayList<Pricelist> pricelists = new ArrayList<Pricelist>();
+		ArrayList<Pricelist> pricelistsActive = new ArrayList<Pricelist>();
 		Pricelist pl1 = new Pricelist();
 		pl1.setDate_invalidated(new Date());
 		Pricelist pl3 = new Pricelist();
@@ -53,6 +54,7 @@ public class PricelistServiceTest {
 		pricelists.add(pl1);
 		pricelists.add(pl3);
 		pricelists.add(pl4);
+		pricelistsActive.add(pl3);
 		PricelistItem pli = new PricelistItem();
 		pli.setPricelist(pl4);
 		ArrayList<PricelistItem> plItems = new ArrayList<PricelistItem>();
@@ -62,6 +64,7 @@ public class PricelistServiceTest {
 		t.setActive(true);
 		ArrayList<Ticket> activeTickets = new ArrayList<Ticket>();
 		activeTickets.add(t);
+		Mockito.when(pricelistRepository.findByInvalidatedIsNull()).thenReturn(pricelistsActive);
 		Mockito.when(pricelistRepository.findById(1l)).thenReturn(Optional.of(pl1));
 		Mockito.when(pricelistRepository.findById(2l)).thenThrow(new NoSuchElementException());
 		Mockito.when(pricelistRepository.findById(3l)).thenReturn(Optional.of(pl3));
@@ -155,9 +158,19 @@ public class PricelistServiceTest {
 	}
 	
 	@Test
-	public void getAllPricelists(){
+	public void getAllPricelists() throws EntityDoesNotExistException{
 		ArrayList<Pricelist> pricelists = pricelistService.getPricelists();
 		assertNotNull(pricelists);
+	}
+	
+	@Test
+	public void reactivatePricelistSuccess() throws EntityDoesNotExistException, InvalidDataException{
+		pricelistService.reactivatePricelist(1l);
+	}
+	
+	@Test(expected = EntityDoesNotExistException.class)
+	public void reactivatePricelistNotFound() throws EntityDoesNotExistException, InvalidDataException{
+		pricelistService.reactivatePricelist(2l);
 	}
 	
 	
