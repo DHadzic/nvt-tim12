@@ -12,17 +12,17 @@ import javax.persistence.Id;
 public class Pricelist {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column
-	private Date date_formed;
+	private Date formed;
 
 	@Column
-	private Date date_reactivated;
+	private Date reactivated;
 	
 	@Column
-	private Date date_invalidated;
+	private Date invalidated;
 
 	public Long getId() {
 		return id;
@@ -33,33 +33,33 @@ public class Pricelist {
 	}
 
 	public Date getDate_formed() {
-		return date_formed;
+		return formed;
 	}
 
 	public void setDate_formed(Date date_formed) {
-		this.date_formed = date_formed;
+		this.formed = date_formed;
 	}
 
 	public Date getDate_invalidated() {
-		return date_invalidated;
+		return invalidated;
 	}
 
 	public Date getDate_reactivated() {
-		return date_reactivated;
+		return reactivated;
 	}
 
 	public void setDate_reactivated(Date date_reactivated) {
-		this.date_reactivated = date_reactivated;
+		this.reactivated = date_reactivated;
 	}
 
 	public void setDate_invalidated(Date date_invalidated) {
-		this.date_invalidated = date_invalidated;
+		this.invalidated = date_invalidated;
 	}
 
 	public Pricelist() {
 		super();
-		this.date_formed = new Date();
-		this.date_invalidated = null;
+		this.formed = new Date();
+		this.invalidated = null;
 	}	
 	
 }

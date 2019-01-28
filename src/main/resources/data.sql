@@ -12,7 +12,7 @@ insert into user_authority (user_id, authority_id) values (1, 2); -- user has PA
 insert into user_authority (user_id, authority_id) values (2, 1); -- admin has ADMIN_ROLE
 insert into user_authority (user_id, authority_id) values (3, 3); -- validator has VALIDATOR_ROLE
 
-insert into pricelist (id, date_formed) values (1, '2017-12-18 13:17:17');
+insert into pricelist (id, formed) values (1, '2017-12-18 13:17:17');
 insert into pricelist_item (id, price, ticket_type, pricelist_id) values (1, 500, 1, 1);
 
 insert into bus_station (id,lat,lng) values (999,'45.264054514190796','19.83022916394043');

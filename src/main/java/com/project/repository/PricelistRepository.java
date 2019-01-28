@@ -9,6 +9,6 @@ import com.project.domain.Pricelist;
 
 public interface PricelistRepository  extends  JpaRepository<Pricelist, Long> {
 	Pricelist findTopByOrderByIdDesc();
-	ArrayList<Pricelist> findByDateInvalidatedIsNull();
+	ArrayList<Pricelist> findByInvalidatedIsNull();
 	Optional<Pricelist> findById(Long id);
 }

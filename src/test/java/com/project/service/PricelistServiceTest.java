@@ -45,7 +45,6 @@ public class PricelistServiceTest {
 	
 	@Before
 	public void setUp(){
-		Mockito.when(pricelistRepository.findTopByOrderByIdDesc()).thenReturn(null);
 		ArrayList<Pricelist> pricelists = new ArrayList<Pricelist>();
 		ArrayList<Pricelist> pricelistsActive = new ArrayList<Pricelist>();
 		Pricelist pl1 = new Pricelist();
@@ -65,7 +64,7 @@ public class PricelistServiceTest {
 		t.setActive(true);
 		ArrayList<Ticket> activeTickets = new ArrayList<Ticket>();
 		activeTickets.add(t);
-		Mockito.when(pricelistRepository.findByDateInvalidatedIsNull()).thenReturn(pricelistsActive);
+		Mockito.when(pricelistRepository.findByInvalidatedIsNull()).thenReturn(pricelistsActive);
 		Mockito.when(pricelistRepository.findById(1l)).thenReturn(Optional.of(pl1));
 		Mockito.when(pricelistRepository.findById(2l)).thenThrow(new NoSuchElementException());
 		Mockito.when(pricelistRepository.findById(3l)).thenReturn(Optional.of(pl3));
@@ -169,7 +168,7 @@ public class PricelistServiceTest {
 		pricelistService.reactivatePricelist(1l);
 	}
 	
-	@Test
+	@Test(expected = EntityDoesNotExistException.class)
 	public void reactivatePricelistNotFound() throws EntityDoesNotExistException, InvalidDataException{
 		pricelistService.reactivatePricelist(2l);
 	}
