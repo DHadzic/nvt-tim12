@@ -19,7 +19,7 @@ public class MainPage {
 	@FindBy(id = "add_line_link")
 	private WebElement addLineLink;
 
-	@FindBy(id = "delte_stop_link")
+	@FindBy(id = "delete_stop_link")
 	private WebElement deleteStopLink;
 
 	@FindBy(id = "delete_line_link")

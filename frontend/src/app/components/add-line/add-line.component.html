@@ -39,8 +39,8 @@ Line must have atleast 2 stops.</div>
       <p class="alert alert-warning box-msg" *ngIf="nameError.nameFormat" style="color:red">Name must be between 1 and 10 characters</p>
       <p class="alert alert-warning box-msg" *ngIf="nameError.nameTaken" style="color:red">Line name is taken.. Try another one..</p>
       </div>
-      <button class="btn btn-success btn-block"(click)="addLine()">Add line</button>
-      <button class="btn btn-success btn-block"(click)="displayRoute()">Show/hide route</button>
+      <button class="btn btn-success btn-block"(click)="addLine()" id="add">Add line</button>
+      <button class="btn btn-success btn-block"(click)="displayRoute()" id="show">Show/hide route</button>
     </div>
     <div>
       <ol class="list-group">

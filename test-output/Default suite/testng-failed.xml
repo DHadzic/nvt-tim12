@@ -5,7 +5,7 @@
     <classes>
       <class name="com.project.e2e.MainPageAdminTest">
         <methods>
-          <include name="testDisplayLine"/>
+          <include name="testDeleteLine"/>
         </methods>
       </class> <!-- com.project.e2e.MainPageAdminTest -->
     </classes>
