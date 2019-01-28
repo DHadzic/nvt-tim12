@@ -17,6 +17,19 @@
             <li class="nav-item active">
                 <a *ngIf="isAdmin()" class="nav-link" href="deleteLine" id="delete_line_link">Delete line</a>
             </li>
+
+            <li class="nav-item active">
+                    <a  class="nav-link" href="listSchedule" id="list_schedule_link">List schedule</a>
+            </li>
+            <li class="nav-item active">
+                    <a *ngIf="isAdmin()" class="nav-link" href="changeSchedule" id="change_schedule_link">Change schedule</a>
+            </li>
+            <li class="nav-item active">
+                    <a *ngIf="isAdmin()" class="nav-link" href="addVehicle" id="add_vehicle_link">Add vehicle</a>
+            </li>
+            <li class="nav-item active">
+                    <a *ngIf="isAdmin()" class="nav-link" href="assignLine" id="assign_line_link">Assign Line to Vehicle</a>
+            </li>
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item active">

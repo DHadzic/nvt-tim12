@@ -1,17 +1,17 @@
 <h1>
   Tickets!
 </h1>
-<div class="containter">
+<div style="background-color: rgb(140, 198, 218)" class="containter">
   <div class="row">
       <div class="col-md-6">
           <h2>Your tickets:</h2>
-          <div class="col- bg-primary" *ngFor="let ticket of userTickets">
-            <p>{{ticket.type}}, created {{ticket.dateCreated}} is {{ticket.active}}</p>
-            <ng-container *ngIf="ticket.active; else ticketNotActiveTemplate">
-              Ticket is active.
+          <div class="col- " style="background-color:rgb(31, 5, 197);" *ngFor="let ticket of userTickets">
+            <p style="color:antiquewhite;">{{ticket.type}}, created {{ticket.dateCreated | date:'medium'}} is {{ticket.active}}</p>
+            <ng-container  *ngIf="ticket.active; else ticketNotActiveTemplate">
+              <span style="color:antiquewhite;">Ticket is active.</span>
             </ng-container>
-            <ng-template #ticketNotActiveTemplate>
-              Ticket is not active.
+            <ng-template  #ticketNotActiveTemplate>
+              <span style="color:darkgoldenrod;">Ticket is not active.</span>
             </ng-template>
             
           </div>

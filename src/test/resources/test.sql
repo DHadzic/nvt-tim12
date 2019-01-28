@@ -29,6 +29,7 @@ insert into user (username, password, dtype, type, documentid) values ('pName', 
 insert into user (username, password, dtype) values ('vName', '$2a$04$Amda.Gm4Q.ZbXz9wcohDHOhOBaNQAkSS1QO26Eh8Hovu3uzEpQvcq','Validator');
 
 insert into pricelist (id,formed,invalidated) values (999, '2017-12-18 13:17:17', '2017-12-18 23:55:17');
+insert into pricelist (id,formed,invalidated) values (994, '2017-12-18 13:17:17', '2017-12-18 23:55:17');
 insert into pricelist (id,formed) values (998, '2017-12-18 13:17:17');
 insert into pricelist (id,formed,invalidated) values (997, '2017-12-18 13:17:17', '2017-12-18 23:47:17');
 insert into pricelist (id,formed) values (996, '2017-12-28 13:17:17');

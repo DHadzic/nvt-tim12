@@ -20,8 +20,15 @@ export class PricelistService {
     return this.http.get("api/pricelist/getAll", {responseType: 'json'});
   }
 
-  deletePricelist(pricelistId){
-    return this.http.post("api/pricelist/deletePricelist", pricelistId, {responseType: 'text'});
+  getPricelistPrices(pricelistId){
+    return this.http.get("api/pricelist/getPricelistItems/"+pricelistId, {responseType: 'json'});
   }
 
+  deletePricelist(pricelistId){
+    return this.http.post("api/pricelist/deletePricelist/"+pricelistId,{},{responseType: 'text'});
+  }
+
+  reactivatePricelist(pricelistId){
+    return this.http.post("api/pricelist/reactivatePricelist/"+pricelistId,{},{responseType: 'text'});
+  }
 }

@@ -37,12 +37,12 @@ public class Vehicle {
 	@OneToOne
 	private Schedule schedule;
 	
+
 	@Column
 	private String name;
 	
 	public Vehicle() {
 	}
-	
 	public Vehicle(TransportType type, ArrayList<Ticket> tickets, Line line, Schedule schedule) {
 		super();
 		this.type = type;
@@ -111,6 +111,7 @@ public class Vehicle {
 		this.name = name;
 	}
 	
+	
 	public Integer getAtStation() {
 		return atStation;
 	}
@@ -126,4 +127,5 @@ public class Vehicle {
 	public void setStartToEnd(Boolean startToEnd) {
 		this.startToEnd = startToEnd;
 	}
+
 }

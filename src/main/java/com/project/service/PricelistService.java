@@ -80,6 +80,16 @@ public class PricelistService {
 		return prices;
 	}
 	
+	public ArrayList<PricelistItem> getPricelistItems(Long plId) throws EntityDoesNotExistException{
+		try{
+			Pricelist pl = pricelistRepository.findById(plId).get();
+			ArrayList<PricelistItem> prices = pricelistItemRepository.findByPricelist(pl);
+			return prices;
+		}catch (NoSuchElementException e){
+			throw new EntityDoesNotExistException("Pricelist not found.");
+		}
+	}
+	
 	public void reactivatePricelist(Long plId) throws EntityDoesNotExistException{
 		try{
 			Pricelist pl = pricelistRepository.findById(plId).get();
@@ -87,6 +97,7 @@ public class PricelistService {
 //			if (activePl.size() > 10) throw new InvalidDataException("There is more than one active pricelist.");
 			Pricelist old_pl = activePl.get(0);
 			pl.setDate_reactivated(new Date());
+			pl.setDate_invalidated(null);
 			old_pl.setDate_invalidated(new Date());
 			pricelistRepository.save(old_pl);
 			pricelistRepository.save(pl);
