@@ -80,15 +80,21 @@ export class ManagePricelistComponent implements OnInit {
       }else{
         alert(success);
       }
-    });
+    },
+    error => {console.log(error);});
   }
 
   reactivatePRicelist(pricelistId){
     this.pricelistService.reactivatePricelist(pricelistId).subscribe(success => {
       console.log(success);
-      alert("Reactivated successfully.");
-      location.reload();
-    });
+      if (success == "Pricelist reactivated."){
+        alert("Reactivated successfully.");
+        location.reload();
+      }else{
+        alert(success);
+      }
+    },
+    error => {console.log(error);});
   }
 
 }
