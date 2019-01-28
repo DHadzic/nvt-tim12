@@ -25,4 +25,8 @@ export class UserService {
   uploadDocumentImage(username, image){
     return this.http.post('api/user/saveUserDocument/'+ username, image, {responseType: 'text'});
   }
+
+  getVerificationRequests(username){
+    return this.http.get('api/user/getVerifyRequests/'+username, {responseType: 'json'});
+  }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MapService } from 'src/app/services/map.service';
 import { catchError } from 'rxjs/operators';
 import { Observable,throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-line',
@@ -17,7 +18,7 @@ export class AddLineComponent implements OnInit {
   public nameError;
   public showRoute;
 
-  constructor(private mapService: MapService) { 
+  constructor(private mapService: MapService,private router : Router) { 
     this.busStops = [];
     this.selectedStops  =[];
     this.routePoints = {};
@@ -96,7 +97,8 @@ export class AddLineComponent implements OnInit {
 
     var observer = {
       next(value) {
-        console.log(value);
+        alert(value);
+        _this.router.navigate(["/main"]);
       },
       error(msg) {
         if(msg.error.includes("Line name taken")){

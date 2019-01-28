@@ -72,6 +72,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					permitAll()
 				.antMatchers("/ticket/validate/{username}&{type}").
 					permitAll()
+				.antMatchers("/addVehicle/getLineInfo/{type}/{line_name}")
+					.permitAll()
+				.antMatchers("/addVehicle/getLinesPerType")
+					.permitAll()
 				//.antMatchers("/line/get_stations").hasAuthority("PASSENGER_ROLE")
 				//.antMatchers(HttpMethod.POST, "/api/**")
 				//	.hasAuthority("ROLE_ADMIN") //only administrator can add and edit data

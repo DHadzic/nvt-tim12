@@ -20,6 +20,8 @@ import com.project.repository.VehicleRepository;
 import com.project.web.dto.AddVehicleDTO;
 import com.project.web.dto.ResponseDTO;
 import com.project.web.dto.VehicleNameDTO;
+import com.project.web.dto.LineInfo;
+import com.project.web.dto.LinesPerTypeDTO;
 
 @Service
 public class AddVehicleServiceImpl {
@@ -124,4 +126,60 @@ public class AddVehicleServiceImpl {
 
 
 
+	
+	public LinesPerTypeDTO getLinesPerType() {
+		LinesPerTypeDTO linesPT = new LinesPerTypeDTO();
+		ArrayList<Vehicle> found_vehicles;
+		found_vehicles = (ArrayList<Vehicle>) vehicleRepository.findByType(TransportType.BUS);
+		for (Vehicle vehicle : found_vehicles) {
+			if(vehicle.getLine() != null) {
+				linesPT.busAddLine(vehicle.getLine().getName());
+			}
+		}
+		found_vehicles = (ArrayList<Vehicle>) vehicleRepository.findByType(TransportType.TRAM);
+		for (Vehicle vehicle : found_vehicles) {
+			if(vehicle.getLine() != null) {
+				linesPT.tramAddLine(vehicle.getLine().getName());
+			}
+		}
+		found_vehicles = (ArrayList<Vehicle>) vehicleRepository.findByType(TransportType.TROLLEYBUS);
+		for (Vehicle vehicle : found_vehicles) {
+			if(vehicle.getLine() != null) {
+				linesPT.trolleybusAddLine(vehicle.getLine().getName());
+			}
+		}
+		return linesPT;
+	}
+	
+	public LineInfo getLineInfo(TransportType type,String line_name) throws EntityDoesNotExistException {
+		LineInfo line_info = new LineInfo();
+
+		Line line = lineRepository.findByName(line_name);
+
+		if(line == null) {
+			throw new EntityDoesNotExistException();
+		}
+
+		line_info.setLine(line);
+		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) vehicleRepository.findByType(type);
+		
+		for (Vehicle vehicle : vehicles) {
+			if(vehicle.getLine() == null) {
+				continue;
+			}
+			
+			if(vehicle.getLine().getName() == null) {
+				continue;
+			}
+			
+			if(!vehicle.getLine().getName().equals(line_name)) {
+				continue;
+			}
+			
+			line_info.addStationAt(vehicle.getAtStation());			
+		}
+		
+		return line_info;
+	}
+	
 }

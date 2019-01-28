@@ -1,4 +1,11 @@
-<h1>Verify your account</h1>
-<input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
-<button type="button" (click)="fileInput.click()">Choose image</button>
-<button type="button" (click)="onUpload()">Upload</button>
+<div *ngIf="validatorRole">
+    <h2>Validate passenger accounts</h2>
+    
+</div>
+<div *ngIf="!validatorRole">
+    <h2>Verify your account</h2>
+    <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+    <button class="btn btn-primary" type="button" (click)="fileInput.click()">Choose image</button><br/>
+    <p *ngIf="selectedFile">Image chosen: {{ selectedFile.name }}</p>
+    <button class="btn btn-secondary" type="button" (click)="onUpload()">Upload</button>
+</div>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -110,5 +111,18 @@ public class AddVehicleController {
         }
 	}
 	
+	@RequestMapping(value = "/getLinesPerType", method = RequestMethod.GET)
+	public ResponseEntity<LinesPerTypeDTO> getLinesPerType() {
+		return new ResponseEntity<LinesPerTypeDTO>(addVehicleService.getLinesPerType(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/getLineInfo/{type}/{line_name}", method = RequestMethod.GET)
+	public ResponseEntity<LineInfo> getLineInfo(@PathVariable TransportType type,@PathVariable String line_name) {
+		try {
+			return new ResponseEntity<LineInfo>(addVehicleService.getLineInfo(type, line_name), HttpStatus.OK);
+		} catch (EntityDoesNotExistException e) {
+			return new ResponseEntity<LineInfo>(new LineInfo(), HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 }

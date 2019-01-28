@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.constants.BusStopConstants;
 import com.project.constants.LineConstants;
 import com.project.domain.BusStation;
+import com.project.domain.Line;
 import com.project.exceptions.EntityAlreadyExistsException;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
@@ -34,12 +35,12 @@ public class LineServiceTestInt {
 	// Rollback ne radi ispravno, ne mogu da namestim
 	@Test
 	public void getLines() {
-		assertThat(lineService.getLines()).hasSize(LineConstants.DB_SIZE);
+		assertTrue(lineService.getLines().size() >= LineConstants.DB_SIZE);
 	}
 
 	@Test
 	public void getStations() {
-		assertThat(lineService.getStations()).hasSize(BusStopConstants.DB_SIZE);
+		assertTrue(lineService.getStations().size() >= BusStopConstants.DB_SIZE);
 	}
 
 	@Test
@@ -57,7 +58,7 @@ public class LineServiceTestInt {
 		try {
 			BusStation bs = new BusStation();
 			bs.setLat(null);
-			bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA);
+			bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA1);
 			lineService.addStation(bs);
 			assertTrue(false);
 		} catch (InvalidDataException | EntityAlreadyExistsException e) {
@@ -68,8 +69,8 @@ public class LineServiceTestInt {
 	@Test
 	public void addStationNullLngSent() {
 		try {
-			BusStation bs = new BusStation(BusStopConstants.NEW_LAT_FIRST_AREA,null);
-			bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA);
+			BusStation bs = new BusStation(BusStopConstants.NEW_LAT_FIRST_AREA1,null);
+			bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA1);
 			bs.setLng(null);
 			lineService.addStation(bs);
 			assertTrue(false);
@@ -108,7 +109,7 @@ public class LineServiceTestInt {
 	public void addStationLngNotParsable() {
 		try {
 			BusStation bs = new BusStation();
-			bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA);
+			bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA1);
 			bs.setLng(BusStopConstants.NEW_LNG_NAN);
 			lineService.addStation(bs);
 			assertTrue(false);
@@ -123,7 +124,7 @@ public class LineServiceTestInt {
 		try {
 			BusStation bs = new BusStation();
 			bs.setLat(BusStopConstants.NEW_LAT_OOB1);
-			bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA);
+			bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA1);
 			lineService.addStation(bs);
 			assertTrue(false);
 		} catch (InvalidDataException | EntityAlreadyExistsException e) {
@@ -136,7 +137,7 @@ public class LineServiceTestInt {
 		try {
 			BusStation bs = new BusStation();
 			bs.setLat(BusStopConstants.NEW_LAT_OOB2);
-			bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA);
+			bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA1);
 			lineService.addStation(bs);
 			assertTrue(false);
 		} catch (InvalidDataException | EntityAlreadyExistsException e) {
@@ -148,7 +149,7 @@ public class LineServiceTestInt {
 	public void addStationLngOutOfBounds1() {
 		try {
 			BusStation bs = new BusStation();
-			bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA);
+			bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA1);
 			bs.setLng(BusStopConstants.NEW_LNG_OOB1);
 			lineService.addStation(bs);
 			assertTrue(false);
@@ -161,7 +162,7 @@ public class LineServiceTestInt {
 	public void addStationLngOutOfBounds2() {
 		try {
 			BusStation bs = new BusStation();
-			bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA);
+			bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA1);
 			bs.setLng(BusStopConstants.NEW_LNG_OOB2);
 			lineService.addStation(bs);
 			assertTrue(false);
@@ -175,7 +176,7 @@ public class LineServiceTestInt {
 		try {
 			BusStation bs = new BusStation();
 			bs.setLat(BusStopConstants.NEW_LAT_OOB3);
-			bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA);
+			bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA1);
 			lineService.addStation(bs);
 			assertTrue(false);
 		} catch (InvalidDataException | EntityAlreadyExistsException e) {
@@ -188,7 +189,7 @@ public class LineServiceTestInt {
 		try {
 			BusStation bs = new BusStation();
 			bs.setLat(BusStopConstants.NEW_LAT_OOB4);
-			bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA);
+			bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA1);
 			lineService.addStation(bs);
 			assertTrue(false);
 		} catch (InvalidDataException | EntityAlreadyExistsException e) {
@@ -200,7 +201,7 @@ public class LineServiceTestInt {
 	public void addStationLngOutOfBounds3() {
 		try {
 			BusStation bs = new BusStation();
-			bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA);
+			bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA1);
 			bs.setLng(BusStopConstants.NEW_LNG_OOB3);
 			lineService.addStation(bs);
 			assertTrue(false);
@@ -213,7 +214,7 @@ public class LineServiceTestInt {
 	public void addStationLngOutOfBounds4() {
 		try {
 			BusStation bs = new BusStation();
-			bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA);
+			bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA1);
 			bs.setLng(BusStopConstants.NEW_LNG_OOB4);
 			lineService.addStation(bs);
 			assertTrue(false);
@@ -228,8 +229,8 @@ public class LineServiceTestInt {
 		try {
 			int size_before = lineService.getStations().size();
 			BusStation bs = new BusStation();
-			bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA);
-			bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA);
+			bs.setLat(BusStopConstants.NEW_LAT_FIRST_AREA1);
+			bs.setLng(BusStopConstants.NEW_LNG_FIRST_AREA1);
 			lineService.addStation(bs);
 			int size_after = lineService.getStations().size();
 			assertEquals(size_before + 1,size_after);
@@ -244,8 +245,8 @@ public class LineServiceTestInt {
 		try {
 			int size_before = lineService.getStations().size();
 			BusStation bs = new BusStation();
-			bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA);
-			bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA);
+			bs.setLat(BusStopConstants.NEW_LAT_SECOND_AREA1);
+			bs.setLng(BusStopConstants.NEW_LNG_SECOND_AREA1);
 			lineService.addStation(bs);
 			int size_after = lineService.getStations().size();
 			assertEquals(size_before + 1,size_after);
@@ -258,7 +259,7 @@ public class LineServiceTestInt {
     public void getStationsExpectedSize() {
     	int stations_number = lineService.getStations().size();
     	
-    	assertEquals(BusStopConstants.DB_SIZE,stations_number);
+    	assertTrue(BusStopConstants.DB_SIZE < stations_number);
     }
 
     @Test
@@ -417,7 +418,7 @@ public class LineServiceTestInt {
 		try {
 	    	LineDTO line = new LineDTO();
 	    	int before = lineService.getLines().size();
-	    	line.setName(LineConstants.NEW_NAME);
+	    	line.setName(LineConstants.NEW_NAME2);
 	    	line.setStations(LineConstants.NEW_STATIONS);
 	    	lineService.addLine(line);
 	    	int after = lineService.getLines().size();
@@ -427,5 +428,37 @@ public class LineServiceTestInt {
 		}
     }
 	
+	@Test(expected = EntityDoesNotExistException.class)
+    public void deleteStationNotExist() throws EntityDoesNotExistException {
+    	LineDTO line = new LineDTO();
+    	lineService.deleteBusStation(LineConstants.DELETE_ID_WRONG);
+    }
 
+	@Test
+	@Rollback
+    public void deleteStationGood() throws EntityDoesNotExistException {
+		int before = lineService.getStations().size();
+    	LineDTO line = new LineDTO();
+    	lineService.deleteBusStation(BusStopConstants.DELETE_ID);
+		int after = lineService.getStations().size();
+		assertEquals(before - 1,after);
+    }
+
+	@Test(expected = EntityDoesNotExistException.class)
+    public void deleteLineNotExist() throws EntityDoesNotExistException {
+    	LineDTO line = new LineDTO();
+    	lineService.deleteLine(LineConstants.DELETE_ID_WRONG);
+    }
+
+	@Test
+	@Rollback
+    public void deleteLineGood() throws EntityDoesNotExistException {
+		int before = lineService.getLines().size();
+    	LineDTO line = new LineDTO();
+    	lineService.deleteLine(LineConstants.DELETE_ID);
+		int after = lineService.getLines().size();
+		assertEquals(before - 1,after);
+    }
+
+	
 }

@@ -2,7 +2,7 @@ package com.project.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +21,7 @@ import com.project.exceptions.InvalidDataException;
 import com.project.repository.AuthorityRepository;
 import com.project.repository.UserAuthorityRepository;
 import com.project.repository.UserRepository;
+import com.project.repository.ValidatorRepository;
 import com.project.web.dto.PassengerDTO;
 import com.project.web.dto.ValidatorDTO;
 import com.project.web.dto.VerifyRequestDTO;
@@ -35,6 +36,9 @@ public class UserService {
 
 	@Autowired
 	private UserAuthorityRepository userAuthRepository;
+	
+	@Autowired
+	private ValidatorRepository validatorRepository;
 
 	public void registerUser(PassengerDTO passengerDTO) throws EntityAlreadyExistsException, InvalidDataException {
 		if(passengerDTO == null) {
@@ -84,7 +88,7 @@ public class UserService {
 		passenger.setSurname(passengerDTO.getSurname());
 		passenger.setType(passengerDTO.getType());
 		passenger.setBirthDate(passengerDTO.getBirthDate());
-		passenger.setTikcet(new ArrayList<Ticket>());
+		passenger.setTikcets(new ArrayList<Ticket>());
 		
 		if (passenger.getType() == PassengerType.REGULAR){
 			passenger.setVerified(true);
@@ -104,7 +108,6 @@ public class UserService {
 		System.out.println(enc.encode(passenger.getPassword()));
 		passenger.setPassword(enc.encode(passenger.getPassword()));
 		userRepository.save(passenger);
-		
 		return;
 		
 	}
@@ -203,24 +206,35 @@ public class UserService {
 		}
 	}
 	
-	public void setUserIdDocument(String username, String image) throws EntityDoesNotExistException {
+	public void setUserIdDocument(String username, String image) throws EntityDoesNotExistException, InvalidDataException {
+		if (username == null || image == null || username == "" || image == "") throw new InvalidDataException("Parameters can not be null or empty string.");
 		Passenger passenger = findPassenger(username);
 		passenger.setDocumentID(image);
 //		sendVerificationRequest(username, passenger.getType(), image);
 		userRepository.save(passenger);
 	}
 	
-	public void verifyPassenger(String username) throws EntityDoesNotExistException {
+	public ArrayList<VerifyRequestDTO> getVerifyRequests(String username) throws EntityDoesNotExistException{
+		Validator validator = (Validator) userRepository.findByUsername(username);
+		if (validator == null) throw new EntityDoesNotExistException("Validator does no exist.");
+		HashMap<String, VerifyRequestDTO> requests = validator.getVerificationRequest();
+		if (requests == null) return new ArrayList<VerifyRequestDTO>();
+		return (ArrayList<VerifyRequestDTO>) requests.values();
+	}
+	
+	public void verifyPassenger(String username) throws EntityDoesNotExistException, InvalidDataException {
+		if (username == null || username == "") throw new InvalidDataException("Username can not be null or empty string.");
 		Passenger passenger = findPassenger(username);
 		passenger.setVerified(true);
-//		closeVerificationRequest(username);
+		closeVerificationRequest(username);
 		userRepository.save(passenger);
 	}
 	
-	public void rejectPassengerVerification(String username) throws EntityDoesNotExistException {
+	public void rejectPassengerVerification(String username) throws EntityDoesNotExistException, InvalidDataException {
+		if (username == null || username == "") throw new InvalidDataException("Username can not be null or empty string.");
 		Passenger passenger = findPassenger(username);
 		passenger.setDocumentID(null);
-//		closeVerificationRequest(username);
+		closeVerificationRequest(username);
 		userRepository.save(passenger);
 	}
 	
@@ -231,29 +245,28 @@ public class UserService {
 	}
 	
 	private void sendVerificationRequest(String username, PassengerType type, String image){
-		ArrayList<User> users = (ArrayList<User>) userRepository.findAll();
-		ArrayList<Validator> validatorsToSave = new ArrayList<Validator>();
-		for (User u : users){
-			if (u instanceof Validator){
-				VerifyRequestDTO vr = new VerifyRequestDTO();
-				vr.setImage(image);
-				vr.setType(type);
-				((Validator) u).getVerificationRequest().put(username, vr);
-				validatorsToSave.add((Validator) u);
+		ArrayList<Validator> validators = (ArrayList<Validator>) validatorRepository.findAll();
+		for (Validator v : validators){
+			VerifyRequestDTO vr = new VerifyRequestDTO();
+			vr.setUsername(username);
+			vr.setImage(image);
+			vr.setType(type);
+			HashMap<String, VerifyRequestDTO> requests = v.getVerificationRequest();
+			if (requests == null){
+				requests = new HashMap<String, VerifyRequestDTO>();
 			}
+			requests.put(username, vr);
+			v.setVerificationRequest(requests);
 		}
-		userRepository.saveAll(validatorsToSave);
+		userRepository.saveAll(validators);
 	}
 	
 	private void closeVerificationRequest(String username) {
-		ArrayList<User> users = (ArrayList<User>) userRepository.findAll();
-		ArrayList<Validator> validatorsToSave = new ArrayList<Validator>();
-		for (User u : users){
-			if (u instanceof Validator){
-				((Validator) u).getVerificationRequest().remove(username);
-				validatorsToSave.add((Validator) u);
-			}
+		ArrayList<Validator> validators = (ArrayList<Validator>) validatorRepository.findAll();
+		for (Validator v : validators){
+			if (v.getVerificationRequest() == null) continue;
+			v.getVerificationRequest().remove(username);
 		}
-		userRepository.saveAll(validatorsToSave);
+		userRepository.saveAll(validators);
 	}
 }

@@ -22,12 +22,18 @@ public class BusStopConstants {
     public static final String NEW_LNG_OOB3 = "19.765163978393484";
     public static final String NEW_LNG_OOB4 = "19.985163978393484";
 
-    public static final String NEW_LAT_FIRST_AREA = "45.293652105740415";
-    public static final String NEW_LNG_FIRST_AREA = "19.839163978393484";
+    public static final String NEW_LAT_FIRST_AREA1 = "45.293652105740415";
+    public static final String NEW_LNG_FIRST_AREA1 = "19.839163978393484";
+    public static final String NEW_LAT_FIRST_AREA2 = "45.293752105740415";
+    public static final String NEW_LNG_FIRST_AREA2 = "19.839173978393484";
 
-    public static final String NEW_LAT_SECOND_AREA = "45.23328630783431";
-    public static final String NEW_LNG_SECOND_AREA = "19.787163978393484";
+    public static final String NEW_LAT_SECOND_AREA1 = "45.23328630783431";
+    public static final String NEW_LNG_SECOND_AREA1 = "19.787163978393484";
+    public static final String NEW_LAT_SECOND_AREA2 = "45.23338630783431";
+    public static final String NEW_LNG_SECOND_AREA2 = "19.787173978393484";
     
     public static final int DB_SIZE = 2;
-    public static final int DB_SIZE_AFTER_ADD = 4;
+    public static final Long DELETE_ID = 40l;
+    public static final Long DELETE_ID2 = 41l;
+    public static final Long DELETE_ID_WRONG = 39l;
 }

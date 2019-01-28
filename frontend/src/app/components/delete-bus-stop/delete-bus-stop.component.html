@@ -1,3 +1,19 @@
-<p>
-  delete-bus-stop works!
-</p>
+<div class="alert alert-info box-msg text-center">Clicking the stop will enable Delete Stop button.</div>
+
+<div class="row">
+  <div class="col-8">
+    <agm-map class="my_map" [longitude]="19.840958" [latitude]="45.24604914768334" 
+      [zoom]="13" [clickableIcons]="false">
+      <agm-marker *ngFor="let stop of busStops" 
+      [label]="{color: 'black', text:stop.id, fontWeight:'bold', fontSize:'15px'}"
+      [longitude]="stop.lng" 
+      [latitude]="stop.lat" 
+      (markerClick)="displayStop(stop.id)">
+      </agm-marker>
+    </agm-map>
+  </div>
+  <div class="col-4 top_padding">
+      <div class="alert alert-info selected_output text-center">Selected stop : {{ selectedStop }}</div>
+      <button class="btn btn-success button_delete" [disabled]="isSelected()" (click)="deleteStop()">Delete line</button>
+  </div>
+</div>

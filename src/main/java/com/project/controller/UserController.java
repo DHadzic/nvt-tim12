@@ -1,6 +1,9 @@
 package com.project.controller;
 
+import java.util.ArrayList;
+
 import javax.naming.AuthenticationException;
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,7 @@ import com.project.service.UserService;
 import com.project.web.dto.LoginDTO;
 import com.project.web.dto.PassengerDTO;
 import com.project.web.dto.ValidatorDTO;
+import com.project.web.dto.VerifyRequestDTO;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -133,12 +137,20 @@ public class UserController {
 		try{
 			userService.setUserIdDocument(username, image);
 			return new ResponseEntity<String>("Document image added.", HttpStatus.OK);
-		}catch (EntityDoesNotExistException edne){
+		}catch (EntityDoesNotExistException | InvalidDataException edne){
 			return new ResponseEntity<String>("Document image not added	.", HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/getVerifyRequests/{username}", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<VerifyRequestDTO>> getVerificationRequests(@PathVariable("username") String username) throws EntityDoesNotExistException {
+		try {
+			ArrayList<VerifyRequestDTO> requests = userService.getVerifyRequests(username);
+			return new ResponseEntity<ArrayList<VerifyRequestDTO>>(requests, HttpStatus.OK);
+		}catch (EntityDoesNotExistException edne){
+			return new ResponseEntity<ArrayList<VerifyRequestDTO>>(new ArrayList<VerifyRequestDTO>(), HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 	
 	@RequestMapping(value = "/verify/{username}", method = RequestMethod.POST)
@@ -146,7 +158,7 @@ public class UserController {
 		try{
 			userService.verifyPassenger(username);
 			return new ResponseEntity<String>("Passenger verified.", HttpStatus.OK);
-		}catch (EntityDoesNotExistException edne) {
+		}catch (EntityDoesNotExistException | InvalidDataException edne) {
 			return new ResponseEntity<String>(edne.getMessage(), HttpStatus.BAD_REQUEST);
 
 		}
@@ -157,7 +169,7 @@ public class UserController {
 		try{
 			userService.rejectPassengerVerification(username);
 			return new ResponseEntity<String>("Verification rejected.", HttpStatus.OK);
-		}catch (EntityDoesNotExistException edne) {
+		}catch (EntityDoesNotExistException | InvalidDataException edne) {
 			return new ResponseEntity<String>(edne.getMessage(), HttpStatus.BAD_REQUEST);
 
 		}

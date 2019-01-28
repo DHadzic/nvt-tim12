@@ -15,17 +15,20 @@ export class TicketsComponent implements OnInit {
   buyTicketForm:boolean = false;
   private currUser;
   private userTickets;
+  public prices;
 
 
   @Output()
   changeDisplay:EventEmitter<any> = new EventEmitter();
 
   constructor(private ticketService:TicketService, private authenticationService:AuthenticationService) {
-      this.ticket = {user:"user", ticketType:"ONE_DAY", transportType:"BUS"};
+      this.ticket = {user: "", ticketType:"ONE_DAY", transportType:"BUS"};
    }
 
   ngOnInit() {
     this.getUserTickets();
+    this.getPrices();
+    this.ticket.user = this.currUser.username;
   }
 
   openCreation(){
@@ -34,38 +37,47 @@ export class TicketsComponent implements OnInit {
 
   priceDisplay(){
     console.log(this.ticket.ticketType);
-    if (this.ticket.transportType == "BUS"){
-      if (this.ticket.ticketType == "ONE_TIME"){
-        this.price = 60;
-      }else if (this.ticket.ticketType == "ONE_DAY" ){
-        this.price = 130;
-      }else if (this.ticket.ticketType == "ONE_MONTH" ){
-        this.price = 1200;
-      }else{
-        this.price = 10000;
-      }
-    }else if (this.ticket.transportType == "TRAM"){
-      if (this.ticket.ticketType == "ONE_TIME"){
-        this.price = 50;
-      }else if (this.ticket.ticketType == "ONE_DAY" ){
-        this.price = 100;
-      }else if (this.ticket.ticketType == "ONE_MONTH" ){
-        this.price = 1000;
-      }else{
-        this.price = 8000;
-      }
-    }else {
-      if (this.ticket.ticketType == "ONE_TIME"){
-        this.price = 50;
-      }else if (this.ticket.ticketType == "ONE_DAY" ){
-        this.price = 120;
-      }else if (this.ticket.ticketType == "ONE_MONTH" ){
-        this.price = 1100;
-      }else{
-        this.price = 7000;
+    console.log(this.prices);
+    for (let i = 0; i < this.prices.length; i++){
+      if (this.ticket.transportType == this.prices[i].transportType &&
+          this.ticket.ticketType == this.prices[i].ticketType){
+            this.price = this.prices[i].price;
       }
     }
   }
+    // }
+    // if (this.ticket.transportType == "BUS"){
+    //   if (this.ticket.ticketType == "ONE_TIME"){
+    //     this.price = 60;
+    //   }else if (this.ticket.ticketType == "ONE_DAY" ){
+    //     this.price = 130;
+    //   }else if (this.ticket.ticketType == "ONE_MONTH" ){
+    //     this.price = 1200;
+    //   }else{
+    //     this.price = 10000;
+    //   }
+    // }else if (this.ticket.transportType == "TRAM"){
+    //   if (this.ticket.ticketType == "ONE_TIME"){
+    //     this.price = 50;
+    //   }else if (this.ticket.ticketType == "ONE_DAY" ){
+    //     this.price = 100;
+    //   }else if (this.ticket.ticketType == "ONE_MONTH" ){
+    //     this.price = 1000;
+    //   }else{
+    //     this.price = 8000;
+    //   }
+    // }else {
+    //   if (this.ticket.ticketType == "ONE_TIME"){
+    //     this.price = 50;
+    //   }else if (this.ticket.ticketType == "ONE_DAY" ){
+    //     this.price = 120;
+    //   }else if (this.ticket.ticketType == "ONE_MONTH" ){
+    //     this.price = 1100;
+    //   }else{
+    //     this.price = 7000;
+    //   }
+  //   }
+  // }
 
   create(){
     this.ticketService.create(this.ticket);
@@ -81,6 +93,13 @@ export class TicketsComponent implements OnInit {
       console.log(tickets);
       this.userTickets = tickets;
     });
+  }
+
+  getPrices(){
+    this.ticketService.getPrices().subscribe((prices) => {
+      this.prices = prices;
+      console.log(this.prices);
+    }) 
   }
 
 

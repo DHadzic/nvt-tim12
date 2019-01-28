@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.Ticket;
 import com.project.exceptions.EntityDoesNotExistException;
-import com.project.service.TicketServiceImpl;
+import com.project.exceptions.InvalidDataException;
+import com.project.service.TicketService;
 import com.project.web.dto.TicketDTO;
 
 @RestController
@@ -22,7 +23,7 @@ import com.project.web.dto.TicketDTO;
 public class TicketController {
 
 	@Autowired
-	private TicketServiceImpl ticketService;
+	private TicketService ticketService;
 
 	@PreAuthorize("permitAll()")
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -33,7 +34,7 @@ public class TicketController {
             
             return new ResponseEntity<String>(
             		"Ticket successfully created.", HttpStatus.OK);
-        } catch (EntityDoesNotExistException edne) {
+        } catch (EntityDoesNotExistException | InvalidDataException edne) {
             return new ResponseEntity<String>("Ticket not created. "+edne.getMessage(), HttpStatus.BAD_REQUEST);
         }
 	}
@@ -46,7 +47,7 @@ public class TicketController {
 			System.out.println(tickets);
 			return new ResponseEntity<ArrayList<Ticket>>(tickets, HttpStatus.OK);
 			
-		} catch (EntityDoesNotExistException edne) {
+		} catch (EntityDoesNotExistException | InvalidDataException edne) {
 			return new ResponseEntity<ArrayList<Ticket>>(new ArrayList<Ticket>(), HttpStatus.NOT_FOUND);
 		}
 	}
@@ -58,7 +59,7 @@ public class TicketController {
 		try{
 			Ticket ticket = ticketService.getUserTicket(username, transportType);
 			return new ResponseEntity<Ticket>(ticket, HttpStatus.OK);
-		}catch (EntityDoesNotExistException edne){
+		}catch (EntityDoesNotExistException | InvalidDataException edne){
 			return new ResponseEntity<Ticket>(new Ticket(), HttpStatus.NOT_FOUND);
 		}
 	}

@@ -26,7 +26,7 @@ public class Line {
 	@Column
 	private String name;
 	
-	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "line_station_relation",
     joinColumns = { @JoinColumn(name = "line_id") },
     inverseJoinColumns = { @JoinColumn(name = "station_id") })

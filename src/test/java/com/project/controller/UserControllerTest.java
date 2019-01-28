@@ -85,7 +85,7 @@ public class UserControllerTest {
 	@Rollback
 	public void successfulRegister() throws Exception {
 		PassengerDTO pass = new PassengerDTO();
-		pass.setUsername(PassengerConstants.NEW_USERNAME);
+		pass.setUsername(PassengerConstants.NEW_USERNAME1);
 		pass.setPassword(PassengerConstants.NEW_PASSWORD);
 		pass.setName(PassengerConstants.NEW_NAME);
 		pass.setSurname(PassengerConstants.NEW_SURNAME);
@@ -389,5 +389,135 @@ public class UserControllerTest {
 				.andExpect(status().isBadRequest()).andReturn();
 
 		assertEquals("Invalid register..Type is null", result.getResponse().getContentAsString());
+	}
+	
+	@Test
+	@Rollback
+	public void setUserIdDocumentSuccess() throws Exception{
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/saveUserDocument/{username}", PassengerConstants.VERIFY_PASSENGER).contentType(MediaType.TEXT_PLAIN).content(PassengerConstants.VERIFY_IMAGE))
+				.andExpect(status().isOk()).andReturn();
+		
+		assertTrue(result.getResponse().getContentAsString().contains("Document image added."));
+					
+	}
+	
+	@Test
+	public void setUserIdDocumentPassengerNotFound() throws Exception{
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/saveUserDocument/{username}", "badUsername").contentType(MediaType.TEXT_PLAIN).content(PassengerConstants.VERIFY_IMAGE))
+				.andExpect(status().isBadRequest()).andReturn();
+		
+		assertTrue(result.getResponse().getContentAsString().contains("Document image not added	."));
+		
+		
+	}
+	
+//	@Test
+//	public void setUserIdDocumentUsernameIsNull() throws Exception{
+//		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/saveUserDocument/{username}", null).contentType(MediaType.TEXT_PLAIN).content(PassengerConstants.VERIFY_IMAGE))
+//				.andExpect(status().isOk()).andReturn();
+//		
+//		assertFalse(result.getResponse().getContentAsString().contains("Document image added."));
+//		
+//		
+//	}
+	
+	@Test
+	public void setUserIdDocumentUsernameIsEmptyString() throws Exception{
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/saveUserDocument/{username}", "").contentType(MediaType.TEXT_PLAIN).content(PassengerConstants.VERIFY_IMAGE))
+				.andExpect(status().isNotFound()).andReturn();
+		
+		assertFalse(result.getResponse().getContentAsString().contains("Document image added."));
+		
+		
+	}
+	
+//	@Test
+//	public void setUserIdDocumentImageIsNull(){
+//		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/saveUserDocument/{username}", null).contentType(MediaType.TEXT_PLAIN).content(null))
+//				.andExpect(status().isOk()).andReturn();
+//		
+//		assertFalse(result.getResponse().getContentAsString().contains("Document image added."));
+//		
+//		
+//	}
+	
+	@Test
+	public void setUserIdDocumentImageIsEmptyString() throws Exception{
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/saveUserDocument/{username}", PassengerConstants.VERIFY_PASSENGER).contentType(MediaType.TEXT_PLAIN_VALUE).content(""))
+				.andExpect(status().isBadRequest()).andReturn();
+		
+		assertFalse(result.getResponse().getContentAsString().contains("Document image added."));
+		
+		
+	}
+//	
+//	@Test
+//	@Rollback
+//	public void verifyPassengerSuccessful(){
+//		userService.verifyPassenger(PassengerConstants.VERIFY_PASSENGER);
+//		
+//	}
+//	
+	@Test
+	public void verifyPassengerPassengerNotFound() throws Exception{
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/verify/{username}", "badUsername"))
+				.andExpect(status().isBadRequest()).andReturn();
+		
+		assertFalse(result.getResponse().getContentAsString().contains("Passenger verified."));
+		
+	}
+	
+//	@Test
+//	public void verifyPassengerUsernameIsNull(){
+//		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/verify/{username}", "badUsername"))
+//				.andExpect(status().isBadRequest()).andReturn();
+//		
+//		assertFalse(result.getResponse().getContentAsString().contains("Passenger verified."));
+//		
+//		userService.verifyPassenger(null);
+//		assertTrue(false);
+//		
+//	}
+	
+	@Test
+	public void verifyPassengerUsernameIsEmptyString() throws Exception{
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/verify/{username}",  "").contentType(MediaType.TEXT_PLAIN).content(PassengerConstants.VERIFY_IMAGE))
+				.andExpect(status().isNotFound()).andReturn();
+		
+		assertFalse(result.getResponse().getContentAsString().contains("Passenger verified."));
+		
+	}
+	
+//	@Test
+//	@Rollback
+//	public void rejectVerificationSuccessful(){
+//		userService.rejectPassengerVerification(PassengerConstants.VERIFY_PASSENGER);
+//		assertTrue(true);
+//	
+//	}
+	
+	@Test
+	public void rejectVerificationPassengerNotFound() throws Exception{
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/rejectVerification/{username}", "badUsername"))
+				.andExpect(status().isBadRequest()).andReturn();
+		
+		assertFalse(result.getResponse().getContentAsString().contains("Verification rejected."));
+		
+	}
+	
+//	@Test
+//	public void rejectVerificationPassengerUsernameIsNull(){
+//		userService.rejectPassengerVerification(null);
+//		assertTrue(false);
+//		
+//	}
+	
+	@Test
+	public void rejectVerificationPassengerUsernameIsEmptyString() throws Exception{
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/rejectVerification/{username}",  "").contentType(MediaType.TEXT_PLAIN).content(PassengerConstants.VERIFY_IMAGE))
+				.andExpect(status().isNotFound()).andReturn();
+		
+		assertFalse(result.getResponse().getContentAsString().contains("Verification rejected."));		
+		
 	}
 }

@@ -20,7 +20,13 @@ public class Vehicle {
 	@Column
 	private TransportType type;
 	
+	// potrebno za kontrolu gde je vozilo
+	@Column
+	private Integer atStation;
 
+	// potrebno za kontrolu gde je vozilo
+	@Column
+	private Boolean startToEnd;
 
 	@Column
 	private ArrayList<Ticket> tickets;
@@ -31,11 +37,15 @@ public class Vehicle {
 	@OneToOne
 	private Schedule schedule;
 	
+<<<<<<< HEAD
 	@Column
 	private String name;
 	
 	public Vehicle() {
 		
+=======
+	public Vehicle() {
+>>>>>>> branch 'master' of https://github.com/DHadzic/nvt-tim12
 	}
 	
 	public Vehicle(TransportType type, ArrayList<Ticket> tickets, Line line, Schedule schedule) {
@@ -61,6 +71,9 @@ public class Vehicle {
 		this.type = type;
 		this.tickets = tickets;
 		this.schedule = schedule;
+		// potrebno za kontrolu gde je vozilo
+		this.atStation = 0;
+		this.startToEnd = true;
 	}
 
 	public TransportType getType() {
@@ -95,6 +108,7 @@ public class Vehicle {
 		this.line = line;
 	}
 
+<<<<<<< HEAD
 	public String getName() {
 		return name;
 	}
@@ -104,4 +118,21 @@ public class Vehicle {
 	}
 	
 	
+=======
+	public Integer getAtStation() {
+		return atStation;
+	}
+
+	public void setAtStation(Integer atStation) {
+		this.atStation = atStation;
+	}
+
+	public Boolean getStartToEnd() {
+		return startToEnd;
+	}
+
+	public void setStartToEnd(Boolean startToEnd) {
+		this.startToEnd = startToEnd;
+	}
+>>>>>>> branch 'master' of https://github.com/DHadzic/nvt-tim12
 }

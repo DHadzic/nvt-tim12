@@ -29,6 +29,8 @@ import { DeleteLineComponent } from './components/delete-line/delete-line.compon
 import { AssignLineToVehicleComponent } from './components/assign-line-to-vehicle/assign-line-to-vehicle.component';
 import { ListScheduleComponent } from './components/list-schedule/list-schedule.component';
 import { ChangeScheduleComponent } from './components/change-schedule/change-schedule.component';
+import { ManagePricelistComponent } from './components/manage-pricelist/manage-pricelist.component';
+
 
 const appRoutes: Routes = [
   { path: 'main', 
