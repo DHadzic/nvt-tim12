@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.constants.BusStopConstants;
 import com.project.constants.LineConstants;
 import com.project.domain.BusStation;
+import com.project.domain.Line;
 import com.project.exceptions.EntityAlreadyExistsException;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
@@ -427,5 +428,37 @@ public class LineServiceTestInt {
 		}
     }
 	
+	@Test(expected = EntityDoesNotExistException.class)
+    public void deleteStationNotExist() throws EntityDoesNotExistException {
+    	LineDTO line = new LineDTO();
+    	lineService.deleteBusStation(LineConstants.DELETE_ID_WRONG);
+    }
 
+	@Test
+	@Rollback
+    public void deleteStationGood() throws EntityDoesNotExistException {
+		int before = lineService.getStations().size();
+    	LineDTO line = new LineDTO();
+    	lineService.deleteBusStation(BusStopConstants.DELETE_ID);
+		int after = lineService.getStations().size();
+		assertEquals(before - 1,after);
+    }
+
+	@Test(expected = EntityDoesNotExistException.class)
+    public void deleteLineNotExist() throws EntityDoesNotExistException {
+    	LineDTO line = new LineDTO();
+    	lineService.deleteLine(LineConstants.DELETE_ID_WRONG);
+    }
+
+	@Test
+	@Rollback
+    public void deleteLineGood() throws EntityDoesNotExistException {
+		int before = lineService.getLines().size();
+    	LineDTO line = new LineDTO();
+    	lineService.deleteLine(LineConstants.DELETE_ID);
+		int after = lineService.getLines().size();
+		assertEquals(before - 1,after);
+    }
+
+	
 }

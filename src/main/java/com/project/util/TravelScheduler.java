@@ -15,7 +15,7 @@ public class TravelScheduler {
 	@Autowired
 	VehicleRepository vehicleRepository;
 	
-	@Scheduled(fixedRate = 12000)
+	@Scheduled(fixedRate = 3000)
 	public void moveVehiclesFirst() {
 		ArrayList<Vehicle> vehicles = (ArrayList<Vehicle>) vehicleRepository.findByLineNotNull();
 		int line_size = 0;
@@ -37,7 +37,7 @@ public class TravelScheduler {
 				}
 			}
 			
-			vehicleRepository.save(vehicles.get(0));
+			vehicleRepository.save(vehicles.get(i));
 		}
 	}
 
@@ -63,7 +63,7 @@ public class TravelScheduler {
 				}
 			}
 			
-			vehicleRepository.save(vehicles.get(0));
+			vehicleRepository.save(vehicles.get(i));
 		}
 	}
 
@@ -89,7 +89,7 @@ public class TravelScheduler {
 				}
 			}
 			
-			vehicleRepository.save(vehicles.get(0));
+			vehicleRepository.save(vehicles.get(i));
 		}
 	}
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LinesPerType } from '../../model/linesPerType';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,14 @@ export class MapService {
 
   constructor(private http: HttpClient) {
    }
+  
+  getLinesPerType(){
+    return this.http.get("api/addVehicle/getLinesPerType",{responseType : 'text' as 'json'})
+  }
+
+  getLineInfo(type : String, line_name : String){
+    return this.http.get("api/addVehicle/getLineInfo/" + type + "/" + line_name,{responseType : 'text' as 'json'})
+  }
 
   getBusStations(){
     return this.http.get(this.path + "/get_stations",{responseType : 'text' as 'json'})

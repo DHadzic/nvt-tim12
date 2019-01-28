@@ -33,4 +33,7 @@ public class BusStopConstants {
     public static final String NEW_LNG_SECOND_AREA2 = "19.787173978393484";
     
     public static final int DB_SIZE = 2;
+    public static final Long DELETE_ID = 40l;
+    public static final Long DELETE_ID2 = 41l;
+    public static final Long DELETE_ID_WRONG = 39l;
 }

@@ -6,118 +6,67 @@ import com.project.domain.Line;
 
 public class LinesPerTypeDTO {
 	
-	private ArrayList<Line> tramLines;
-	private ArrayList<Line> busLines;
-	private ArrayList<Line> trolleybusLines;
+	private ArrayList<String> tramLines;
+	private ArrayList<String> busLines;
+	private ArrayList<String> trolleybusLines;
 	
+	/*
 	private ArrayList<Integer> tramAtStations;
 	private ArrayList<Integer> busAtStations;
 	private ArrayList<Integer> trolleybusAtStations;
-	
+	*/
 	public LinesPerTypeDTO() {
-		this.tramLines = new ArrayList<Line>();
-		this.busLines = new ArrayList<Line>();
-		this.trolleybusLines = new ArrayList<Line>();
-		this.tramAtStations = new ArrayList<Integer>();
-		this.busAtStations = new ArrayList<Integer>();
-		this.trolleybusAtStations = new ArrayList<Integer>();
+		this.tramLines = new ArrayList<String>();
+		this.busLines = new ArrayList<String>();
+		this.trolleybusLines = new ArrayList<String>();
 	}
 	
-	public ArrayList<Line> getTramLines() {
+	public ArrayList<String> getTramLines() {
 		return tramLines;
 	}
-	public void setTramLines(ArrayList<Line> tramLines) {
+	public void setTramLines(ArrayList<String> tramLines) {
 		this.tramLines = tramLines;
 	}
-	public ArrayList<Line> getBusLines() {
+	public ArrayList<String> getBusLines() {
 		return busLines;
 	}
-	public void setBusLines(ArrayList<Line> busLines) {
+	public void setBusLines(ArrayList<String> busLines) {
 		this.busLines = busLines;
 	}
-	public ArrayList<Line> getTrolleybusLines() {
+	public ArrayList<String> getTrolleybusLines() {
 		return trolleybusLines;
 	}
-	public void setTrolleybusLines(ArrayList<Line> trolleybusLines) {
+	public void setTrolleybusLines(ArrayList<String> trolleybusLines) {
 		this.trolleybusLines = trolleybusLines;
 	}
-	public ArrayList<Integer> getTramAtStations() {
-		return tramAtStations;
-	}
-	public void setTramAtStations(ArrayList<Integer> tramAtStations) {
-		this.tramAtStations = tramAtStations;
-	}
-	public ArrayList<Integer> getBusAtStations() {
-		return busAtStations;
-	}
-	public void setBusAtStations(ArrayList<Integer> busAtStations) {
-		this.busAtStations = busAtStations;
-	}
-	public ArrayList<Integer> getTrolleybusAtStations() {
-		return trolleybusAtStations;
-	}
-	public void setTrolleybusAtStations(ArrayList<Integer> trolleybusAtStations) {
-		this.trolleybusAtStations = trolleybusAtStations;
-	}
-	
-	public void tramAddLine(Line line) {
-		for (Line l : this.tramLines) {
-			if(l.getName().equals(line.getName())) {
+
+	public void tramAddLine(String line_name) {
+		for (String l_name : this.tramLines) {
+			if(l_name.equals(line_name)) {
 				return;
 			}
 		}
-		this.tramLines.add(line);
+		this.tramLines.add(line_name);
 		return;
 	}
 
-	public void busAddLine(Line line) {
-		for (Line l : this.busLines) {
-			if(l.getName().equals(line.getName())) {
+	public void busAddLine(String line_name) {
+		for (String l_name : this.busLines) {
+			if(l_name.equals(line_name)) {
 				return;
 			}
 		}
-		this.busLines.add(line);
+		this.busLines.add(line_name);
 		return;
 	}
 
-	public void trolleybusAddLine(Line line) {
-		for (Line l : this.trolleybusLines) {
-			if(l.getName().equals(line.getName())) {
+	public void trolleybusAddLine(String line_name) {
+		for (String l_name : this.trolleybusLines) {
+			if(l_name.equals(line_name)) {
 				return;
 			}
 		}
-		this.trolleybusLines.add(line);
+		this.trolleybusLines.add(line_name);
 		return;
 	}
-
-	public void tramAddStationAt(Integer stationAt) {
-		for (Integer statAt : this.tramAtStations) {
-			if(statAt.equals(stationAt)) {
-				return;
-			}
-		}
-		this.tramAtStations.add(stationAt);
-		return;
-	}
-
-	public void busAddStationAt(Integer stationAt) {
-		for (Integer statAt : this.busAtStations) {
-			if(statAt.equals(stationAt)) {
-				return;
-			}
-		}
-		this.busAtStations.add(stationAt);
-		return;
-	}
-
-	public void trolleybusAddStationAt(Integer stationAt) {
-		for (Integer statAt : this.trolleybusAtStations) {
-			if(statAt.equals(stationAt)) {
-				return;
-			}
-		}
-		this.trolleybusAtStations.add(stationAt);
-		return;
-	}
-
 }

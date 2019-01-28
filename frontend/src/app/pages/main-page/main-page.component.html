@@ -1,4 +1,49 @@
-<p>
-        MAIN-PAGE COMPONENT
-</p>
-      
+<div class="row">
+    <div class="col-md-4">
+            <label>Type:</label>
+            <select class="form-control" [(ngModel)]="selectedType" name="type">
+            <option *ngFor="let transport_type of transport_types" [ngValue]="transport_type">{{transport_type}}</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label>Line:</label>
+        <ng-container *ngIf="selectedType == 'Bus'">
+            <select class="form-control" (change)="onChange($event)" [(ngModel)]="selectedLineBus" name="type">
+                <option *ngFor="let line of lines.busLines" [ngValue]="line">{{line}}</option>
+            </select>
+        </ng-container>
+        <ng-container *ngIf="selectedType == 'Tram'">
+            <select class="form-control" (change)="onChange($event)" [(ngModel)]="selectedLineTram" name="type">
+                <option *ngFor="let line of lines.tramLines" [ngValue]="line">{{line}}</option>
+            </select>
+        </ng-container>
+        <ng-container *ngIf="selectedType == 'Trolleybus'">
+            <select class="form-control" (change)="onChange($event)" [(ngModel)]="selectedLineTrolleybus" name="type">
+                <option *ngFor="let line of lines.trolleybusLines" [ngValue]="line">{{line}}</option>
+            </select>
+        </ng-container>
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn btn-success btn-block" id="show" (click)="displayLine()">Show</button>
+    </div>
+</div>
+<div class="row margin_top">
+    <agm-map class="my_map" [longitude]="19.840958" [latitude]="45.24604914768334" 
+    [zoom]="13" [clickableIcons]="false">
+        <ng-container>
+        <agm-direction 
+            [renderOptions]="{suppressMarkers: true}"
+            [travelMode]="'DRIVING'"
+            [markerOptions]="markerOptions"
+            [origin]="routePoints.origin"
+            [destination]="routePoints.dest" 
+            [waypoints]="routePoints.waypoints">
+       </agm-direction>
+       </ng-container>
+        <agm-marker *ngFor="let stop of busAtStops" [label]="{color: 'green', text:'o', fontWeight:'bold', fontSize:'45px'}" 
+                    [zIndex]="20" [longitude]="stop.lng" [latitude]="stop.lat"></agm-marker>
+    </agm-map>
+    <div class ="row">
+    <div class="alert alert-warning box-msg text-center" *ngIf="selectError" style="color:red">You must select line</div> 
+    </div>
+</div>

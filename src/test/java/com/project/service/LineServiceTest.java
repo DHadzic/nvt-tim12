@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,11 +20,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.project.domain.Authority;
 import com.project.domain.BusStation;
 import com.project.domain.Line;
+import com.project.domain.Vehicle;
 import com.project.exceptions.EntityAlreadyExistsException;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.repository.BusStationRepository;
 import com.project.repository.LineRepository;
+import com.project.repository.VehicleRepository;
 import com.project.web.dto.LineDTO;
 
 @RunWith(SpringRunner.class)
@@ -38,12 +41,29 @@ public class LineServiceTest {
 	
 	@MockBean
 	private BusStationRepository bsRepository;
-	
+
+	@MockBean
+	private VehicleRepository vehicleRepository;
+
 	@Before
 	public void setUp() {
 		Authority auth = new Authority();
 		auth.setUserAuthorities(new HashSet<>());
 		
+		ArrayList<Line> lines = new ArrayList<>();
+		lines.add(new Line());
+		lines.get(0).setStations(new ArrayList<BusStation>());
+		lines.get(0).getStations().add(new BusStation());
+		lines.get(0).getStations().get(0).setId(40l);
+
+		ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
+		vehicles.add(new Vehicle());
+		vehicles.get(0).setLine(new Line());
+		vehicles.get(0).getLine().setId(40l);
+		
+		lines.get(0).setStations(new ArrayList<BusStation>());
+		lines.get(0).getStations().add(new BusStation());
+		lines.get(0).getStations().get(0).setId(40l);
 		Mockito.when(bsRepository.findByLat("123")).thenReturn(new BusStation("123","123"));
 		Mockito.when(bsRepository.findByLat("NOT_PARSABALE")).thenReturn(null);
 		Mockito.when(bsRepository.findByLat("1234")).thenReturn(null);
@@ -51,6 +71,13 @@ public class LineServiceTest {
 		Mockito.when(bsRepository.findByLat("12")).thenReturn(new BusStation("12","12"));
 		Mockito.when(lineRepository.findByName("8a")).thenReturn(null);
 		Mockito.when(lineRepository.findByName("taken")).thenReturn(new Line());
+		Mockito.when(bsRepository.findById(39l)).thenReturn(Optional.empty());
+		Mockito.when(bsRepository.findById(40l)).thenReturn(Optional.of(new BusStation()));
+		Mockito.when(lineRepository.findAll()).thenReturn(lines);
+		Mockito.when(lineService.getLines()).thenReturn(lines);
+		Mockito.when(lineRepository.findById(39l)).thenReturn(Optional.empty());
+		Mockito.when(lineRepository.findById(40l)).thenReturn(Optional.of(new Line()));
+		Mockito.when(vehicleRepository.findByLineNotNull()).thenReturn(vehicles);
 	}
 	
 	
@@ -381,5 +408,31 @@ public class LineServiceTest {
 		} catch (InvalidDataException | EntityDoesNotExistException e) {
 			assertTrue(false);
 		}
+    }
+
+	@Test(expected = EntityDoesNotExistException.class)
+    public void deleteStationNotExist() throws EntityDoesNotExistException {
+	    	LineDTO line = new LineDTO();
+	    	lineService.deleteBusStation(39l);
+    }
+
+	@Test
+    public void deleteStationGood() throws EntityDoesNotExistException {
+	    	LineDTO line = new LineDTO();
+	    	lineService.deleteBusStation(40l);
+			assertEquals(0,lineService.getLines().get(0).getStations().size());
+    }
+
+	@Test(expected = EntityDoesNotExistException.class)
+    public void deleteLineNotExist() throws EntityDoesNotExistException {
+	    	LineDTO line = new LineDTO();
+	    	lineService.deleteLine(39l);
+    }
+
+	@Test
+    public void deleteLineGood() throws EntityDoesNotExistException {
+	    	LineDTO line = new LineDTO();
+	    	lineService.deleteLine(40l);
+			assertEquals(null,vehicleRepository.findByLineNotNull().get(0).getLine());
     }
 }

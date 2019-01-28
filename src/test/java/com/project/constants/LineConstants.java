@@ -46,6 +46,9 @@ public class LineConstants {
 		add(new BusStation("45.26042973161276","19.832632423217774"));
     }};
     
-    public static int DB_SIZE = 1;
+    public static final int DB_SIZE = 1;
+    public static final Long DELETE_ID = 40l;
+    public static final Long DELETE_ID2 = 41l;
+    public static final Long DELETE_ID_WRONG = 39l;
 
 }
