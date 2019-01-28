@@ -46,6 +46,8 @@ public class AddVehicleServiceImpl {
 		ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 		Schedule schedule = new Schedule(addVehicleDTO.getSchedule());
 		Vehicle v = new Vehicle(tt,tickets,l,schedule,name);
+		v.setStartToEnd(false);
+		v.setAtStation(0);
 		scheduleRepository.save(schedule);
 		vehicleRepository.save(v);
 		return true;

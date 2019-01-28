@@ -40,7 +40,7 @@ public class AddVehicleController {
             return new ResponseEntity<String>(
             		"Vehicle successfully created.", HttpStatus.OK);
         } catch (InvalidDataException | EntityDoesNotExistException edne) {
-        	System.out.println(ticketDTO.getName());
+        	System.out.println(ticketDTO.getName());	
             return new ResponseEntity<String>("Ticket not created. "+edne.getMessage(), HttpStatus.BAD_REQUEST);
         }
 	}
