@@ -68,12 +68,7 @@ public class PricelistControllerTest {
 		
 		PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
 		assertTrue(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(plItemsDTO);
-//			PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
-//		} catch (InvalidDataException e) {
-//			assertTrue(true);
-//		}
+
 	}
 
 	@Test
@@ -84,13 +79,7 @@ public class PricelistControllerTest {
 				.andExpect(status().isBadRequest()).andReturn();
 		
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(plItemsDTO);
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			assertEquals("Number of pricelist items too small or too big.", e.getMessage());
-//		}
+
 	}
 	
 	@Test
@@ -109,14 +98,7 @@ public class PricelistControllerTest {
 		PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
 		PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(plItemsDTO);
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
-//			PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
-//			assertEquals("Number of pricelist items too small or too big.", e.getMessage());
-//		}
+
 	}
 	
 	@Test
@@ -130,13 +112,7 @@ public class PricelistControllerTest {
 		
 		PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(plItemsDTO);
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
-//			assertEquals("Price can not be negative value or zero.", e.getMessage());
-//		}
+
 	}
 	
 	@Test
@@ -150,13 +126,7 @@ public class PricelistControllerTest {
 		
 		PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(plItemsDTO);
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
-//			assertEquals("Price can not be negative value or zero.", e.getMessage());
-//		}
+
 	}
 	
 	@Test
@@ -170,13 +140,7 @@ public class PricelistControllerTest {
 		
 		PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(plItemsDTO);
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
-//			assertEquals("Price is too high.", e.getMessage());
-//		}
+
 	}
 	
 	@Test
@@ -186,12 +150,7 @@ public class PricelistControllerTest {
 				.andExpect(status().isBadRequest()).andReturn();
 		
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(null);
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			assertEquals("List is null.", e.getMessage());
-//		}
+
 	}
 	
 	@Test
@@ -205,13 +164,7 @@ public class PricelistControllerTest {
 		
 		PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(plItemsDTO);
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
-//			assertEquals("Null can not be Transport type or Ticket type.", e.getMessage());
-//		}
+
 	}
 	
 	@Test
@@ -225,13 +178,7 @@ public class PricelistControllerTest {
 		
 		PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(plItemsDTO);
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
-//			assertEquals("Invalid value for Transport type or Ticket type.", e.getMessage());
-//		}
+
 	}
 	
 	@Test
@@ -245,13 +192,7 @@ public class PricelistControllerTest {
 		
 		PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(plItemsDTO);
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
-//			assertEquals("Null can not be Transport type or Ticket type.", e.getMessage());
-//		}
+
 	}
 	
 	@Test
@@ -265,13 +206,7 @@ public class PricelistControllerTest {
 		
 		PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(plItemsDTO);
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
-//			assertEquals("Invalid value for Transport type or Ticket type.", e.getMessage());
-//		}
+
 	}
 	
 	@Test
@@ -285,13 +220,7 @@ public class PricelistControllerTest {
 		
 		PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist successfully created."));
-//		try {
-//			pricelistService.createPricelistAndPricelistItems(plItemsDTO);
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			PricelistConstants.PRICELIST_ITEMS_DTO.remove(PricelistConstants.PRICELIST_ITEMS_DTO.size()-1);
-//			assertEquals("List contains multiple prices for same ticket and transport type.", e.getMessage());
-//		}
+
 	}
 	
 	@Test
@@ -300,67 +229,45 @@ public class PricelistControllerTest {
 				.andExpect(status().isOk()).andReturn();
 		
 		assertTrue(result != null);
-//		try {
-//			pricelists = pricelistService.getPricelists();
-//			assertNotNull(pricelists);
-//		} catch (EntityDoesNotExistException e) {
-//			assertTrue(false);
-//		}
+
 		
 	}
 	
 	@Test
 	@Rollback
 	public void reactivatePricelistSuccess() throws Exception{
-		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/reactivatePricelist").contentType(MediaType.TEXT_PLAIN_VALUE).content("999"))
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/reactivatePricelist/{id}", "999"))
 				.andExpect(status().isOk()).andReturn();
 		
 		assertTrue(result.getResponse().getContentAsString().contains("Pricelist reactivated"));
-//		try {
-//			pricelistService.reactivatePricelist(999l);
-//		} catch (EntityDoesNotExistException e) {
-//			assertTrue(false);
-//		}
+
 	}
 	
 	@Test
 	public void reactivatePricelistNotFound() throws Exception{
-		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/reactivatePricelist").contentType(MediaType.TEXT_PLAIN_VALUE).content("900"))
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/reactivatePricelist/{id}", "900"))
 				.andExpect(status().isBadRequest()).andReturn();
 		
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist reactivated"));
-		
-//		try {
-//			pricelistService.reactivatePricelist(900l);
-//			assertTrue(false);
-//		} catch (EntityDoesNotExistException e) {
-//			assertEquals("Pricelist not found.", e.getMessage());
-//		}
+
 	}
 	
 	
 	@Test
 	@Rollback
 	public void deletePricelistSuccess() throws Exception{
-		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/deletePricelist").contentType(MediaType.TEXT_PLAIN_VALUE).content("999"))
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/deletePricelist/{id}", "994"))
 				.andExpect(status().isOk()).andReturn();
 		
 		assertTrue(result.getResponse().getContentAsString().contains("Pricelist deleted."));
 		
-		
-//		try {
-//			pricelistService.deletePricelist(999L);
-//		} catch (NoSuchElementException e) {
-//			assertTrue(false);
-//		} catch (InvalidDataException e) {
-//			assertTrue(false);
-//		}
+
 	}
 	
 	
 	@Test
 	public void deletePricelistNotFound() throws Exception{
-		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/deletePricelist").contentType(MediaType.TEXT_PLAIN_VALUE).content("900"))
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/deletePricelist/{id}", "900"))
 				.andExpect(status().isBadRequest()).andReturn();
 		
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist deleted."));
@@ -369,7 +276,7 @@ public class PricelistControllerTest {
 	
 	@Test
 	public void deletePricelistIsActive() throws Exception{
-		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/deletePricelist").contentType(MediaType.TEXT_PLAIN_VALUE).content("998"))
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/deletePricelist/{id}", "998"))
 				.andExpect(status().isOk()).andReturn();
 		
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist deleted."));
@@ -377,7 +284,7 @@ public class PricelistControllerTest {
 	
 	@Test
 	public void deletePricelistActiveTicketsUsingIt() throws Exception{
-		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/deletePricelist").contentType(MediaType.TEXT_PLAIN_VALUE).content("997"))
+		MvcResult result = mockMvc.perform(post(URL_PREFIX + "/deletePricelist/{id}", "997"))
 				.andExpect(status().isOk()).andReturn();
 		
 		assertFalse(result.getResponse().getContentAsString().contains("Pricelist deleted."));

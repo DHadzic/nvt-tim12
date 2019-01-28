@@ -13,7 +13,7 @@
     </agm-map>
   </div>
   <div class="col-4 top_padding">
-      <div class="alert alert-info selected_output text-center">Selected stop : {{ selectedStop }}</div>
-      <button class="btn btn-success button_delete" [disabled]="isSelected()" (click)="deleteStop()">Delete line</button>
+      <div class="alert alert-info selected_output text-center" id="selected_text">Selected stop : {{ selectedStop }}</div>
+      <button class="btn btn-success button_delete" [disabled]="isSelected()" id="delete" (click)="deleteStop()">Delete line</button>
   </div>
 </div>

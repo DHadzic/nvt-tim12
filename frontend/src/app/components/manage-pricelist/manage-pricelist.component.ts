@@ -9,11 +9,14 @@ import { PricelistService } from 'src/app/services/pricelist.service';
 export class ManagePricelistComponent implements OnInit {
   createPricelistForm:boolean = false;
   prices:any;
+  pricelists;
+  pricelistPrices = [];
 
   constructor(private pricelistService:PricelistService) { }
 
   ngOnInit() {
     this.definePrices();
+    this.listAll();
   }
 
   toggleCreate(){
@@ -40,16 +43,58 @@ export class ManagePricelistComponent implements OnInit {
   create(){
     this.pricelistService.create(this.prices).subscribe(success => {
       console.log(success);
+      alert("Created successfully.");
+      location.reload();
     },
     error => {console.log(error);});
   }
 
   listAll(){
-    this.pricelistService.getPricelists().subscribe();
+    this.pricelistService.getPricelists().subscribe(
+      (pricelists) => {
+        this.pricelists = pricelists;
+        console.log(this.pricelists); 
+        for (let i = 0; i < this.pricelists.length; i++){
+          this.listPricelistPrices(this.pricelists[i].id, i);
+        }
+      }
+    );
+  }
+
+  listPricelistPrices(pricelistId, i){
+    this.pricelistService.getPricelistPrices(pricelistId).subscribe(
+      (prices) => {
+        this.pricelistPrices.push(prices);
+        // console.log(prices);
+      }
+    )
+
   }
 
   deletePricelist(pricelistId){
-    this.pricelistService.deletePricelist(pricelistId).subscribe();
+    this.pricelistService.deletePricelist(pricelistId).subscribe(success => {
+      console.log(success);
+      if (success == "Pricelist deleted."){
+        alert("Deleted successfully.");
+        location.reload();
+      }else{
+        alert(success);
+      }
+    },
+    error => {console.log(error);});
+  }
+
+  reactivatePRicelist(pricelistId){
+    this.pricelistService.reactivatePricelist(pricelistId).subscribe(success => {
+      console.log(success);
+      if (success == "Pricelist reactivated."){
+        alert("Reactivated successfully.");
+        location.reload();
+      }else{
+        alert(success);
+      }
+    },
+    error => {console.log(error);});
   }
 
 }
