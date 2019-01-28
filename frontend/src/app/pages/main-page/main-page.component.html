@@ -1,19 +1,19 @@
 <div class="row">
     <div class="col-md-4">
             <label>Type:</label>
-            <select class="form-control" [(ngModel)]="selectedType" name="type">
+            <select class="form-control" [(ngModel)]="selectedType" id="trans_type" name="type">
             <option *ngFor="let transport_type of transport_types" [ngValue]="transport_type">{{transport_type}}</option>
         </select>
     </div>
     <div class="col-md-4">
         <label>Line:</label>
         <ng-container *ngIf="selectedType == 'Bus'">
-            <select class="form-control" (change)="onChange($event)" [(ngModel)]="selectedLineBus" name="type">
+            <select class="form-control" (change)="onChange($event)" id="bus_line_select" [(ngModel)]="selectedLineBus" name="type">
                 <option *ngFor="let line of lines.busLines" [ngValue]="line">{{line}}</option>
             </select>
         </ng-container>
         <ng-container *ngIf="selectedType == 'Tram'">
-            <select class="form-control" (change)="onChange($event)" [(ngModel)]="selectedLineTram" name="type">
+            <select class="form-control" (change)="onChange($event)" id="tram_line_select" [(ngModel)]="selectedLineTram" name="type">
                 <option *ngFor="let line of lines.tramLines" [ngValue]="line">{{line}}</option>
             </select>
         </ng-container>
@@ -28,6 +28,7 @@
     </div>
 </div>
 <div class="row margin_top">
+    <div class="row">
     <agm-map class="my_map" [longitude]="19.840958" [latitude]="45.24604914768334" 
     [zoom]="13" [clickableIcons]="false">
         <ng-container>
@@ -43,6 +44,7 @@
         <agm-marker *ngFor="let stop of busAtStops" [label]="{color: 'green', text:'o', fontWeight:'bold', fontSize:'45px'}" 
                     [zIndex]="20" [longitude]="stop.lng" [latitude]="stop.lat"></agm-marker>
     </agm-map>
+    </div>
     <div class ="row">
     <div class="alert alert-warning box-msg text-center" *ngIf="selectError" style="color:red">You must select line</div> 
     </div>

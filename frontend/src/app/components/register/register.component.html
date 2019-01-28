@@ -8,6 +8,7 @@
         <label for="email"><b>Username</b></label>
         <input type="text" class="form-control" id="username" name="username" [(ngModel)]="passenger.username" required />
         <p class="alert alert-warning box-msg" *ngIf="error_messages.username" style="color:red">Username must be between 3 and 20 characters..</p>
+        <p class="alert alert-warning box-msg" *ngIf="error_messages.username_taken" style="color:red">Username taken</p>
       </div>
       <div class="form-group">
         <label for="password"><b>Password</b></label>
@@ -31,13 +32,13 @@
       </div>
       <div class="form-group">
         <label for="Type"><b>Select your type</b></label>
-        <select class="form-control" [(ngModel)]="passenger.type" name="type">
+        <select class="form-control" [(ngModel)]="passenger.type" name="type" id="type">
             <option *ngFor="let pass_type of pass_types" [ngValue]="pass_type">{{pass_type}}</option>
         </select>
       </div>
       <div class="form-group">
           <label for="Birth date"><b>Birth date</b></label>
-          <input type="date" datetime="MM-dd-yyyy" class="form-control" name="birthDate" [(ngModel)] ="passenger.birthDate" />
+          <input type="date" datetime="MM-dd-yyyy" class="form-control" id="birthDate" name="birthDate" [(ngModel)] ="passenger.birthDate" />
           <p class="alert alert-warning box-msg" *ngIf="error_messages.birthDate" style="color:red">Must be inbetween Jan 1st 1900 and Jan 1st 2010</p>
         </div>
         <div class="right_padding">

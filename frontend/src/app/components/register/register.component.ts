@@ -27,6 +27,7 @@ export class RegisterComponent implements OnInit {
     this.myBool = true;
     this.error_messages = {};
     this.error_messages.username = false;
+    this.error_messages.username_taken = false;
     this.error_messages.password = false;
     this.error_messages.password_r = false;
     this.error_messages.name = false;
@@ -55,9 +56,13 @@ export class RegisterComponent implements OnInit {
 
     var observer = {
       next(value) {
-        _this.router.navigate(['/login']);
+        _this.passenger.type = _this.pass_types[0];
+        _this.router.navigate(['/main']);
       },
       error(msg) {
+        console.log(msg.error);
+        _this.passenger.type = _this.pass_types[0];
+        _this.error_messages.username_taken = true;
         console.log(msg.error);
       }
     }
@@ -72,6 +77,7 @@ export class RegisterComponent implements OnInit {
 
   handleValidation(): boolean{
     this.error_messages.username = false;
+    this.error_messages.username_taken = false;
     this.error_messages.password = false;
     this.error_messages.password_r = false;
     this.error_messages.name = false;
