@@ -25,6 +25,7 @@
     "angular-bootstrap-datetimepicker": "^2.2.1",
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
+    "jasmine": "^3.3.1",
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",
     "open-iconic": "^1.1.1",

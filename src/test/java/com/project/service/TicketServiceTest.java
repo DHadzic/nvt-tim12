@@ -55,6 +55,8 @@ public class TicketServiceTest {
 		p1.setPassword("p11");
 		Pricelist pl1 = new Pricelist();
 		PricelistItem pli1 = new PricelistItem(pl1, TicketType.ONE_TIME, TransportType.BUS, 500);
+		ArrayList<Pricelist> activepl = new ArrayList<Pricelist>();
+		activepl.add(pl1);
 		Ticket t1 = new Ticket(p1, TicketType.MONTHLY, TransportType.BUS, pli1);
 		Ticket t2 = new Ticket();
 		t2.setTransportType(TransportType.TRAM);
@@ -66,7 +68,7 @@ public class TicketServiceTest {
 		p1.setTikcets(tickets);
 		Mockito.when(userRepository.findByUsername("p1")).thenReturn(p1);
 		Mockito.when(userRepository.findByUsername("p2")).thenReturn(null);
-		Mockito.when(pricelistRepository.findTopByOrderByIdDesc()).thenReturn(pl1);
+		Mockito.when(pricelistRepository.findByInvalidatedIsNull()).thenReturn(activepl);
 		Mockito.when(pricelistItemRepository.findByPricelistAndTicketTypeAndTransportType(pl1, TicketType.ONE_TIME, TransportType.BUS)).thenReturn(pli1);
 		Mockito.when(pricelistItemRepository.findByPricelistAndTicketTypeAndTransportType(pl1, TicketType.ONE_DAY, TransportType.BUS)).thenReturn(null);
 		Mockito.when(ticketRepository.findByUser(p1)).thenReturn(tickets);
@@ -93,25 +95,25 @@ public class TicketServiceTest {
 	
 	@Test(expected = InvalidDataException.class)
 	public void createTransportTypeNull() throws EntityDoesNotExistException, InvalidDataException {
-		TicketDTO t1dto = new TicketDTO("p2", "ONE_TIME", null);
+		TicketDTO t1dto = new TicketDTO("p1", "ONE_TIME", null);
 		ticketService.create(t1dto);
 	}
 	
 	@Test(expected = InvalidDataException.class)
 	public void createTransportTypeInvalid() throws EntityDoesNotExistException, InvalidDataException {
-		TicketDTO t1dto = new TicketDTO("p2", "ONE_TIME", " ");
+		TicketDTO t1dto = new TicketDTO("p1", "ONE_TIME", " ");
 		ticketService.create(t1dto);
 	}
 	
 	@Test(expected = InvalidDataException.class)
 	public void createTicketTypeNull() throws EntityDoesNotExistException, InvalidDataException {
-		TicketDTO t1dto = new TicketDTO("p2", null, "BUS");
+		TicketDTO t1dto = new TicketDTO("p1", null, "BUS");
 		ticketService.create(t1dto);
 	}
 	
 	@Test(expected = InvalidDataException.class)
 	public void createTicketTypeInvalid() throws EntityDoesNotExistException, InvalidDataException {
-		TicketDTO t1dto = new TicketDTO("p2", " ", "BUS");
+		TicketDTO t1dto = new TicketDTO("p1", " ", "BUS");
 		ticketService.create(t1dto);
 	}
 	

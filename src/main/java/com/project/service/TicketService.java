@@ -1,6 +1,10 @@
 package com.project.service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,6 +69,8 @@ public class TicketService {
 		Passenger p = (Passenger) userRepository.findByUsername(username);
 		if (p == null) throw new EntityDoesNotExistException("User does not exist.");
 		ArrayList<Ticket> tickets = ticketRepository.findByUser(p);
+		tickets = checkIfTicketsActive(tickets);
+		
 		return tickets;
 	}
 	
@@ -74,6 +80,11 @@ public class TicketService {
 			TransportType ttype = TransportType.valueOf(transportType);
 			for (Ticket t : tickets){
 				if (t.getTransportType() == ttype && t.isActive() == true){
+					if (t.getType() == TicketType.ONE_TIME){
+						t.setActive(false);
+						ticketRepository.save(t);
+					}
+					
 					return t;
 				}
 			}
@@ -83,5 +94,29 @@ public class TicketService {
 		}catch (NullPointerException npe){
 			throw new InvalidDataException("Null can not be Transport type.");
 		}
+	}
+	
+	private ArrayList<Ticket> checkIfTicketsActive(ArrayList<Ticket> tickets){
+		Date today = new Date();
+		for (Ticket t : tickets){
+			if (t.getType() == TicketType.ONE_DAY){
+				LocalDate td = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				LocalDate tick = t.getDateCreated().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				tick = tick.plusDays(1);
+				if (td.isAfter(tick)) t.setActive(false);
+			}else if (t.getType() == TicketType.MONTHLY){
+				LocalDate td = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				LocalDate tick = t.getDateCreated().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				tick = tick.plusMonths(1);
+				if (td.isAfter(tick)) t.setActive(false);
+			}else if (t.getType() == TicketType.YEARLY){
+				LocalDate td = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				LocalDate tick = t.getDateCreated().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				tick = tick.plusYears(1);
+				if (td.isAfter(tick)) t.setActive(false);
+			}
+		}
+		ticketRepository.saveAll(tickets);
+		return tickets;
 	}
 }

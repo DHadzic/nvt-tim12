@@ -1,5 +1,5 @@
 <div class="col-md-6">
-  <button class="btn btn btn-primary" (click)="toggleCreate()">Create new pricelist</button>
+  <button class="btn btn btn-primary" (click)="toggleCreate()" id="create_pricelist">Create new pricelist</button>
   <div *ngIf="createPricelistForm">
     <h2 class="form-signin-heading">Create pricelist</h2>
     <form role="form" (ngSubmit)="create()">
