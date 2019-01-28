@@ -37,17 +37,14 @@ public class Vehicle {
 	@OneToOne
 	private Schedule schedule;
 	
-<<<<<<< HEAD
+
 	@Column
 	private String name;
 	
 	public Vehicle() {
 		
-=======
-	public Vehicle() {
->>>>>>> branch 'master' of https://github.com/DHadzic/nvt-tim12
+
 	}
-	
 	public Vehicle(TransportType type, ArrayList<Ticket> tickets, Line line, Schedule schedule) {
 		super();
 		this.type = type;
@@ -108,7 +105,6 @@ public class Vehicle {
 		this.line = line;
 	}
 
-<<<<<<< HEAD
 	public String getName() {
 		return name;
 	}
@@ -118,7 +114,6 @@ public class Vehicle {
 	}
 	
 	
-=======
 	public Integer getAtStation() {
 		return atStation;
 	}
@@ -134,5 +129,5 @@ public class Vehicle {
 	public void setStartToEnd(Boolean startToEnd) {
 		this.startToEnd = startToEnd;
 	}
->>>>>>> branch 'master' of https://github.com/DHadzic/nvt-tim12
+
 }
