@@ -53,12 +53,9 @@ insert into schedule_work_day(schedule_id,work_day) values
 
 insert into schedule(id)  values (0);
 
-insert into vehicle(id,line_id,schedule_id,name,type) values (5,null,0,'g11',0);
-insert into vehicle(id,line_id,schedule_id,name,type) values (6,999,0,'g12',0);
-insert into vehicle(id,line_id,schedule_id,name,type) values (7,998,0,'g13',0);
-
-insert into vehicle(id,line_id,start_to_end,at_station,type) values (999,999,true,0,0);
-insert into vehicle(id,line_id,start_to_end,at_station,type) values (997,999,true,1,1);
-insert into vehicle(id) values (998);
+insert into vehicle(id,line_id,schedule_id,name,type,start_to_end,at_station) values (995,null,0,'g11',0,true,0);
+insert into vehicle(id,line_id,schedule_id,name,type,start_to_end,at_station) values (996,999,0,'g12',0,true,0);
+insert into vehicle(id,line_id,schedule_id,name,type,start_to_end,at_station) values (997,998,0,'g13',0,true,0);
+insert into vehicle(id,line_id,schedule_id,name,type,start_to_end,at_station) values (998,999,0,'g14',1,true,0);
 
 

@@ -10,22 +10,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.Line;
-import com.project.domain.Schedule;
-import com.project.domain.Ticket;
+import com.project.domain.TransportType;
 import com.project.domain.Vehicle;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
-import com.project.repository.ScheduleRepository;
-import com.project.repository.VehicleRepository;
 import com.project.service.AddVehicleServiceImpl;
 import com.project.web.dto.AddVehicleDTO;
+import com.project.web.dto.LineInfo;
+import com.project.web.dto.LinesPerTypeDTO;
 import com.project.web.dto.ResponseDTO;
-import com.project.web.dto.TicketDTO;
-import com.project.web.dto.VehicleNameDTO;
 
 @RestController
 @RequestMapping(value = "/addVehicle")
