@@ -28,7 +28,7 @@ public class MainPageAdminTest {
 	@BeforeMethod
 	public void setupSelenium() {
 		//instantiate browser
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Damir\\Desktop\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Dell\\Desktop\\chromedriver.exe");
 		browser = new ChromeDriver();
 		//maximize window
 		browser.manage().window().maximize();

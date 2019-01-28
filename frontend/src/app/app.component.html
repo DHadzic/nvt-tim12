@@ -30,10 +30,18 @@
             <li class="nav-item active">
                     <a *ngIf="isAdmin()" class="nav-link" href="assignLine" id="assign_line_link">Assign Line to Vehicle</a>
             </li>
+            
+            <li class="nav-item active">
+                <a *ngIf="isAdmin()" class="nav-link" href="pricelists" id="pricelist_link">Manage pricelist</a>
+            </li>
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item active">
                 <a *ngIf="verifyBtn" class="nav-link" href="verify">Please verify your account</a>
+            </li>
+
+            <li class="nav-item active">
+                <a *ngIf="isPassenger()" class="nav-link" href="tickets" id="tickets_link">Buy tickets</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
