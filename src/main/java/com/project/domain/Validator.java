@@ -18,7 +18,7 @@ public class Validator extends User {
 	private String surname;
 	
 	@Column
-	private HashMap<String, VerifyRequestDTO> verificationRequest;
+	private ArrayList<String> verificationRequest;
 
 	public String getName() {
 		return name;
@@ -36,12 +36,14 @@ public class Validator extends User {
 		this.surname = surname;
 	}
 
-	public HashMap<String, VerifyRequestDTO> getVerificationRequest() {
+	public ArrayList<String> getVerificationRequest() {
 		return verificationRequest;
 	}
 
-	public void setVerificationRequest(HashMap<String, VerifyRequestDTO> verificationRequest) {
+	public void setVerificationRequest(ArrayList<String> verificationRequest) {
 		this.verificationRequest = verificationRequest;
 	}
+
+
 	
 }

@@ -36,5 +36,6 @@ insert into pricelist (id,formed) values (996, '2017-12-28 13:17:17');
 insert into pricelist_item (id, pricelist_id, ticket_type, transport_type) values (999, 997,1,1);
 insert into pricelist_item (id, pricelist_id, ticket_type, transport_type) values (998, 997,1,2);
 insert into pricelist_item (id, pricelist_id, ticket_type, transport_type) values (997, 998,0,1);
-insert into ticket (id,price_id,transport_type, type, is_active, user_id) values (999,999,1,1, true, 2);
-insert into ticket (id,price_id,transport_type, type, is_active, user_id) values (998,998,1,2, false, 2);
+insert into ticket (id,price_id,transport_type, type, is_active, user_id, date_created) values (999,999,1,1, true, 2, '2017-12-18 13:17:17');
+insert into ticket (id,price_id,transport_type, type, is_active, user_id, date_created) values (998,998,1,2, false, 2, '2017-12-18 13:17:17');
+insert into ticket (id,price_id,transport_type, type, is_active, user_id, date_created) values (997,999,1,2, true, 2, '2017-12-18 13:17:17');

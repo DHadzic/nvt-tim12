@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.PassengerType;
+import com.project.domain.PricelistItem;
 import com.project.exceptions.EntityAlreadyExistsException;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
@@ -29,6 +30,7 @@ import com.project.security.TokenUtils;
 import com.project.service.UserService;
 import com.project.web.dto.LoginDTO;
 import com.project.web.dto.PassengerDTO;
+import com.project.web.dto.PricelistItemDTO;
 import com.project.web.dto.ValidatorDTO;
 import com.project.web.dto.VerifyRequestDTO;
 
@@ -143,12 +145,12 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/getVerifyRequests/{username}", method = RequestMethod.GET)
-	public ResponseEntity<ArrayList<VerifyRequestDTO>> getVerificationRequests(@PathVariable("username") String username) throws EntityDoesNotExistException {
+	public ResponseEntity<ArrayList<String>> getVerificationRequests(@PathVariable("username") String username) throws EntityDoesNotExistException {
 		try {
-			ArrayList<VerifyRequestDTO> requests = userService.getVerifyRequests(username);
-			return new ResponseEntity<ArrayList<VerifyRequestDTO>>(requests, HttpStatus.OK);
+			ArrayList<String> requests = userService.getVerifyRequests(username);
+			return new ResponseEntity<ArrayList<String>>(requests, HttpStatus.OK);
 		}catch (EntityDoesNotExistException edne){
-			return new ResponseEntity<ArrayList<VerifyRequestDTO>>(new ArrayList<VerifyRequestDTO>(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<ArrayList<String>>(new ArrayList<String>(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -172,6 +174,16 @@ public class UserController {
 		}catch (EntityDoesNotExistException | InvalidDataException edne) {
 			return new ResponseEntity<String>(edne.getMessage(), HttpStatus.BAD_REQUEST);
 
+		}
+	}
+	
+	@RequestMapping(value = "/checkForDiscount/{username}", method = RequestMethod.GET)
+	public ResponseEntity<String> checkForDiscount(@PathVariable("username") String username){
+		try{
+			Integer pass = userService.checkForUserDiscount(username);
+			return new ResponseEntity<String>(String.valueOf(pass), HttpStatus.OK);
+		} catch (EntityDoesNotExistException e) {
+			return new ResponseEntity<String>("-1", HttpStatus.BAD_REQUEST);
 		}
 	}
 }

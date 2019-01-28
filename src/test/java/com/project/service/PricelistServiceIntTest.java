@@ -267,7 +267,7 @@ public class PricelistServiceIntTest {
 	@Test
 	public void deletePricelistIsActive(){
 		try {
-			pricelistService.deletePricelist(998l);
+			pricelistService.deletePricelist(996l);
 			assertTrue(false);
 		} catch (NoSuchElementException e) {
 			assertTrue(false);

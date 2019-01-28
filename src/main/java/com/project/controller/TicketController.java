@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.domain.PricelistItem;
 import com.project.domain.Ticket;
 import com.project.exceptions.EntityDoesNotExistException;
 import com.project.exceptions.InvalidDataException;
 import com.project.service.TicketService;
+import com.project.web.dto.PricelistItemDTO;
 import com.project.web.dto.TicketDTO;
 
 @RestController

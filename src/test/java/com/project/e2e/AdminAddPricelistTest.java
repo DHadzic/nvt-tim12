@@ -1,7 +1,9 @@
 package com.project.e2e;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -14,7 +16,7 @@ public class AdminAddPricelistTest {
 private WebDriver browser;
 	
 	LoginPage loginPage;
-	MainPage mainPage;
+	PricelistPage pricelistPage;
 	
 	@BeforeMethod
 	public void setupSelenium() {
@@ -27,7 +29,6 @@ private WebDriver browser;
 		browser.navigate().to("http://localhost:4200/login");
 		
 		loginPage = PageFactory.initElements(browser, LoginPage.class);
-		mainPage = PageFactory.initElements(browser, MainPage.class);
 	}
 	
 	@Test
@@ -43,6 +44,33 @@ private WebDriver browser;
 		Thread.sleep(2000);
 		
 		browser.navigate().to("http://localhost:4200/pricelist");
+		pricelistPage = PageFactory.initElements(browser, PricelistPage.class);
+		
+		int numOfPricelists = pricelistPage.getPricelistsContainer().findElements(By.cssSelector("*")).size();
+		
+		pricelistPage.ensureCreateBtnIsDisplayed();
+		pricelistPage.getCreateButton().click();
+		
+		pricelistPage.ensureInputsAreDisplayed();
+		pricelistPage.getInsertPrice1().sendKeys("50");
+		pricelistPage.getInsertPrice2().sendKeys("100");
+		pricelistPage.getInsertPrice3().sendKeys("1200");
+		pricelistPage.getInsertPrice4().sendKeys("12000");
+		pricelistPage.getInsertPrice5().sendKeys("52");
+		pricelistPage.getInsertPrice6().sendKeys("112");
+		pricelistPage.getInsertPrice7().sendKeys("512");
+		pricelistPage.getInsertPrice8().sendKeys("1212");
+		pricelistPage.getInsertPrice9().sendKeys("62");
+		pricelistPage.getInsertPrice10().sendKeys("112");
+		pricelistPage.getInsertPrice11().sendKeys("1112");
+		pricelistPage.getInsertPrice12().sendKeys("3112");
+
+		pricelistPage.ensureSubmitIsDisplayed();
+		pricelistPage.getSubmitCreateBtn().click();
+		Thread.sleep(3000);
+		int newNumOfPricelists = pricelistPage.getPricelistsContainer().findElements(By.cssSelector("*")).size();
+		
+		assertTrue(newNumOfPricelists > numOfPricelists);
 		
 	}
 	@AfterMethod

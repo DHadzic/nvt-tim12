@@ -210,16 +210,16 @@ public class UserService {
 		if (username == null || image == null || username == "" || image == "") throw new InvalidDataException("Parameters can not be null or empty string.");
 		Passenger passenger = findPassenger(username);
 		passenger.setDocumentID(image);
-//		sendVerificationRequest(username, passenger.getType(), image);
+		sendVerificationRequest(username, passenger.getType(), image);
 		userRepository.save(passenger);
 	}
 	
-	public ArrayList<VerifyRequestDTO> getVerifyRequests(String username) throws EntityDoesNotExistException{
+	public ArrayList<String> getVerifyRequests(String username) throws EntityDoesNotExistException{
 		Validator validator = (Validator) userRepository.findByUsername(username);
 		if (validator == null) throw new EntityDoesNotExistException("Validator does no exist.");
-		HashMap<String, VerifyRequestDTO> requests = validator.getVerificationRequest();
-		if (requests == null) return new ArrayList<VerifyRequestDTO>();
-		return (ArrayList<VerifyRequestDTO>) requests.values();
+		ArrayList<String> requests = validator.getVerificationRequest();
+		if (requests == null) return new ArrayList<String>();
+		return requests;
 	}
 	
 	public void verifyPassenger(String username) throws EntityDoesNotExistException, InvalidDataException {
@@ -238,6 +238,22 @@ public class UserService {
 		userRepository.save(passenger);
 	}
 	
+
+	public Integer checkForUserDiscount(String username) throws EntityDoesNotExistException{
+		Passenger pass = (Passenger) userRepository.findByUsername(username);
+		if (pass == null) throw new EntityDoesNotExistException("User not found.");
+		PassengerType type = pass.getType();
+		Boolean verified = pass.isVerified();
+		if (type == PassengerType.RETIREE && verified){
+			return 2;
+		}else if (type == PassengerType.STUDENT && verified){
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+	
+	
 	private Passenger findPassenger(String username) throws EntityDoesNotExistException{
 		Passenger passenger = (Passenger) userRepository.findByUsername(username);
 		if (passenger == null) throw new EntityDoesNotExistException("Passenger not found");
@@ -251,11 +267,11 @@ public class UserService {
 			vr.setUsername(username);
 			vr.setImage(image);
 			vr.setType(type);
-			HashMap<String, VerifyRequestDTO> requests = v.getVerificationRequest();
+			ArrayList<String> requests = v.getVerificationRequest();
 			if (requests == null){
-				requests = new HashMap<String, VerifyRequestDTO>();
+				requests = new ArrayList<String>();
 			}
-			requests.put(username, vr);
+			requests.add(username);
 			v.setVerificationRequest(requests);
 		}
 		userRepository.saveAll(validators);
@@ -269,4 +285,5 @@ public class UserService {
 		}
 		userRepository.saveAll(validators);
 	}
+	
 }

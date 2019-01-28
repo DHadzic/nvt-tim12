@@ -61,8 +61,8 @@ public class UserServiceTest {
 		Mockito.when(userRepository.findByUsername("pName")).thenReturn(p);
 		ArrayList<User> users = new ArrayList<User>();
 		Validator v1 = new Validator();
-		HashMap<String, VerifyRequestDTO> req = new HashMap<String, VerifyRequestDTO>();
-		req.put("pName", new VerifyRequestDTO());
+		ArrayList<String> req = new ArrayList<String>();
+		req.add("pName");
 		v1.setVerificationRequest(req);
 		users.add(p);
 		users.add(v1);

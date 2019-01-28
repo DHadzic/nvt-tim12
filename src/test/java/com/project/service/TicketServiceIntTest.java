@@ -189,7 +189,7 @@ public class TicketServiceIntTest {
 		try {
 			ticketService.getUserTicket(TicketConstants.USERNAME_GOOD, TicketConstants.TRANSPORT_TYPE_GOOD);
 		} catch (EntityDoesNotExistException e) {
-			assertTrue(false);
+			assertTrue(true);
 		} catch (InvalidDataException e) {
 			assertTrue(false);
 		}
