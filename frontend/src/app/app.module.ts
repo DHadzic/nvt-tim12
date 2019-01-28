@@ -77,6 +77,15 @@ const appRoutes: Routes = [
   { path: 'changeSchedule',
   component: ChangeScheduleComponent
   },
+  {
+    path: 'deleteStop',
+    component:  DeleteBusStopComponent
+  },
+  {
+    path: 'deleteLine',
+    component:  DeleteLineComponent
+  },
+
   { path: '**', component: NotFoundPageComponent },
  
 ];
