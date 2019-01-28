@@ -55,3 +55,23 @@
     </form>
   </div>
 </div>
+<br/>
+<div id="accordion" *ngFor="let pricelist of pricelists; let i=index">
+  <div class="card">
+    <div class="card-header" id="i">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#pridelist.id" aria-expanded="true" aria-controls="pridelist.id">
+          Pricelist created {{ pricelist.date_formed | date:'medium'}}
+        </button>
+        <button style="float:right;" *ngIf="pricelist.date_invalidated" class="btn btn-primary" (click)=" reactivatePRicelist(pricelist.id)">Reactivate</button>
+        <button style="float:right;"class="btn btn-warning" (click)="deletePricelist(pricelist.id)">Delete</button>
+      </h5>
+    </div>
+
+    <div id="pridelist.id" class="collapse show" aria-labelledby="i" data-parent="#accordion">
+      <div class="card-body" *ngFor="let price of pricelistPrices[i]">
+        <span>{{price.ticketType}}, {{price.transportType}}: {{price.price}} RSD</span><br>
+      </div>
+    </div>
+  </div>
+</div>

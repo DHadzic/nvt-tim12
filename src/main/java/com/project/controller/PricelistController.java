@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,8 +59,23 @@ public class PricelistController {
 		return new ResponseEntity<ArrayList<PricelistItemDTO>>(pricesToReturn, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/reactivatePricelist", method = RequestMethod.POST)
-	public ResponseEntity<String> reactivate(@RequestBody String pricelistId){
+	@RequestMapping(value = "/getPricelistItems/{id}", method = RequestMethod.GET)
+	public ResponseEntity<ArrayList<PricelistItemDTO>> getPricelistItems(@PathVariable("id") String pricelistId){
+		try{
+			ArrayList<PricelistItem> prices = pricelistService.getPricelistItems(Long.parseLong(pricelistId, 10));
+			ArrayList<PricelistItemDTO> pricesToReturn = new ArrayList<PricelistItemDTO>();
+			for (PricelistItem pli : prices){
+				PricelistItemDTO pliDTO = new PricelistItemDTO(pli.getTicketType().toString(), pli.getTransportType().toString(), pli.getPrice());
+				pricesToReturn.add(pliDTO);
+			}
+			return new ResponseEntity<ArrayList<PricelistItemDTO>>(pricesToReturn, HttpStatus.OK);
+		} catch (EntityDoesNotExistException e) {
+			return new ResponseEntity<ArrayList<PricelistItemDTO>>(new ArrayList<PricelistItemDTO>(), HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@RequestMapping(value = "/reactivatePricelist/{id}", method = RequestMethod.POST)
+	public ResponseEntity<String> reactivate(@PathVariable("id") String pricelistId){
 		try{
 			pricelistService.reactivatePricelist(Long.parseLong(pricelistId, 10));
 			return new ResponseEntity<String>("Pricelist reactivated.", HttpStatus.OK);
@@ -69,8 +85,8 @@ public class PricelistController {
 		
 	}
 	
-	@RequestMapping(value = "/deletePricelist", method = RequestMethod.POST)
-	public ResponseEntity<String> deletePricelist(@RequestBody String pricelistId){
+	@RequestMapping(value = "/deletePricelist/{id}", method = RequestMethod.POST)
+	public ResponseEntity<String> deletePricelist(@PathVariable("id") String pricelistId){
 		try{
 			pricelistService.deletePricelist(Long.parseLong(pricelistId, 10));
 			return new ResponseEntity<String>("Pricelist deleted.", HttpStatus.OK);
