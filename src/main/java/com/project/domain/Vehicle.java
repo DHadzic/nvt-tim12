@@ -42,8 +42,6 @@ public class Vehicle {
 	private String name;
 	
 	public Vehicle() {
-		
-
 	}
 	public Vehicle(TransportType type, ArrayList<Ticket> tickets, Line line, Schedule schedule) {
 		super();
