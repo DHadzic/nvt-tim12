@@ -22,7 +22,7 @@
     </div>
     <div class="row">
       <div class="alert alert-info selected_output text-center">Selected line : {{ selectedLine.id }} , {{ selectedLine.name}}</div>
-      <button class="btn btn-success button_delete" [disabled]="isSelected()" (click)="deleteLine()">Delete line</button>
+      <button class="btn btn-success button_delete" [disabled]="isSelected()" id="delete_line" (click)="deleteLine()">Delete line</button>
     </div>
 </div>
   <div class="col-4 top_padding">

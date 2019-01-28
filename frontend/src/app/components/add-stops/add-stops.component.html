@@ -18,7 +18,7 @@
     </div>
   <div class="col-3 top_padding">
     <div class="bottom_padding">
-    <button class="btn btn-success btn-block"(click)="addStation()" [disabled]="isMapClicked()">Add station</button>
+    <button class="btn btn-success btn-block"(click)="addStation()" id="add_station" [disabled]="isMapClicked()">Add station</button>
     </div>
     <div *ngIf="mapNotClicked" class="alert alert-warning box-msg text-center">You must first click on the map.</div>
   </div>
